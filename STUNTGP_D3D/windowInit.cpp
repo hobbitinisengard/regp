@@ -172,7 +172,7 @@ HWND windowCreateInternal(HINSTANCE hInstance, LPCTSTR className, LPCTSTR window
 const char *ddGetErrMessage(int res)
 {
     int elements = {0};
-    // DATA: STUNTGP_D3D 0x572ae4
+    // GLOBAL: STUNTGP_D3D 0x572ae4
     static char message[256];
 
     if (errorMessages[0].message)
