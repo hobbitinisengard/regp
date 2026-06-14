@@ -3,22 +3,21 @@
 // TODO: update this based on currrent date and a compile-time define?
 
 #if !defined(REGP_FIXES)
-// STRING: STUNTGP_D3D 0x4826a4
+// GLOBAL: STUNTGP_D3D 0x4826a4
 const char g_VERSION_DATE[] = "Nov 21 2000";
 
-// STRING: STUNTGP_D3D 0x482698
+// GLOBAL: STUNTGP_D3D 0x482698
 const char g_VERSION_TIME[] = "16:26:50";
 #else
-// STRING: STUNTGP_D3D 0x4826a4
 const char g_VERSION_DATE[] = __DATE__;
 
-// STRING: STUNTGP_D3D 0x482698
 const char g_VERSION_TIME[] = __TIME__;
 #endif
-// STRING: STUNTGP_D3D 0x4826b0
+
+// GLOBAL: STUNTGP_D3D 0x4826b0
 const char g_VERSION_FORMAT[] = "Version: %s - %s";
 
-// STRING: STUNTGP_D3D 0x612bf8
+// GLOBAL: STUNTGP_D3D 0x612bf8
 static char g_VERSION_STRING[255];
 
 // FUNCTION: STUNTGP_D3D 0x442010
