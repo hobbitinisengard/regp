@@ -17,67 +17,143 @@
  *        /Gy is set. This is needed so that NOTE2 works properly.
  */
 
+// GLOBAL: STUNTGP_D3D 0x62de18
 static int avoidGy_1;
+
+// GLOBAL: STUNTGP_D3D 0x62de1c
 static int avoidGy_2;
+
+// GLOBAL: STUNTGP_D3D 0x62de20
 static int avoidGy_3;
+
+// GLOBAL: STUNTGP_D3D 0x62de24
 static int avoidGy_4;
+
+// GLOBAL: STUNTGP_D3D 0x62de04
 static int avoidGy_5;
+
+// GLOBAL: STUNTGP_D3D 0x62de08
 static int avoidGy_6;
+
+// GLOBAL: STUNTGP_D3D 0x62de0c
 static int avoidGy_7;
+
+// GLOBAL: STUNTGP_D3D 0x62de10
 static int avoidGy_8;
+
+// GLOBAL: STUNTGP_D3D 0x62de14
 static int avoidGy_9;
+
+// GLOBAL: STUNTGP_D3D 0x62de60
 static int avoidGy_10;
+
+// GLOBAL: STUNTGP_D3D 0x62de5c
 static int avoidGy_11;
+
+// GLOBAL: STUNTGP_D3D 0x62de58
 static int avoidGy_12;
+
+// GLOBAL: STUNTGP_D3D 0x62decc
 static int avoidGy_13;
+
+// GLOBAL: STUNTGP_D3D 0x62dec8
 static int avoidGy_14;
+
+// GLOBAL: STUNTGP_D3D 0x62dec0
 static int avoidGy_15;
+
+// GLOBAL: STUNTGP_D3D 0x62deb8
 static int avoidGy_16;
+
+// GLOBAL: STUNTGP_D3D 0x62def4
 static int avoidGy_17;
+
+// GLOBAL: STUNTGP_D3D 0x62deec
 static int avoidGy_18;
+
+// GLOBAL: STUNTGP_D3D 0x62dee0
 static int avoidGy_19;
+
+// GLOBAL: STUNTGP_D3D 0x62dec4
 static int avoidGy_20;
+
+// GLOBAL: STUNTGP_D3D 0x62debc
 static int avoidGy_21;
+
+// GLOBAL: STUNTGP_D3D 0x62deb4
 static int avoidGy_22;
+
+// GLOBAL: STUNTGP_D3D 0x62def0
 static int avoidGy_23;
+
+// GLOBAL: STUNTGP_D3D 0x62dee8
 static int avoidGy_24;
+
+// GLOBAL: STUNTGP_D3D 0x62dedc
 static int avoidGy_25;
+
+// GLOBAL: STUNTGP_D3D 0x62ded4
 static int avoidGy_26;
+
+// GLOBAL: STUNTGP_D3D 0x62de88
 static int avoidGy_27;
+
+// GLOBAL: STUNTGP_D3D 0x62de80
 static int avoidGy_28;
+
+// GLOBAL: STUNTGP_D3D 0x62de74
 static int avoidGy_29;
+
+// GLOBAL: STUNTGP_D3D 0x62dee4
 static int avoidGy_30;
+
+// GLOBAL: STUNTGP_D3D 0x62ded8
 static int avoidGy_31;
+
+// GLOBAL: STUNTGP_D3D 0x62ded0
 static int avoidGy_32;
+
+// GLOBAL: STUNTGP_D3D 0x62de84
 static int avoidGy_33;
+
+// GLOBAL: STUNTGP_D3D 0x62de7c
 static int avoidGy_34;
+
+// GLOBAL: STUNTGP_D3D 0x62de70
 static int avoidGy_35;
+
+// GLOBAL: STUNTGP_D3D 0x62de68
 static int avoidGy_36;
+
+// GLOBAL: STUNTGP_D3D 0x62deb0
 static int avoidGy_37;
+
+// GLOBAL: STUNTGP_D3D 0x62de64
 static int avoidGy_38;
+
+// GLOBAL: STUNTGP_D3D 0x62deac
 static int avoidGy_39;
+
+// GLOBAL: STUNTGP_D3D 0x62dea4
 static int avoidGy_40;
+
+// GLOBAL: STUNTGP_D3D 0x62de98
 static int avoidGy_41;
+
+// GLOBAL: STUNTGP_D3D 0x62de90
 static int avoidGy_42;
+
+// GLOBAL: STUNTGP_D3D 0x62de48
 static int avoidGy_43;
+
+// GLOBAL: STUNTGP_D3D 0x62de40
 static int avoidGy_44;
+
+// GLOBAL: STUNTGP_D3D 0x62de30
 static int avoidGy_45;
+
+// GLOBAL: STUNTGP_D3D 0x62de34
 static int avoidGy_46;
-static int avoidGy_47;
-static int avoidGy_48;
-static int avoidGy_49;
-static int avoidGy_50;
-static int avoidGy_51;
-static int avoidGy_52;
-static int avoidGy_53;
-static int avoidGy_54;
-static int avoidGy_55;
-static int avoidGy_56;
-static int avoidGy_57;
-static int avoidGy_58;
-static int avoidGy_59;
-static int avoidGy_60;
-static int avoidGy_PL_01;
 
 // FUNCTION: STUNTGP_D3D 0x45f250
 __declspec(dllexport) int __cdecl PurePrintf(const char *fmt, ...)
@@ -378,49 +454,49 @@ __declspec(dllexport) int __cdecl CoverageSaveData(void)
 // FUNCTION: STUNTGP_D3D 0x45f500
 __declspec(dllexport) int __cdecl QuantifyIsRunning(void)
 {
-    avoidGy_42++;
+    avoidGy_38++;
     return 0;
 }
 
 // FUNCTION: STUNTGP_D3D 0x45f510
 __declspec(dllexport) int __cdecl QuantifyDisableRecordingData(void)
 {
-    avoidGy_43++;
+    avoidGy_39++;
     return 0;
 }
 
 // FUNCTION: STUNTGP_D3D 0x45f520
 __declspec(dllexport) int __cdecl QuantifyStartRecordingData(void)
 {
-    avoidGy_44++;
+    avoidGy_40++;
     return 0;
 }
 
 // FUNCTION: STUNTGP_D3D 0x45f530
 __declspec(dllexport) int __cdecl QuantifyStopRecordingData(void)
 {
-    avoidGy_45++;
+    avoidGy_41++;
     return 0;
 }
 
 // FUNCTION: STUNTGP_D3D 0x45f540
 __declspec(dllexport) int __cdecl QuantifyClearData(void)
 {
-    avoidGy_46++;
+    avoidGy_42++;
     return 0;
 }
 
 // FUNCTION: STUNTGP_D3D 0x45f550
 __declspec(dllexport) int __cdecl QuantifyIsRecordingData(void)
 {
-    avoidGy_47++;
+    avoidGy_43++;
     return 0;
 }
 
 // FUNCTION: STUNTGP_D3D 0x45f560
 __declspec(dllexport) int __cdecl QuantifyAddAnnotation(char *str)
 {
-    avoidGy_48++;
+    avoidGy_44++;
     str;
     return 0;
 }
@@ -428,13 +504,13 @@ __declspec(dllexport) int __cdecl QuantifyAddAnnotation(char *str)
 // FUNCTION: STUNTGP_D3D 0x45f570
 __declspec(dllexport) int __cdecl QuantifySaveData(void)
 {
-    avoidGy_49++;
+    avoidGy_45++;
     return 0;
 }
 
 // FUNCTION: STUNTGP_D3D 0x45f580
 __declspec(dllexport) int __cdecl PurelockIsRunning(void)
 {
-    avoidGy_PL_01++;
+    avoidGy_46++;
     return 0;
 }
