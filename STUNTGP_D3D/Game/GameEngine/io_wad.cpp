@@ -2,7 +2,7 @@
 
 // TODO: should it be here?
 // FUNCTION: STUNTGP_D3D 0x44b170
-int FUN_0044b170(char *in)
+int FUN_44b170(char *in)
 {
     // start in from the end of GameDirectory and return position of first non '\\' char
     int len = strlen(g_GameDirectory);
@@ -19,7 +19,7 @@ int FUN_0044b170(char *in)
 
 // TODO: should it be here?
 // FUNCTION: STUNTGP_D3D 0x44b140
-void FUN_0044b140(char *out, char *in)
+void FUN_44b140(char *out, char *in)
 {
     // get buffer and return filename without doubled '\\\\'
     char tmp = *in;
@@ -94,8 +94,8 @@ void WAD_SplitFileName(char *in, char *a, char *filename)
 
     // tmp = buffer[len2]; // ???? whyy, useless?
 
-    int afterGameDir = FUN_0044b170(buffer);
-    FUN_0044b140(filename, buffer + afterGameDir);
+    int afterGameDir = FUN_44b170(buffer);
+    FUN_44b140(filename, buffer + afterGameDir);
 
     char *orig = a;
     if (len < 0)
@@ -105,7 +105,7 @@ void WAD_SplitFileName(char *in, char *a, char *filename)
     else
     {
         buffer[len] = '\0';
-        FUN_0044b140(orig, buffer + afterGameDir);
+        FUN_44b140(orig, buffer + afterGameDir);
     }
     orig = a;
 

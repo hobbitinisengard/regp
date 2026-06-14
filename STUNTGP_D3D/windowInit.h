@@ -15,7 +15,7 @@ struct errorMessage
 
 HWND windowCreateInternal(HINSTANCE hInstance, LPCTSTR className, LPCTSTR windowName);
 
-char *ddGetResMessage(int res);
+const char *ddGetErrMessage(int res);
 void FUN_422780();
 void FUN_4227b0();
 int ddSetCoopLevel(LPDIRECTDRAW lplpDD, HWND hWnd);
@@ -44,6 +44,10 @@ void FUN_422c60();
 void FUN_422d50();
 void FUN_422df0();
 void FUN_422ea0();
-void FUN_422f30();
+int FUN_422f30(LPDIRECTDRAW4 lpDD4, LPDIRECTDRAWSURFACE4 *surface, LPDIRECTDRAWSURFACE4 *surface2, int width,
+               int height, int depth);
 void FUN_423070();
 int FUN_4230b0(LPDIRECTDRAWPALETTE outPalette, void *sth);
+
+// GLOBAL: STUNTSP_D3D 0x5728dc
+extern int DAT_CAPS;

@@ -150,6 +150,8 @@ errorMessage errorMessages[] = {
      DDERR_NOTINITIALIZED},
     {NULL, NULL}};
 
+int DAT_CAPS = 0;
+
 // FUNCTION: STUNTGP_D3D 0x422700
 HWND windowCreateInternal(HINSTANCE hInstance, LPCTSTR className, LPCTSTR windowName)
 {
@@ -167,7 +169,7 @@ HWND windowCreateInternal(HINSTANCE hInstance, LPCTSTR className, LPCTSTR window
 }
 
 // FUNCTION: STUNTGP_D3D 0x422690
-char *ddGetResMessage(int res)
+const char *ddGetErrMessage(int res)
 {
     int elements = {0};
     // DATA: STUNTGP_D3D 0x572ae4
@@ -210,8 +212,7 @@ int ddSetCoopLevel(LPDIRECTDRAW lplpDD, HWND hWnd)
     int res = lplpDD->SetCooperativeLevel(hWnd, DDSCL_FULLSCREEN | DDSCL_ALLOWREBOOT | DDSCL_EXCLUSIVE);
     if (res != DD_OK)
     {
-        ddGetResMessage(res);
-        exitError();
+        exitError(ddGetErrMessage(res));
     }
     return res;
 }
@@ -223,8 +224,7 @@ int windowDDCreate(LPDIRECTDRAW *lplpDD, GUID *lpGUID, HWND hWnd)
     res = DirectDrawCreate(lpGUID, lplpDD, NULL);
     if (res != DD_OK)
     {
-        ddGetResMessage(res);
-        exitError();
+        exitError(ddGetErrMessage(res));
     }
     ddSetCoopLevel(*lplpDD, hWnd);
     return res;
@@ -237,8 +237,7 @@ int dd4SetCoopLevel(LPDIRECTDRAW4 ppvObj, HWND hWnd)
     int res = ppvObj->SetCooperativeLevel(hWnd, DDSCL_FULLSCREEN | DDSCL_ALLOWREBOOT | DDSCL_EXCLUSIVE);
     if (res != DD_OK)
     {
-        ddGetResMessage(res);
-        exitError();
+        exitError(ddGetErrMessage(res));
     }
     return res;
 }
@@ -249,8 +248,7 @@ int ddGetDD4(LPDIRECTDRAW lplpDD, LPDIRECTDRAW4 *ppvObj, HWND hWnd)
     int res = lplpDD->QueryInterface(IID_IDirectDraw4, (LPVOID *)ppvObj);
     if (res != DD_OK)
     {
-        ddGetResMessage(res);
-        exitError();
+        exitError(ddGetErrMessage(res));
     }
     dd4SetCoopLevel(*ppvObj, hWnd);
     return res;
@@ -397,22 +395,94 @@ int ddGetMemory(LPDIRECTDRAW4 lpDD4, LPDWORD totalVideoMem, LPDWORD totalTexture
 // {
 // }
 
+void FUN_422a00(LPDIRECTDRAWSURFACE4 *surface)
+{
+    // TODO save surface to globals or sth
+}
+
+// STUB: STUNTGP_D3D 0x422a80
+int FUN_422a80(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, LPDDSURFACEDESC2 surfaceDescriptor, int unk)
+{
+    int res = dd->CreateSurface(surfaceDescriptor, surface, NULL);
+    if (res != DD_OK)
+    {
+        FUN_422a00(surface);
+    }
+    else if (unk == 1)
+    {
+        exit(1);
+    }
+    return res;
+}
+
+void FUN_422ac0(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, int width, int height, int caps)
+{
+    int res;
+    DDSURFACEDESC2 surfaceDescriptor;
+    ZeroMemory(&surfaceDescriptor, sizeof(surfaceDescriptor));
+    surfaceDescriptor.dwWidth = width;
+    surfaceDescriptor.dwHeight = height;
+    surfaceDescriptor.dwSize = sizeof(surfaceDescriptor);
+    surfaceDescriptor.ddsCaps.dwCaps = DAT_CAPS | caps | DDSCAPS_OFFSCREENPLAIN;
+    surfaceDescriptor.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT;
+    if (caps != DDSCAPS_VIDEOMEMORY || (res = FUN_422a80(dd, surface, &surfaceDescriptor, 2), res != DD_OK))
+    {
+        FUN_422a80(dd, surface, &surfaceDescriptor, 2);
+    }
+}
+
+// TODO: some kind of 640x480 fallback?
+int FUN_422c60(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, void *surface2, int width, int height, int depth)
+{
+    int res = dd->SetDisplayMode(640, 480, depth, 0, 0);
+    if (res != DD_OK)
+    {
+        return -1;
+    }
+
+    // TODO blah blach blah
+    DDSURFACEDESC2 surfaceDescriptor;
+    ZeroMemory(&surfaceDescriptor, sizeof(surfaceDescriptor));
+    surfaceDescriptor.ddsCaps.dwCaps = DAT_CAPS | (DDSCAPS_VIDEOMEMORY | DDSCAPS_PRIMARYSURFACE);
+    surfaceDescriptor.dwSize = sizeof(surfaceDescriptor);
+    surfaceDescriptor.dwFlags = DDSD_CAPS;
+
+    // FUN_422a80(dd, surface, &surfaceDescriptor, 2);
+    // FUN_422ac0(dd, surface2, 640, 480, DDSCAPS_VIDEOMEMORY); // 16384
+    //   FUN_422ac0(dd,surface2,640,480, DDSCAPS_SYSTEMMEMORY); //2048
+}
+
 // STUB: STUNTGP_D3D 0x422f30
-int FUN_422f30(LPDIRECTDRAW4 lpDD4, void *b, void *c, int width, int height, int depth)
+int FUN_422f30(LPDIRECTDRAW4 lpDD4, LPDIRECTDRAWSURFACE4 *surface, LPDIRECTDRAWSURFACE4 *surface2, int width,
+               int height, int depth)
 {
     // TODO
-    if (false)
+    if (((g_DD_DISPLAYRESWIDTH != width) || (g_DD_DISPLAYRESHEIGHT != height)) || (g_DD_DISPLAYRESDEPTH != depth))
     {
+        g_005728d8_dd = 0;
+
+        void *interesting;
+        interesting = surface;
+        // TODO
         int res = lpDD4->SetDisplayMode(width, height, depth, 0, 0);
         if (res != DD_OK)
         {
-            if (false)
+            // Fallback to 640x480
+            if (g_005728d8_dd == 0)
             {
+                res = FUN_422c60(lpDD4, surface, surface2, width, height, depth);
             }
-            if (false)
+            if (res != DD_OK)
             {
+                // fallback to fallback? the heck
+                res = lpDD4->SetDisplayMode(width, height, depth, 0, 0);
+                if (res == DD_OK)
+                {
+                    return res;
+                }
             }
         }
+        auto sth = 0;
     }
     return 0;
 }

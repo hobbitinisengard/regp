@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
+#include <ddraw.h>
 #include <windows.h>
 
 #include "Game/GameEngine/Engine_LevelScript.h"
@@ -20,16 +21,21 @@ void FUN_44e490()
     g_612994 = 0;
 }
 
-// fastcall ?
-// STUB: STUNTGP_D3D 0x44e4b0
+// FUNCTION: STUNTGP_D3D 0x44e4b0
 void FUN_44e4b0(BOOL windowMessage)
 {
-    if (windowMessage)
+    DDSCAPS2 caps;
+    if (windowMessage == 1)
     {
-        if (!g_WindowMessage)
+        if (g_WindowMessage == 0)
         {
             g_WindowMessage = windowMessage;
-            // TODO: class sth
+            g_surface->GetCaps(&caps);
+            if (caps.dwCaps & DDSCAPS_MODEX)
+            {
+                FUN_422f30(g_dd4, &g_surface, &g_surface2, 640, 480, 8);
+            }
+            g_dd4->FlipToGDISurface();
             DrawMenuBar(g_Hwnd);
             RedrawWindow(g_Hwnd, NULL, NULL, RDW_FRAME);
             FUN_44e490();
@@ -192,23 +198,24 @@ BOOL windowCreate(HINSTANCE hInstance, HINSTANCE hPrevInstance)
     }
 
     //  TODO: DirectX init
-    windowDDCreate(&g_61c378_dd, NULL, g_Hwnd);
-    ddGetDD4(g_61c378_dd, &g_61c380_dd4, g_Hwnd);
-    ddGetMemory(g_61c380_dd4, &totalVideoMem, &totalTextureMem, &freeMem);
+    windowDDCreate(&g_dd, NULL, g_Hwnd);
+    ddGetDD4(g_dd, &g_dd4, g_Hwnd);
+    ddGetMemory(g_dd4, &totalVideoMem, &totalTextureMem, &freeMem);
     // FUN_4229e0();
-    // FUN_422f30(g_61c380_dd4, &g_61c368, &g_61c3a0, 640, 480, 8);
-    // m_keyboard();
+    FUN_422f30(g_dd4, &g_surface, &g_surface2, 640, 480, 8);
+    m_keyboard();
     return !FUN_4230b0(g_61c384, g_571fd4);
 }
 
 // FUNCTION: STUNTGP_D3D 0x44e9b0
-int FUN_44e9b0(int *param_1)
+int surfaceExists(LPDIRECTDRAWSURFACE4 surface)
 {
-    if (param_1)
+    if (surface)
     {
-        // TODO: objects
+        int res = surface->IsLost();
+        return res;
     }
-    return NULL;
+    return 0;
 }
 // FUNCTION: STUNTGP_D3D 0x44e9c0
 int *FUN_44e9c0(int *param_1)
@@ -220,17 +227,25 @@ int *FUN_44e9c0(int *param_1)
     return NULL;
 }
 
+BOOL FUN_4314c0()
+{
+    if (false)
+    {
+    }
+    return 1;
+}
+
 // FUNCTION: STUNTGP_D3D 0x44e9d0
 void FUN_44e9d0()
 {
-    if (!FUN_44e9b0(&g_61c368))
+    if (surfaceExists(g_surface) == DD_OK)
     {
-        if (!FUN_44e9b0(&g_61c3a0))
+        if (surfaceExists(g_surface2) == DD_OK)
         {
-            // if (FUN_4314c0() == 1)
-            // {
-            //     return;
-            // }
+            if (FUN_4314c0())
+            {
+                return;
+            }
         }
     }
     FUN_44e4b0(1);
@@ -278,8 +293,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 
     static int mode_current = 2;
 
-    // FUN_00442120();  // bigger setup
-    // FUN_0044e5d0(); // some variables setup?
+    // FUN_442120();  // bigger setup
+    // FUN_44e5d0(); // some variables setup?
     do
     {
         BOOL availableMessage = PeekMessageA(&uMsg, NULL, WM_NULL, WM_NULL, PM_REMOVE);

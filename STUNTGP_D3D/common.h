@@ -1,4 +1,6 @@
 
 #include <cstdlib>
 
-void exitError();
+#include <windows.h>
+
+void exitError(LPCTSTR msg);
