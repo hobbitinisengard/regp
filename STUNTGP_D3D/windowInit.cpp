@@ -395,6 +395,7 @@ int ddGetMemory(LPDIRECTDRAW4 lpDD4, LPDWORD totalVideoMem, LPDWORD totalTexture
 // {
 // }
 
+// STUB: STUNTGP_D3D 0x422a00
 void FUN_422a00(LPDIRECTDRAWSURFACE4 *surface)
 {
     // TODO save surface to globals or sth
@@ -415,6 +416,7 @@ int FUN_422a80(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, LPDDSURFACEDESC2
     return res;
 }
 
+// FUNCTION: STUNTGP_D3D 0x422ac0
 void FUN_422ac0(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, int width, int height, int caps)
 {
     int res;
@@ -432,6 +434,7 @@ void FUN_422ac0(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, int width, int 
 }
 
 // TODO: some kind of 640x480 fallback?
+// FUNCTION: STUNTGP_D3D 0x422c60
 int FUN_422c60(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, void *surface2, int width, int height, int depth)
 {
     int res = dd->SetDisplayMode(640, 480, depth, 0, 0);
@@ -452,7 +455,7 @@ int FUN_422c60(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, void *surface2, 
     //   FUN_422ac0(dd,surface2,640,480, DDSCAPS_SYSTEMMEMORY); //2048
 }
 
-// STUB: STUNTGP_D3D 0x422f30
+// FUNCTION: STUNTGP_D3D 0x422f30
 int FUN_422f30(LPDIRECTDRAW4 lpDD4, LPDIRECTDRAWSURFACE4 *surface, LPDIRECTDRAWSURFACE4 *surface2, int width,
                int height, int depth)
 {

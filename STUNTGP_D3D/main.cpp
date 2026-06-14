@@ -217,6 +217,7 @@ int surfaceExists(LPDIRECTDRAWSURFACE4 surface)
     }
     return 0;
 }
+
 // FUNCTION: STUNTGP_D3D 0x44e9c0
 int *FUN_44e9c0(int *param_1)
 {
@@ -227,6 +228,7 @@ int *FUN_44e9c0(int *param_1)
     return NULL;
 }
 
+// STUB: STUNTGP_D3D 0x4314c0
 BOOL FUN_4314c0()
 {
     if (false)
