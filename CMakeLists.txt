@@ -68,6 +68,7 @@ cmake_dependent_option(STUNTGP_USE_DX6_LIBS "Build with internal DirectX 6 SDK L
 # option(ISLE_INCLUDE_ENTROPY "Build with entropy.h" OFF)
 # option(ISLE_ENTROPY_FILENAME "Entropy header filename" "entropy.h")
 option(STUNTGP_DEBUG "Enable additional debugging paths" OFF)
+option(STUNTGP_UNICODE "Build with TCHAR mapped to Unicode APIs, matching the Polish executable family" OFF)
 
 add_cxx_warning(parentheses)
 
@@ -176,6 +177,20 @@ if(STUNTGP_DEBUG)
       target_compile_definitions(StuntGP PRIVATE "SGP_DEBUG")
       target_compile_definitions(StuntGP_D3D PRIVATE "SGP_DEBUG")
   # endforeach()
+endif()
+
+if(STUNTGP_UNICODE)
+  message(STATUS "TCHAR maps to Unicode")
+  if (TARGET config)
+    target_compile_definitions(config PRIVATE "UNICODE" "_UNICODE")
+  endif()
+  if (TARGET StuntGP)
+    target_compile_definitions(StuntGP PRIVATE "UNICODE" "_UNICODE")
+    target_link_options(StuntGP PRIVATE "/entry:wWinMainCRTStartup")
+  endif()
+  if (TARGET StuntGP_D3D)
+    target_compile_definitions(StuntGP_D3D PRIVATE "UNICODE" "_UNICODE")
+  endif()
 endif()
 
 if (MSVC_FOR_DECOMP)

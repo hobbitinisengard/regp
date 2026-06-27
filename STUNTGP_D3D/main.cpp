@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <ddraw.h>
+#include <tchar.h>
 #include <windows.h>
 
 #include "Game/GameEngine/Engine_LevelScript.h"
@@ -15,6 +16,8 @@
 #include "common.h"
 // #include "pure.h"
 
+static BOOL SHOULD_STOP = {false};
+
 // FUNCTION: STUNTGP_D3D 0x44e490
 void FUN_44e490()
 {
@@ -24,7 +27,7 @@ void FUN_44e490()
 // FUNCTION: STUNTGP_D3D 0x44e4b0
 void FUN_44e4b0(BOOL windowMessage)
 {
-    DDSCAPS2 caps;
+    DDSCAPS2 caps = {0};
     if (windowMessage == 1)
     {
         if (g_WindowMessage == 0)
@@ -33,8 +36,10 @@ void FUN_44e4b0(BOOL windowMessage)
             g_surface->GetCaps(&caps);
             if (caps.dwCaps & DDSCAPS_MODEX)
             {
-                FUN_422f30(g_dd4, &g_surface, &g_surface2, 640, 480, 8);
+                FUN_422f30(g_dd4, &g_surface, &g_surface2, g_DISPLAYRESWIDTH, g_DISPLAYRESHEIGHT, g_DISPLAYRESDEPTH);
             }
+            restoreAndClearSurface(g_surface);
+            restoreAndClearSurface(g_surface2);
             g_dd4->FlipToGDISurface();
             DrawMenuBar(g_Hwnd);
             RedrawWindow(g_Hwnd, NULL, NULL, RDW_FRAME);
@@ -100,7 +105,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     // #define WM_MOVE                         0x0003
     // #define WM_SIZE                         0x0005
     // #define WM_ACTIVATE                     0x0006
-    BOOL windowMessage;
+    BOOL windowMessage = {0};
     if (uMsg < WM_ACTIVATE)
     {
         if (uMsg != WM_SIZE)
@@ -126,6 +131,11 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
         if (uMsg != WM_ACTIVATEAPP)
         {
+            if ((uMsg == WM_KEYDOWN) && (wParam == VK_ESCAPE))
+            {
+                PostQuitMessage(0);
+                return 0;
+            }
             if ((uMsg == WM_CHAR) && (g_62ddfc == '\0'))
             {
                 g_62ddfc = wParam;
@@ -153,10 +163,15 @@ exit:
 // STUB: STUNTGP_D3D 0x44e870
 void m_keyboard()
 {
-    int i = 10;
+    int i = {10};
     for (i = 10; i >= 0; i--)
     {
         GetKeyboardState(g_62d480[i]);
+    }
+    if (g_62d480[0][VK_ESCAPE] & 0x80)
+    {
+        SHOULD_STOP = true;
+        PostQuitMessage(0);
     }
 }
 
@@ -167,19 +182,17 @@ BOOL windowCreate(HINSTANCE hInstance, HINSTANCE hPrevInstance)
     // TODO: global?
     static HINSTANCE g_HINSTANCE = hInstance;
 
-    DWORD totalVideoMem = 0;
-    DWORD totalTextureMem = 0;
-    DWORD freeMem = 0;
+    DWORD totalVideoMem = {0};
+    DWORD totalTextureMem = {0};
+    DWORD freeMem = {0};
 
-    const char menuName[] = "AppMenu";
-    const char className[] = "Stunt GP";
+    const TCHAR menuName[] = _T("AppMenu");
+    const TCHAR className[] = _T("Stunt GP");
     if (!hPrevInstance)
     {
-        WNDCLASS windowInfo;
+        WNDCLASS windowInfo = {0};
         windowInfo.style = CS_OWNDC;
         windowInfo.lpfnWndProc = WndProc;
-        windowInfo.cbClsExtra = 0;
-        windowInfo.cbWndExtra = 0;
         windowInfo.hInstance = hInstance;
         windowInfo.hIcon = LoadIcon(hInstance, IDC_ARROW);
         windowInfo.hCursor = NULL;
@@ -191,20 +204,26 @@ BOOL windowCreate(HINSTANCE hInstance, HINSTANCE hPrevInstance)
             return FALSE;
         }
     }
-    g_Hwnd = windowCreateInternal(hInstance, "Stunt GP", "Stunt GP");
+    g_Hwnd = windowCreateInternal(hInstance, _T("Stunt GP"), _T("Stunt GP"));
     if (!g_Hwnd)
     {
         return FALSE;
     }
 
     //  TODO: DirectX init
+    traceLog("windowDDCreate");
     windowDDCreate(&g_dd, NULL, g_Hwnd);
+    traceLog("ddGetDD4");
     ddGetDD4(g_dd, &g_dd4, g_Hwnd);
+    traceLog("ddGetMemory");
     ddGetMemory(g_dd4, &totalVideoMem, &totalTextureMem, &freeMem);
     // FUN_4229e0();
-    FUN_422f30(g_dd4, &g_surface, &g_surface2, 640, 480, 8);
+    traceLog("FUN_422f30 %d %d %d", g_DISPLAYRESWIDTH, g_DISPLAYRESHEIGHT, g_DISPLAYRESDEPTH);
+    FUN_422f30(g_dd4, &g_surface, &g_surface2, g_DISPLAYRESWIDTH, g_DISPLAYRESHEIGHT, g_DISPLAYRESDEPTH);
     m_keyboard();
-    return !FUN_4230b0(g_61c384, g_571fd4);
+    int paletteRes = FUN_4230b0(&g_61c384, g_571fd4);
+    traceLog("FUN_4230b0 result 0x%08x", paletteRes);
+    return TRUE;
 }
 
 // FUNCTION: STUNTGP_D3D 0x44e9b0
@@ -213,6 +232,10 @@ int surfaceExists(LPDIRECTDRAWSURFACE4 surface)
     if (surface)
     {
         int res = surface->IsLost();
+        if (res == DDERR_SURFACELOST)
+        {
+            res = restoreAndClearSurface(surface);
+        }
         return res;
     }
     return 0;
@@ -244,6 +267,15 @@ void FUN_44e9d0()
     {
         if (surfaceExists(g_surface2) == DD_OK)
         {
+            clearSurfaceGameColor(g_surface2);
+            drawLevelProbeOverlay(g_surface2);
+            static BOOL loggedPresent = FALSE;
+            int presentRes = g_surface->Blt(NULL, g_surface2, NULL, DDBLT_WAIT, NULL);
+            if (!loggedPresent)
+            {
+                traceLog("present blit result 0x%08x", presentRes);
+                loggedPresent = TRUE;
+            }
             if (FUN_4314c0())
             {
                 return;
@@ -265,27 +297,29 @@ void FUN_44ea50()
 // FUNCTION: STUNTGP_D3D 0x44ea60
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow)
 {
-    MSG uMsg;
-    static BOOL SHOULD_STOP = false;
-
+    MSG uMsg = {0};
     g_DISPLAYRESWIDTH = 640;
     g_DISPLAYRESHEIGHT = 480;
     g_DISPLAYRESDEPTH = 8;
-    BOOL windowCreated = windowCreate(hInstance, hPrevInstance);
+    traceLog("WinMain start");
+    Script_ParseGameConfig();
+    traceLog("config %s %d %d %d", g_GameDirectory, g_DISPLAYRESWIDTH, g_DISPLAYRESHEIGHT, g_DISPLAYRESDEPTH);
+
+    BOOL windowCreated = {windowCreate(hInstance, hPrevInstance)};
+    traceLog("windowCreate result %d", windowCreated);
     if (!windowCreated)
     {
         return 0;
     }
 
 #if defined(SGP_DEBUG)
-    OutputDebugString("Woo, window created!");
+    OutputDebugString(_T("Woo, window created!"));
 #endif
 
 #if !defined(SGP_DEBUG)
     ShowCursor(false);
 #endif
 
-    Script_ParseGameConfig();
     GetGameBuildVersion();
 
     // srand(time(NULL));
@@ -299,21 +333,25 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
     // FUN_44e5d0(); // some variables setup?
     do
     {
-        BOOL availableMessage = PeekMessageA(&uMsg, NULL, WM_NULL, WM_NULL, PM_REMOVE);
+        BOOL availableMessage = {PeekMessage(&uMsg, NULL, WM_NULL, WM_NULL, PM_REMOVE)};
         if (!availableMessage)
         {
-            FUN_44e9d0();
+            m_keyboard();
+            if (!SHOULD_STOP)
+            {
+                FUN_44e9d0();
+            }
             // if ((false) && (false))
             // {
             //     // TODO: replace with switch?
             //     if (mode_current == 1)
             //     {
-            //         OutputDebugString("Game logic");
+            //         OutputDebugString(_T("Game logic"));
             //         printf("game logic");
             //     }
             //     else if (mode_current == 2)
             //     {
-            //         OutputDebugString("Frontend logic");
+            //         OutputDebugString(_T("Frontend logic"));
             //         printf("Frontend logic");
             //     }
             //     // thunk

@@ -7,35 +7,35 @@
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+static TCHAR THIS_FILE[] = _T(__FILE__);
 #endif
 
 // STRING: STUNTGP 0x004130b0
-#define EXE_STUNTGP_D3D "StuntGP_D3D.exe"
+#define EXE_STUNTGP_D3D _T("StuntGP_D3D.exe")
 
 // STRING: STUNTGP 0x0004130c0
-#define EXE_STUNTGP_GLIDE "StuntGP_Glide.exe"
+#define EXE_STUNTGP_GLIDE _T("StuntGP_Glide.exe")
 
 // STRING: STUNTGP 0x0004130d4
-#define CONFIG_GLIDE "GLIDE"
+#define CONFIG_GLIDE _T("GLIDE")
 
 // STRING: STUNTGP 0x004130dc
-#define CONFIG_END "-END"
+#define CONFIG_END _T("-END")
 
 // STRING: STUNTGP 0x004130e4
-#define FILE_GAME_CFG "GAME.CFG"
+#define FILE_GAME_CFG _T("GAME.CFG")
 
 // STRING: STUNTGP 0x0004130f0
-#define FILE_READ_TEXT "rt"
+#define FILE_READ_TEXT _T("rt")
 
 // STRING: STUNTGP 0x004130f4
-#define EXE_CONFIG "Config.exe"
+#define EXE_CONFIG _T("Config.exe")
 
 // STRING: STUNTGP 0x00413100
-#define FILE_CONFIG_CFG "config.cfg"
+#define FILE_CONFIG_CFG _T("config.cfg")
 
 // STRING: STUNTGP 0x0041310c
-#define FILE_READ_BINARY "rb"
+#define FILE_READ_BINARY _T("rb")
 
 /////////////////////////////////////////////////////////////////////////////
 // CStuntGPApp
@@ -64,11 +64,11 @@ BOOL CStuntGPApp::InitInstance()
     //  of your final executable, you should remove from the following
     //  the specific initialization routines you do not need.
 
-    char *exePath;
-    char buffer[200];
-    BOOL glideMode = false;
+    LPCTSTR exePath = {NULL};
+    TCHAR buffer[200] = {0};
+    BOOL glideMode = {false};
 
-    FILE *configFile = fopen(FILE_CONFIG_CFG, FILE_READ_BINARY);
+    FILE *configFile = _tfopen(FILE_CONFIG_CFG, FILE_READ_BINARY);
     if (!configFile)
     {
         exePath = EXE_CONFIG;
@@ -78,32 +78,32 @@ BOOL CStuntGPApp::InitInstance()
     {
         fclose(configFile);
 
-        FILE *gameConfigFile = fopen("GAME.CFG", FILE_READ_TEXT);
+        FILE *gameConfigFile = _tfopen(FILE_GAME_CFG, FILE_READ_TEXT);
         if (!gameConfigFile)
         {
             return FALSE;
         }
 
         // line by line search for -END,
-        int found = 0;
+        int found = {0};
         do
         {
             do
             {
-                char *line = fgets(buffer, BUFFER_SIZE, gameConfigFile);
+                TCHAR *line = _fgetts(buffer, BUFFER_SIZE, gameConfigFile);
                 if (!line)
                 {
                     // TOOD: find code that doesn't use goto
                     goto end;
                 }
-                found = strncmp(buffer, CONFIG_END, 4);
+                found = _tcsncmp(buffer, CONFIG_END, 4);
             } while (!found);
-            char *line = fgets(buffer, BUFFER_SIZE, gameConfigFile);
+            TCHAR *line = _fgetts(buffer, BUFFER_SIZE, gameConfigFile);
             if (!line)
             {
                 goto end;
             }
-            found = strncmp(buffer, CONFIG_GLIDE, 5);
+            found = _tcsncmp(buffer, CONFIG_GLIDE, 5);
         } while (!found);
         glideMode = 1;
     end:
@@ -118,7 +118,8 @@ BOOL CStuntGPApp::InitInstance()
         }
     }
 
-    _spawnv(_P_NOWAIT, exePath, (const char *const *)exePath);
+    const TCHAR *argv[] = {exePath, NULL};
+    _tspawnv(_P_NOWAIT, exePath, argv);
     // Since the dialog has been closed, return FALSE so that we exit the
     //  application, rather than start the application's message pump.
     return FALSE;

@@ -2,6 +2,7 @@
 
 #include <cstdio>
 #include <ddraw.h>
+#include <tchar.h>
 #include <windows.h>
 
 #include "common.h"
@@ -9,13 +10,13 @@
 
 struct errorMessage
 {
-    char *message;
+    const char *message;
     int code;
 };
 
 HWND windowCreateInternal(HINSTANCE hInstance, LPCTSTR className, LPCTSTR windowName);
 
-const char *ddGetErrMessage(int res);
+LPCTSTR ddGetErrMessage(int res);
 void FUN_422780();
 void FUN_4227b0();
 int ddSetCoopLevel(LPDIRECTDRAW lplpDD, HWND hWnd);
@@ -34,20 +35,24 @@ void FUN_4229e0();
 void FUN_422a00();
 void FUN_422a20();
 void FUN_422a60();
-void FUN_422a80();
-void FUN_422ac0();
+int FUN_422a80(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, LPDDSURFACEDESC2 surfaceDescriptor, int unk);
+void FUN_422ac0(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, int width, int height, int caps);
 void FUN_422b50();
 void FUN_422ba0();
 void FUN_422bb0();
 void FUN_422bf0();
-void FUN_422c60();
+int FUN_422c60(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, void *surface2, int width, int height, int depth);
 void FUN_422d50();
 void FUN_422df0();
 void FUN_422ea0();
 int FUN_422f30(LPDIRECTDRAW4 lpDD4, LPDIRECTDRAWSURFACE4 *surface, LPDIRECTDRAWSURFACE4 *surface2, int width,
                int height, int depth);
+int clearSurfaceBlack(LPDIRECTDRAWSURFACE4 surface);
+int clearSurfaceGameColor(LPDIRECTDRAWSURFACE4 surface);
+void drawLevelProbeOverlay(LPDIRECTDRAWSURFACE4 surface);
+int restoreAndClearSurface(LPDIRECTDRAWSURFACE4 surface);
 void FUN_423070();
-int FUN_4230b0(LPDIRECTDRAWPALETTE outPalette, void *sth);
+int FUN_4230b0(LPDIRECTDRAWPALETTE *outPalette, void *sth);
 
 // GLOBAL: STUNTSP_D3D 0x5728dc
 extern int DAT_CAPS;

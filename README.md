@@ -60,7 +60,7 @@ Nice to have:
 For comparison with the original files we're using the [reccmp](https://github.com/isledecomp/reccmp) project:
 
 1. Create `originals` directory
-1. Copy your original .exxe file(s) to the `originals` directory
+1. Copy your original .exe file(s) to the `originals` directory
 1. Create Python virtual env (once): `python -m venv .venv`
 1. Enable venv: `.\.venv\Scripts\activate.ps1` (or`.bat` if you're using CMD)
 1. Install dependencies (once): `pip install -r .\tools\requirements.txt`
@@ -77,7 +77,7 @@ In theory when enough work is done you could just put the compiled executables i
 
 - Fullscreen window gets created, no DirectX surface yet
 
-## TODO
+## Build options
 
-- check if init of all varaibles is done in a `{}` manner.
-- make sure TCHAR is used everywhere, the Polish version was compiled with UNICODE support.
+- `STUNTGP_UNICODE=ON` builds with `TCHAR` mapped to Unicode APIs, matching the Polish executable family.
+- Runtime and Win32-facing variables are initialized with `{}` where practical; byte-oriented file/WAD parsing remains `char`-based.
