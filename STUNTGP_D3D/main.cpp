@@ -22,6 +22,8 @@ static BOOL SHOULD_STOP = {false};
 
 void FUN_44ea10();
 
+void FUN_44ea50();
+
 void FUN_42bf00();
 
 void FUN_4411c0();
@@ -78,15 +80,24 @@ void __fastcall FUN_44e4b0(BOOL windowMessage)
     {
         if (g_WindowMessage == 0)
         {
+            traceLog("FUN_44e4b0 called with windowMessage=%d g_WindowMessage=0", windowMessage);
             g_WindowMessage = windowMessage;
-            g_surface->GetCaps(&caps);
-            if (caps.dwCaps & DDSCAPS_MODEX)
+            if (g_surface)
             {
-                FUN_422f30(g_dd4, &g_surface, &g_surface2, g_DISPLAYRESWIDTH, g_DISPLAYRESHEIGHT, g_DISPLAYRESDEPTH);
+                g_surface->GetCaps(&caps);
+                if (caps.dwCaps & DDSCAPS_MODEX)
+                {
+                    traceLog("FUN_44e4b0 restoring mode-x surfaces");
+                    FUN_422f30(g_dd4, &g_surface, &g_surface2, g_DISPLAYRESWIDTH, g_DISPLAYRESHEIGHT, g_DISPLAYRESDEPTH);
+                }
             }
-            restoreAndClearSurface(g_surface);
-            restoreAndClearSurface(g_surface2);
-            g_dd4->FlipToGDISurface();
+            int primaryRes = g_surface ? restoreAndClearSurface(g_surface) : DDERR_INVALIDPARAMS;
+            int secondaryRes = g_surface2 ? restoreAndClearSurface(g_surface2) : DDERR_INVALIDPARAMS;
+            traceLog("restore results primary=0x%08x secondary=0x%08x", primaryRes, secondaryRes);
+            if ((primaryRes == DD_OK) && (secondaryRes == DD_OK) && g_dd4)
+            {
+                g_dd4->FlipToGDISurface();
+            }
             DrawMenuBar(g_Hwnd);
             RedrawWindow(g_Hwnd, NULL, NULL, RDW_FRAME);
             FUN_44e490();
@@ -96,6 +107,7 @@ void __fastcall FUN_44e4b0(BOOL windowMessage)
     else
     {
         g_WindowMessage = 0;
+        FUN_44ea50();
         FUN_44ea10();
         FUN_4411c0();
         g_6244f4 = 0;
@@ -246,55 +258,69 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     // #define WM_MOVE                         0x0003
     // #define WM_SIZE                         0x0005
     // #define WM_ACTIVATE                     0x0006
-    BOOL windowMessage = {0};
-    if (uMsg < WM_ACTIVATE)
+
+    if (uMsg == WM_DESTROY)
     {
-        if (uMsg != WM_SIZE)
-        {
-            if (uMsg == WM_DESTROY)
-            {
-                PostQuitMessage(0);
-                return DefWindowProc(hWnd, WM_DESTROY, wParam, lParam);
-            }
-            if (uMsg != WM_MOVE)
-            {
-                return DefWindowProc(hWnd, uMsg, wParam, lParam);
-            }
-        }
-        // TODO: what produces goto?
-        if (!IsIconic(hWnd))
-        {
-            goto exit;
-        }
-        windowMessage = 1;
+        PostQuitMessage(0);
+        return DefWindowProc(hWnd, WM_DESTROY, wParam, lParam);
     }
-    else
+
+    if (uMsg == WM_ACTIVATEAPP)
     {
-        if (uMsg != WM_ACTIVATEAPP)
-        {
-            if ((uMsg == WM_KEYDOWN) && (wParam == VK_ESCAPE))
-            {
-                PostQuitMessage(0);
-                return 0;
-            }
-            if ((uMsg == WM_CHAR) && (g_62ddfc == '\0'))
-            {
-                g_62ddfc = wParam;
-                // TODO: save wparam to static
-                return DefWindowProc(hWnd, WM_CHAR, wParam, lParam);
-            }
-            goto exit;
-        }
-        // TODO wparam blah
+        traceLog("WM_ACTIVATEAPP wParam=%d g_WindowMessage=%d", (int)wParam, g_WindowMessage);
         g_61c374 = wParam;
-        if ((wParam == 0) || (!g_WindowMessage))
+        if (wParam == 0)
         {
-            goto exit;
+            g_WindowMessage = 0;
         }
-        windowMessage = 0;
+        return DefWindowProc(hWnd, uMsg, wParam, lParam);
     }
-    FUN_44e4b0(windowMessage);
-exit:
+
+    if (uMsg == WM_ACTIVATE)
+    {
+        WORD activateState = LOWORD(wParam);
+        BOOL isMinimized = HIWORD(wParam) != 0;
+        traceLog("WM_ACTIVATE state=%d fMinimized=%d g_WindowMessage=%d", activateState, (int)isMinimized, g_WindowMessage);
+        if ((activateState == WA_INACTIVE) || isMinimized)
+        {
+            g_WindowMessage = 0;
+        }
+        else if (g_WindowMessage == 0)
+        {
+            traceLog("calling FUN_44e4b0(1) from WM_ACTIVATE");
+            FUN_44e4b0(1);
+        }
+        return DefWindowProc(hWnd, uMsg, wParam, lParam);
+    }
+
+    if (uMsg == WM_SIZE)
+    {
+        traceLog("WM_SIZE wParam=%d g_WindowMessage=%d", (int)wParam, g_WindowMessage);
+        if (wParam == SIZE_MINIMIZED)
+        {
+            g_WindowMessage = 0;
+        }
+        else if (g_WindowMessage == 0)
+        {
+            traceLog("calling FUN_44e4b0(1) from WM_SIZE");
+            FUN_44e4b0(1);
+        }
+        return DefWindowProc(hWnd, uMsg, wParam, lParam);
+    }
+
+    if ((uMsg == WM_KEYDOWN) && (wParam == VK_ESCAPE))
+    {
+        PostQuitMessage(0);
+        return 0;
+    }
+
+    if ((uMsg == WM_CHAR) && (g_62ddfc == '\0'))
+    {
+        g_62ddfc = wParam;
+        // TODO: save wparam to static
+        return DefWindowProc(hWnd, WM_CHAR, wParam, lParam);
+    }
+
     return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
@@ -1275,6 +1301,36 @@ __declspec(naked) void FUN_44ea10()
 // FUNCTION: STUNTGP_D3D 0x44ea50
 void FUN_44ea50()
 {
+    if (g_61c384)
+    {
+        g_61c384->Release();
+        g_61c384 = NULL;
+    }
+    if (g_surface2)
+    {
+        g_surface2->Release();
+        g_surface2 = NULL;
+    }
+    if (g_surface)
+    {
+        g_surface->Release();
+        g_surface = NULL;
+    }
+    if (g_dd4)
+    {
+        g_dd4->Release();
+        g_dd4 = NULL;
+    }
+    if (g_dd)
+    {
+        g_dd->Release();
+        g_dd = NULL;
+    }
+    if (g_Hwnd)
+    {
+        DestroyWindow(g_Hwnd);
+        g_Hwnd = NULL;
+    }
 }
 
 // FUNCTION: STUNTGP_D3D 0x44ea60
@@ -1344,7 +1400,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 
     } while (!SHOULD_STOP);
 
-    DestroyWindow(NULL);
+    DestroyWindow(g_Hwnd);
     // shutdowny();
     // fuckery();
 

@@ -402,7 +402,13 @@ int ddGetMemory(LPDIRECTDRAW4 lpDD4, LPDWORD totalVideoMem, LPDWORD totalTexture
 // STUB: STUNTGP_D3D 0x422a00
 void FUN_422a00(LPDIRECTDRAWSURFACE4 *surface)
 {
-    // TODO save surface to globals or sth
+    if (!surface || !*surface)
+    {
+        return;
+    }
+
+    (*surface)->Release();
+    *surface = NULL;
 }
 
 static int clearSurface(LPDIRECTDRAWSURFACE4 surface, DWORD color)
