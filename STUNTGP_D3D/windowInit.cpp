@@ -821,7 +821,8 @@ static void drawTextureDecodedSwatch(LPDIRECTDRAWSURFACE4 surface)
     {
         if (!readPmdMaterialUvProbe(texturePath, sizeof(texturePath), probeU, probeV, &probeUvCount, &probeMaterial))
         {
-            sprintf(texturePath, "graphics24\\cars\\car%d\\b%dgrid1.pc", g_LevelCars[0].config, g_LevelCars[0].config);
+            int fallbackLivery = g_LevelCars[0].livery > 0 ? g_LevelCars[0].livery : 1;
+            sprintf(texturePath, "graphics24\\cars\\car%d\\b%dgrid%d.pc", g_LevelCars[0].config, g_LevelCars[0].config, fallbackLivery);
         }
         textureSize = size_of_file(texturePath);
         if (textureSize > 0)
@@ -971,6 +972,7 @@ struct PmdPolyLine
 {
     unsigned char count;
     unsigned char material;
+    int surfaceOrdinal;
     float x[4];
     float z[4];
     float u[4];
@@ -1187,6 +1189,7 @@ static void drawPmdVertexPreview(LPDIRECTDRAWSURFACE4 surface)
                         if (polyLines)
                         {
                             BOOL haveTransformedBounds = FALSE;
+                            int drawableSurfaceOrdinal = 0;
                             for (int surfaceIndex = 0; surfaceIndex < surfaceCount; surfaceIndex++)
                             {
                                 unsigned char *surfaceCursor = meshBytes + surfaceOffset + (surfaceIndex * 64);
@@ -1201,13 +1204,18 @@ static void drawPmdVertexPreview(LPDIRECTDRAWSURFACE4 surface)
                                 {
                                     continue;
                                 }
+                                int currentSurfaceOrdinal = drawableSurfaceOrdinal;
+                                drawableSurfaceOrdinal++;
                                 float translateX = 0.0f;
                                 float translateZ = 0.0f;
-                                if ((transformIndex >= 0) && (transformOffset + ((transformIndex + 1) * 80) <= bytesRead))
+                                BOOL isPmd182 = (meshBytes[8] == '2');
+                                int transformStride = isPmd182 ? 72 : 80;
+                                if ((transformIndex >= 0) && (transformOffset + ((transformIndex + 1) * transformStride) <= bytesRead))
                                 {
-                                    unsigned char *transformCursor = meshBytes + transformOffset + (transformIndex * 80);
-                                    translateX = readFloat(transformCursor);
-                                    translateZ = readFloat(transformCursor + 8);
+                                    unsigned char *transformCursor = meshBytes + transformOffset + (transformIndex * transformStride);
+                                    // 4x4 row-major matrix: translation is at matrix[12]=tx, matrix[14]=tz
+                                    translateX = readFloat(transformCursor + 48);
+                                    translateZ = readFloat(transformCursor + 56);
                                 }
                                 for (int i = 0; i < surfacePolyCount; i++)
                                 {
@@ -1226,6 +1234,7 @@ static void drawPmdVertexPreview(LPDIRECTDRAWSURFACE4 surface)
                                         BOOL valid = TRUE;
                                         polyLines[polyLineCount].count = (unsigned char)count;
                                         polyLines[polyLineCount].material = (unsigned char)material;
+                                        polyLines[polyLineCount].surfaceOrdinal = currentSurfaceOrdinal;
                                         for (int j = 0; j < count; j++)
                                         {
                                             int uvLocalIndex = (short)readWord(meshBytes + 480 + ((faceStart + j) * 2));
@@ -1349,7 +1358,7 @@ static void drawPmdVertexPreview(LPDIRECTDRAWSURFACE4 surface)
                     break;
                 }
                 PmdPolyLine *poly = &polyLines[textureLine];
-                if ((poly->material != 0) || (poly->count < 3))
+                if ((poly->surfaceOrdinal != 0) || (poly->material != 0) || (poly->count < 3))
                 {
                     continue;
                 }
@@ -1417,7 +1426,7 @@ static void drawPmdVertexPreview(LPDIRECTDRAWSURFACE4 surface)
 
     if (!logged)
     {
-        traceLog("pmd preview path=%s vertices=%d faces=%d polys=%d polyLines=%d drawnLines=%d surfaces=%d boundsX=%.3f..%.3f boundsZ=%.3f..%.3f drawSize=%d scale=%.3f offset=%d,%d lock=0x%08x texPath=%s texDecoded=%d texUnderflows=%d texturedPolys=%d texturedPixels=%d",
+        traceLog("pmd preview path=%s vertices=%d faces=%d polys=%d polyLines=%d drawnLines=%d surfaces=%d boundsX=%.3f..%.3f boundsZ=%.3f..%.3f drawSize=%d scale=%.3f offset=%d,%d lock=0x%08x texPath=%s texDecoded=%d texUnderflows=%d texturedSurface=%d texturedPolys=%d texturedPixels=%d",
                  meshPath,
                  vertexCount,
                  faceCount,
@@ -1437,6 +1446,7 @@ static void drawPmdVertexPreview(LPDIRECTDRAWSURFACE4 surface)
                  texturePath,
                  textureDecodedWords,
                  textureUnderflows,
+                 0,
                  texturedPolyCount,
                  texturedPixelsDrawn);
         logged = TRUE;

@@ -1,0 +1,4139 @@
+; FUN_44e490
+0x401000  : mov dword ptr [g_612994 (DATA)], 0 	(main.cpp:23)
+0x40100a  : ret  	(main.cpp:25)
+; FUN_44e4b0
+0x401010  : sub esp, 0x10 	(main.cpp:29)
+0x401013  : mov ecx, dword ptr [esp + 0x14] 	(main.cpp:31)
+0x401017  : xor eax, eax
+0x401019  : mov dword ptr [esp + 4], eax
+0x40101d  : mov dword ptr [esp], 0
+0x401025  : mov dword ptr [esp + 8], eax
+0x401029  : mov dword ptr [esp + 0xc], eax
+0x40102d  : mov eax, 1
+0x401032  : cmp ecx, eax
+0x401034  : jne 0xaa
+0x40103a  : mov ecx, dword ptr [g_WindowMessage (DATA)] 	(main.cpp:33)
+0x401040  : test ecx, ecx
+0x401042  : jne 0xa6
+0x401048  : mov dword ptr [g_WindowMessage (DATA)], eax 	(main.cpp:35)
+0x40104d  : mov eax, dword ptr [g_surface (DATA)] 	(main.cpp:36)
+0x401052  : lea edx, [esp]
+0x401056  : mov ecx, dword ptr [eax]
+0x401058  : push edx
+0x401059  : push eax
+0x40105a  : call dword ptr [ecx + 0x38]
+0x40105d  : test dword ptr [esp], 0x200000 	(main.cpp:37)
+0x401065  : je 0x2c
+0x401067  : mov eax, dword ptr [g_DISPLAYRESDEPTH (DATA)] 	(main.cpp:39)
+0x40106c  : mov ecx, dword ptr [g_DISPLAYRESHEIGHT (DATA)]
+0x401072  : mov edx, dword ptr [g_DISPLAYRESWIDTH (DATA)]
+0x401078  : push eax
+0x401079  : mov eax, dword ptr [g_dd4 (DATA)]
+0x40107e  : push ecx
+0x40107f  : push edx
+0x401080  : push g_surface2 (DATA)
+0x401085  : push g_surface (DATA)
+0x40108a  : push eax
+0x40108b  : call FUN_422f30 (FUNCTION)
+0x401090  : add esp, 0x18
+0x401093  : mov ecx, dword ptr [g_surface (DATA)] 	(main.cpp:41)
+0x401099  : push ecx
+0x40109a  : call restoreAndClearSurface (FUNCTION)
+0x40109f  : mov edx, dword ptr [g_surface2 (DATA)] 	(main.cpp:42)
+0x4010a5  : push edx
+0x4010a6  : call restoreAndClearSurface (FUNCTION)
+0x4010ab  : mov eax, dword ptr [g_dd4 (DATA)] 	(main.cpp:43)
+0x4010b0  : add esp, 8
+0x4010b3  : mov ecx, dword ptr [eax]
+0x4010b5  : push eax
+0x4010b6  : call dword ptr [ecx + 0x28]
+0x4010b9  : mov edx, dword ptr [g_Hwnd (DATA)] 	(main.cpp:44)
+0x4010bf  : push edx
+0x4010c0  : call dword ptr [->USER32.dll::DrawMenuBar (IMPORT)]
+0x4010c6  : mov eax, dword ptr [g_Hwnd (DATA)] 	(main.cpp:45)
+0x4010cb  : push 0x400
+0x4010d0  : push 0
+0x4010d2  : push 0
+0x4010d4  : push eax
+0x4010d5  : call dword ptr [->USER32.dll::RedrawWindow (IMPORT)]
+0x4010db  : call FUN_44e490 (FUNCTION) 	(main.cpp:46)
+0x4010e0  : add esp, 0x10 	(main.cpp:58)
+0x4010e3  : ret 
+0x4010e4  : mov dword ptr [g_WindowMessage (DATA)], 0 	(main.cpp:52)
+0x4010ee  : add esp, 0x10 	(main.cpp:58)
+0x4010f1  : ret 
+; FUN_44e5d0
+0x401100  : call dword ptr [->KERNEL32.dll::GetTickCount (IMPORT)] 	(main.cpp:62)
+0x401106  : mov dword ptr [g_61c37c (DATA)], eax
+0x40110b  : mov dword ptr [g_61c394 (DATA)], 0 	(main.cpp:64)
+0x401115  : mov dword ptr [g_61c390 (DATA)], eax 	(main.cpp:65)
+0x40111a  : mov dword ptr [g_61c370 (DATA)], eax 	(main.cpp:66)
+0x40111f  : mov dword ptr [g_61c388 (DATA)], eax 	(main.cpp:67)
+0x401124  : ret  	(main.cpp:68)
+; FUN_44e610
+0x401130  : sub esp, 8 	(main.cpp:72)
+0x401133  : mov eax, dword ptr [g_61c390 (DATA)] 	(main.cpp:73)
+0x401138  : push esi
+0x401139  : push edi
+0x40113a  : mov dword ptr [g_61c388 (DATA)], eax
+0x40113f  : call dword ptr [->KERNEL32.dll::GetTickCount (IMPORT)] 	(main.cpp:74)
+0x401145  : mov edi, eax
+0x401147  : mov eax, dword ptr [g_61c388 (DATA)] 	(main.cpp:76)
+0x40114c  : mov ecx, edi
+0x40114e  : mov esi, dword ptr [g_61c394 (DATA)]
+0x401154  : sub ecx, eax
+0x401156  : mov dword ptr [esp + 0xc], 0
+0x40115e  : mov dword ptr [esp + 8], ecx
+0x401162  : inc esi
+0x401163  : fild qword ptr [esp + 8]
+0x401167  : mov dword ptr [g_61c390 (DATA)], edi
+0x40116d  : mov dword ptr [g_61c394 (DATA)], esi
+0x401173  : fmul qword ptr [0.06 (FLOAT)]
+0x401179  : call __ftol (UNK)
+0x40117e  : mov edx, dword ptr [g_61c370 (DATA)] 	(main.cpp:78)
+0x401184  : mov ecx, edi
+0x401186  : sub ecx, edx
+0x401188  : mov dword ptr [g_61c36c (DATA)], eax
+0x40118d  : cmp ecx, 0x3e8
+0x401193  : jbe 0x34
+0x401195  : mov eax, dword ptr [g_61c35c (DATA)] 	(main.cpp:80)
+0x40119a  : mov dword ptr [g_61c35c (DATA)], esi 	(main.cpp:81)
+0x4011a0  : mov dword ptr [g_61c370 (DATA)], edi 	(main.cpp:82)
+0x4011a6  : lea eax, [eax + eax*4]
+0x4011a9  : lea eax, [eax + eax*4]
+0x4011ac  : lea edx, [eax + eax*4]
+0x4011af  : lea eax, [esi + esi*4]
+0x4011b2  : shl edx, 3
+0x4011b5  : lea eax, [eax + eax*4]
+0x4011b8  : lea eax, [eax + eax*4]
+0x4011bb  : shl eax, 3
+0x4011be  : sub eax, edx
+0x4011c0  : xor edx, edx
+0x4011c2  : div ecx
+0x4011c4  : mov dword ptr [g_61c39c (DATA)], eax
+0x4011c9  : pop edi
+0x4011ca  : pop esi
+0x4011cb  : add esp, 8 	(main.cpp:84)
+0x4011ce  : ret 
+; thunk_FUN_44e6b0
+0x4011d0  : jmp FUN_44e610 (FUNCTION) 	(main.cpp:89)
+; WndProc
+0x4011e0  : push ebx 	(main.cpp:101)
+0x4011e1  : mov ebx, dword ptr [esp + 8]
+0x4011e5  : push esi
+0x4011e6  : mov esi, dword ptr [esp + 0x10]
+0x4011ea  : push edi
+0x4011eb  : mov edi, dword ptr [esp + 0x18]
+0x4011ef  : cmp esi, 6
+0x4011f2  : jae 0x5d
+0x4011f4  : cmp esi, 5 	(main.cpp:111)
+0x4011f7  : je 0x46
+0x4011f9  : cmp esi, 2 	(main.cpp:113)
+0x4011fc  : jne 0x20
+0x4011fe  : push 0 	(main.cpp:115)
+0x401200  : call dword ptr [->USER32.dll::PostQuitMessage (IMPORT)]
+0x401206  : mov ecx, edi 	(main.cpp:116)
+0x401208  : mov edx, ebx
+0x40120a  : mov eax, dword ptr [esp + 0x1c]
+0x40120e  : push eax
+0x40120f  : push ecx
+0x401210  : push esi
+0x401211  : push edx
+0x401212  : call dword ptr [->USER32.dll::DefWindowProcA (IMPORT)] 	(main.cpp:157)
+0x401218  : pop edi
+0x401219  : pop esi
+0x40121a  : pop ebx
+0x40121b  : ret 0x10 	(main.cpp:158)
+0x40121e  : cmp esi, 3 	(main.cpp:118)
+0x401221  : je 0x1c
+0x401223  : mov eax, dword ptr [esp + 0x1c] 	(main.cpp:120)
+0x401227  : mov ecx, dword ptr [esp + 0x18]
+0x40122b  : mov edx, dword ptr [esp + 0x10]
+0x40122f  : push eax
+0x401230  : push ecx
+0x401231  : push esi
+0x401232  : push edx
+0x401233  : call dword ptr [->USER32.dll::DefWindowProcA (IMPORT)] 	(main.cpp:157)
+0x401239  : pop edi
+0x40123a  : pop esi
+0x40123b  : pop ebx
+0x40123c  : ret 0x10 	(main.cpp:158)
+0x40123f  : push ebx 	(main.cpp:124)
+0x401240  : call dword ptr [->USER32.dll::IsIconic (IMPORT)]
+0x401246  : test eax, eax
+0x401248  : je 0x79
+0x40124a  : mov eax, 1 	(main.cpp:128)
+0x40124f  : jmp 0x69 	(main.cpp:130)
+0x401251  : cmp esi, 0x1c 	(main.cpp:132)
+0x401254  : je 0x4f
+0x401256  : cmp esi, 0x100 	(main.cpp:134)
+0x40125c  : jne 0x15
+0x40125e  : cmp edi, 0x1b
+0x401261  : jne 0x60
+0x401263  : push 0 	(main.cpp:136)
+0x401265  : call dword ptr [->USER32.dll::PostQuitMessage (IMPORT)]
+0x40126b  : pop edi
+0x40126c  : pop esi
+0x40126d  : xor eax, eax 	(main.cpp:137)
+0x40126f  : pop ebx
+0x401270  : ret 0x10 	(main.cpp:158)
+0x401273  : cmp esi, 0x102 	(main.cpp:139)
+0x401279  : jne 0x48
+0x40127b  : mov al, byte ptr [g_62ddfc (DATA)]
+0x401280  : test al, al
+0x401282  : jne 0x3f
+0x401284  : mov ecx, dword ptr [esp + 0x1c] 	(main.cpp:143)
+0x401288  : mov eax, dword ptr [esp + 0x18]
+0x40128c  : mov edx, dword ptr [esp + 0x10]
+0x401290  : push ecx
+0x401291  : push eax
+0x401292  : push esi
+0x401293  : push edx
+0x401294  : mov byte ptr [g_62ddfc (DATA)], al
+0x401299  : call dword ptr [->USER32.dll::DefWindowProcA (IMPORT)] 	(main.cpp:157)
+0x40129f  : pop edi
+0x4012a0  : pop esi
+0x4012a1  : pop ebx
+0x4012a2  : ret 0x10 	(main.cpp:158)
+0x4012a5  : test edi, edi 	(main.cpp:149)
+0x4012a7  : mov dword ptr [g_61c374 (DATA)], edi
+0x4012ad  : je 0x14
+0x4012af  : mov eax, dword ptr [g_WindowMessage (DATA)]
+0x4012b4  : test eax, eax
+0x4012b6  : je 0xb
+0x4012b8  : xor eax, eax 	(main.cpp:153)
+0x4012ba  : push eax 	(main.cpp:155)
+0x4012bb  : call FUN_44e4b0 (FUNCTION)
+0x4012c0  : add esp, 4
+0x4012c3  : mov eax, dword ptr [esp + 0x1c] 	(main.cpp:157)
+0x4012c7  : push eax
+0x4012c8  : push edi
+0x4012c9  : push esi
+0x4012ca  : push ebx
+0x4012cb  : call dword ptr [->USER32.dll::DefWindowProcA (IMPORT)]
+0x4012d1  : pop edi
+0x4012d2  : pop esi
+0x4012d3  : pop ebx
+0x4012d4  : ret 0x10 	(main.cpp:158)
+; m_keyboard
+0x4012e0  : push esi 	(main.cpp:165)
+0x4012e1  : push edi
+0x4012e2  : mov edi, dword ptr [USER32.dll::GetKeyboardState (IMPORT)]
+0x4012e8  : mov esi, g_62d480[10].[0] (OFFSET)
+0x4012ed  : push esi 	(main.cpp:169)
+0x4012ee  : call edi
+0x4012f0  : sub esi, 0x100
+0x4012f6  : cmp esi, g_62d480[0].[0] (DATA)
+0x4012fc  : jge -0x11
+0x4012fe  : mov al, byte ptr [g_62d480[0].[27] (OFFSET)] 	(main.cpp:171)
+0x401303  : pop edi
+0x401304  : test al, 0x80
+0x401306  : pop esi
+0x401307  : je 0x12
+0x401309  : push 0 	(main.cpp:174)
+0x40130b  : mov dword ptr [SHOULD_STOP (DATA)], 1
+0x401315  : call dword ptr [->USER32.dll::PostQuitMessage (IMPORT)]
+0x40131b  : ret  	(main.cpp:176)
+; windowCreate
+0x401320  : mov al, byte ptr [?$S1@?1??windowCreate@@YAHPAUHINSTANCE__@@0@Z@4EA (DATA)] 	(main.cpp:180)
+0x401325  : sub esp, 0x44
+0x401328  : test al, 1
+0x40132a  : push ebx
+0x40132b  : push esi
+0x40132c  : mov esi, dword ptr [esp + 0x50]
+0x401330  : jne 0xd
+0x401332  : or al, 1
+0x401334  : mov dword ptr [<OFFSET2>], esi
+0x40133a  : mov byte ptr [?$S1@?1??windowCreate@@YAHPAUHINSTANCE__@@0@Z@4EA (DATA)], al
+0x40133f  : mov eax, dword ptr ["AppMenu" (STRING)] 	(main.cpp:189)
+0x401344  : mov ecx, dword ptr [<OFFSET4>]
+0x40134a  : mov edx, dword ptr ["Stunt GP" (STRING)] 	(main.cpp:190)
+0x401350  : mov dword ptr [esp + 0x10], eax
+0x401354  : mov eax, dword ptr [<OFFSET6>]
+0x401359  : xor ebx, ebx
+0x40135b  : mov dword ptr [esp + 0x1c], eax
+0x40135f  : mov eax, dword ptr [esp + 0x54] 	(main.cpp:191)
+0x401363  : mov dword ptr [esp + 0x14], ecx
+0x401367  : mov cl, byte ptr [<OFFSET7>]
+0x40136d  : cmp eax, ebx
+0x40136f  : mov dword ptr [esp + 0xc], ebx
+0x401373  : mov dword ptr [esp + 8], ebx
+0x401377  : mov dword ptr [esp + 0x50], ebx
+0x40137b  : mov dword ptr [esp + 0x18], edx
+0x40137f  : mov byte ptr [esp + 0x20], cl
+0x401383  : jne 0x6b
+0x401385  : push edi
+0x401386  : mov ecx, 9 	(main.cpp:193)
+0x40138b  : xor eax, eax
+0x40138d  : lea edi, [esp + 0x2c]
+0x401391  : push 0x7f00 	(main.cpp:197)
+0x401396  : push esi
+0x401397  : rep stosd dword ptr es:[edi], eax
+0x401399  : mov dword ptr [esp + 0x30], 0x20
+0x4013a1  : mov dword ptr [esp + 0x34], WndProc (FUNCTION)
+0x4013a9  : mov dword ptr [esp + 0x40], esi
+0x4013ad  : call dword ptr [->USER32.dll::LoadIconA (IMPORT)]
+0x4013b3  : push 5 	(main.cpp:199)
+0x4013b5  : mov dword ptr [esp + 0x40], eax
+0x4013b9  : mov dword ptr [esp + 0x44], ebx
+0x4013bd  : call dword ptr [->GDI32.dll::GetStockObject (IMPORT)]
+0x4013c3  : mov dword ptr [esp + 0x44], eax
+0x4013c7  : lea ecx, [esp + 0x28] 	(main.cpp:202)
+0x4013cb  : lea edx, [esp + 0x14]
+0x4013cf  : lea eax, [esp + 0x1c]
+0x4013d3  : push ecx
+0x4013d4  : mov dword ptr [esp + 0x4c], edx
+0x4013d8  : mov dword ptr [esp + 0x50], eax
+0x4013dc  : call dword ptr [->USER32.dll::RegisterClassA (IMPORT)]
+0x4013e2  : test ax, ax
+0x4013e5  : pop edi
+0x4013e6  : jne 0x8
+0x4013e8  : pop esi
+0x4013e9  : xor eax, eax 	(main.cpp:204)
+0x4013eb  : pop ebx
+0x4013ec  : add esp, 0x44 	(main.cpp:227)
+0x4013ef  : ret 
+0x4013f0  : push "Stunt GP" (STRING) 	(main.cpp:207)
+0x4013f5  : push "Stunt GP" (STRING)
+0x4013fa  : push esi
+0x4013fb  : call windowCreateInternal (FUNCTION)
+0x401400  : add esp, 0xc
+0x401403  : cmp eax, ebx 	(main.cpp:208)
+0x401405  : mov dword ptr [g_Hwnd (DATA)], eax
+0x40140a  : jne 0x8
+0x40140c  : pop esi
+0x40140d  : xor eax, eax 	(main.cpp:210)
+0x40140f  : pop ebx
+0x401410  : add esp, 0x44 	(main.cpp:227)
+0x401413  : ret 
+0x401414  : push "windowDDCreate" (STRING) 	(main.cpp:214)
+0x401419  : call traceLog (FUNCTION)
+0x40141e  : mov edx, dword ptr [g_Hwnd (DATA)] 	(main.cpp:215)
+0x401424  : push edx
+0x401425  : push ebx
+0x401426  : push g_dd (DATA)
+0x40142b  : call windowDDCreate (FUNCTION)
+0x401430  : push "ddGetDD4" (STRING) 	(main.cpp:216)
+0x401435  : call traceLog (FUNCTION)
+0x40143a  : mov eax, dword ptr [g_Hwnd (DATA)] 	(main.cpp:217)
+0x40143f  : mov ecx, dword ptr [g_dd (DATA)]
+0x401445  : push eax
+0x401446  : push g_dd4 (DATA)
+0x40144b  : push ecx
+0x40144c  : call ddGetDD4 (FUNCTION)
+0x401451  : push "ddGetMemory" (STRING) 	(main.cpp:218)
+0x401456  : call traceLog (FUNCTION)
+0x40145b  : lea edx, [esp + 0x74] 	(main.cpp:219)
+0x40145f  : lea eax, [esp + 0x2c]
+0x401463  : push edx
+0x401464  : mov edx, dword ptr [g_dd4 (DATA)]
+0x40146a  : lea ecx, [esp + 0x34]
+0x40146e  : push eax
+0x40146f  : push ecx
+0x401470  : push edx
+0x401471  : call ddGetMemory (FUNCTION)
+0x401476  : mov eax, dword ptr [g_DISPLAYRESDEPTH (DATA)] 	(main.cpp:221)
+0x40147b  : mov ecx, dword ptr [g_DISPLAYRESHEIGHT (DATA)]
+0x401481  : mov edx, dword ptr [g_DISPLAYRESWIDTH (DATA)]
+0x401487  : push eax
+0x401488  : push ecx
+0x401489  : push edx
+0x40148a  : push "FUN_422f30 %d %d %d" (STRING)
+0x40148f  : call traceLog (FUNCTION)
+0x401494  : mov eax, dword ptr [g_DISPLAYRESDEPTH (DATA)] 	(main.cpp:222)
+0x401499  : mov ecx, dword ptr [g_DISPLAYRESHEIGHT (DATA)]
+0x40149f  : mov edx, dword ptr [g_DISPLAYRESWIDTH (DATA)]
+0x4014a5  : add esp, 0x44
+0x4014a8  : push eax
+0x4014a9  : mov eax, dword ptr [g_dd4 (DATA)]
+0x4014ae  : push ecx
+0x4014af  : push edx
+0x4014b0  : push g_surface2 (DATA)
+0x4014b5  : push g_surface (DATA)
+0x4014ba  : push eax
+0x4014bb  : call FUN_422f30 (FUNCTION)
+0x4014c0  : call m_keyboard (FUNCTION) 	(main.cpp:223)
+0x4014c5  : mov ecx, dword ptr [g_571fd4 (DATA)] 	(main.cpp:224)
+0x4014cb  : push ecx
+0x4014cc  : push g_61c384 (DATA)
+0x4014d1  : call FUN_4230b0 (FUNCTION)
+0x4014d6  : push eax 	(main.cpp:225)
+0x4014d7  : push "FUN_4230b0 result 0x%08x" (STRING)
+0x4014dc  : call traceLog (FUNCTION)
+0x4014e1  : add esp, 0x28
+0x4014e4  : mov eax, 1 	(main.cpp:226)
+0x4014e9  : pop esi
+0x4014ea  : pop ebx
+0x4014eb  : add esp, 0x44 	(main.cpp:227)
+0x4014ee  : ret 
+; surfaceExists
+0x4014f0  : push esi 	(main.cpp:231)
+0x4014f1  : mov esi, dword ptr [esp + 8]
+0x4014f5  : test esi, esi
+0x4014f7  : je 0x18
+0x4014f9  : mov eax, dword ptr [esi] 	(main.cpp:234)
+0x4014fb  : push esi
+0x4014fc  : call dword ptr [eax + 0x60]
+0x4014ff  : cmp eax, 0x887601c2 	(main.cpp:235)
+0x401504  : jne 0xd
+0x401506  : push esi 	(main.cpp:237)
+0x401507  : call restoreAndClearSurface (FUNCTION)
+0x40150c  : add esp, 4
+0x40150f  : pop esi
+0x401510  : ret  	(main.cpp:242)
+0x401511  : xor eax, eax 	(main.cpp:241)
+0x401513  : pop esi
+0x401514  : ret  	(main.cpp:242)
+; FUN_442120
+0x401520  : push "FUN_442120: stub start" (STRING) 	(main.cpp:256)
+0x401525  : call traceLog (FUNCTION)
+0x40152a  : push "FUN_442120: stub end" (STRING) 	(main.cpp:265)
+0x40152f  : call traceLog (FUNCTION)
+0x401534  : add esp, 8
+0x401537  : ret  	(main.cpp:266)
+; FUN_4314c0
+0x401540  : mov eax, 1 	(main.cpp:270)
+0x401545  : ret  	(main.cpp:275)
+; FUN_44e9d0
+0x401550  : mov eax, dword ptr [g_surface (DATA)] 	(main.cpp:279)
+0x401555  : push eax
+0x401556  : call surfaceExists (FUNCTION)
+0x40155b  : add esp, 4
+0x40155e  : test eax, eax
+0x401560  : jne 0x75
+0x401562  : mov ecx, dword ptr [g_surface2 (DATA)] 	(main.cpp:282)
+0x401568  : push ecx
+0x401569  : call surfaceExists (FUNCTION)
+0x40156e  : add esp, 4
+0x401571  : test eax, eax
+0x401573  : jne 0x62
+0x401575  : mov edx, dword ptr [g_surface2 (DATA)] 	(main.cpp:284)
+0x40157b  : push edx
+0x40157c  : call clearSurfaceGameColor (FUNCTION)
+0x401581  : mov eax, dword ptr [g_surface2 (DATA)] 	(main.cpp:285)
+0x401586  : push eax
+0x401587  : call drawLevelProbeOverlay (FUNCTION)
+0x40158c  : mov eax, dword ptr [g_surface (DATA)] 	(main.cpp:287)
+0x401591  : mov edx, dword ptr [g_surface2 (DATA)]
+0x401597  : add esp, 8
+0x40159a  : mov ecx, dword ptr [eax]
+0x40159c  : push 0
+0x40159e  : push 0x1000000
+0x4015a3  : push 0
+0x4015a5  : push edx
+0x4015a6  : push 0
+0x4015a8  : push eax
+0x4015a9  : call dword ptr [ecx + 0x14]
+0x4015ac  : mov ecx, dword ptr [<OFFSET6>] 	(main.cpp:288)
+0x4015b2  : test ecx, ecx
+0x4015b4  : jne 0x18
+0x4015b6  : push eax 	(main.cpp:290)
+0x4015b7  : push "present blit result 0x%08x" (STRING)
+0x4015bc  : call traceLog (FUNCTION)
+0x4015c1  : add esp, 8
+0x4015c4  : mov dword ptr [<OFFSET6>], 1 	(main.cpp:291)
+0x4015ce  : call FUN_4314c0 (FUNCTION) 	(main.cpp:293)
+0x4015d3  : test eax, eax
+0x4015d5  : jne 0x8
+0x4015d7  : push 1 	(main.cpp:299)
+0x4015d9  : call FUN_44e4b0 (FUNCTION)
+0x4015de  : pop ecx
+0x4015df  : ret  	(main.cpp:302)
+; FUN_44ea50
+0x4015e0  : ret  	(main.cpp:308)
+; WinMain
+0x4015f0  : sub esp, 0x1c 	(main.cpp:313)
+0x4015f3  : push ebx
+0x4015f4  : push esi
+0x4015f5  : push edi
+0x4015f6  : mov ecx, 6 	(main.cpp:314)
+0x4015fb  : xor eax, eax
+0x4015fd  : lea edi, [esp + 0x10]
+0x401601  : mov dword ptr [esp + 0xc], 0
+0x401609  : push "WinMain start" (STRING) 	(main.cpp:318)
+0x40160e  : rep stosd dword ptr es:[edi], eax
+0x401610  : mov dword ptr [g_DISPLAYRESWIDTH (DATA)], 0x280
+0x40161a  : mov dword ptr [g_DISPLAYRESHEIGHT (DATA)], 0x1e0
+0x401624  : mov dword ptr [g_DISPLAYRESDEPTH (DATA)], 8
+0x40162e  : call traceLog (FUNCTION)
+0x401633  : call Script_ParseGameConfig (FUNCTION) 	(main.cpp:319)
+0x401638  : mov eax, dword ptr [g_DISPLAYRESDEPTH (DATA)] 	(main.cpp:320)
+0x40163d  : mov ecx, dword ptr [g_DISPLAYRESHEIGHT (DATA)]
+0x401643  : mov edx, dword ptr [g_DISPLAYRESWIDTH (DATA)]
+0x401649  : push eax
+0x40164a  : push ecx
+0x40164b  : push edx
+0x40164c  : push g_GameDirectory[0] (DATA)
+0x401651  : push "config %s %d %d %d" (STRING)
+0x401656  : call traceLog (FUNCTION)
+0x40165b  : mov ebx, dword ptr [esp + 0x48] 	(main.cpp:322)
+0x40165f  : mov edi, dword ptr [esp + 0x44]
+0x401663  : push ebx
+0x401664  : push edi
+0x401665  : call windowCreate (FUNCTION)
+0x40166a  : mov esi, eax
+0x40166c  : push esi 	(main.cpp:323)
+0x40166d  : push "windowCreate result %d" (STRING)
+0x401672  : call traceLog (FUNCTION)
+0x401677  : add esp, 0x28
+0x40167a  : test esi, esi 	(main.cpp:324)
+0x40167c  : jne 0xb
+0x40167e  : pop edi
+0x40167f  : pop esi
+0x401680  : xor eax, eax 	(main.cpp:326)
+0x401682  : pop ebx
+0x401683  : add esp, 0x1c 	(main.cpp:384)
+0x401686  : ret 0x10
+0x401689  : push 0 	(main.cpp:334)
+0x40168b  : call dword ptr [->USER32.dll::ShowCursor (IMPORT)]
+0x401691  : call GetGameBuildVersion (FUNCTION) 	(main.cpp:337)
+0x401696  : mov al, byte ptr [?$S2@?4??WinMain@@9@16@4EA (DATA)] 	(main.cpp:341)
+0x40169b  : test al, 1
+0x40169d  : jne 0xd
+0x40169f  : or al, 1
+0x4016a1  : mov dword ptr [<OFFSET14>], edi
+0x4016a7  : mov byte ptr [?$S2@?4??WinMain@@9@16@4EA (DATA)], al
+0x4016ac  : test al, 2 	(main.cpp:342)
+0x4016ae  : jne 0xd
+0x4016b0  : or al, 2
+0x4016b2  : mov dword ptr [<OFFSET15>], ebx
+0x4016b8  : mov byte ptr [?$S2@?4??WinMain@@9@16@4EA (DATA)], al
+0x4016bd  : push ebp
+0x4016be  : push "=== FUN_442120 (bigger setup) ===" (STRING) 	(main.cpp:346)
+0x4016c3  : call traceLog (FUNCTION)
+0x4016c8  : call FUN_442120 (FUNCTION) 	(main.cpp:347)
+0x4016cd  : push "=== FUN_44e5d0 (timing init) ===" (STRING) 	(main.cpp:348)
+0x4016d2  : call traceLog (FUNCTION)
+0x4016d7  : add esp, 8
+0x4016da  : call FUN_44e5d0 (FUNCTION) 	(main.cpp:349)
+0x4016df  : mov esi, dword ptr [USER32.dll::PeekMessageA (IMPORT)]
+0x4016e5  : mov edi, dword ptr [USER32.dll::TranslateMessage (IMPORT)]
+0x4016eb  : mov ebx, dword ptr [USER32.dll::DispatchMessageA (IMPORT)]
+0x4016f1  : push 1 	(main.cpp:352)
+0x4016f3  : push 0
+0x4016f5  : push 0
+0x4016f7  : lea eax, [esp + 0x1c]
+0x4016fb  : push 0
+0x4016fd  : push eax
+0x4016fe  : call esi
+0x401700  : test eax, eax 	(main.cpp:353)
+0x401702  : jne 0x4b
+0x401704  : call m_keyboard (FUNCTION) 	(main.cpp:355)
+0x401709  : mov eax, dword ptr [SHOULD_STOP (DATA)] 	(main.cpp:356)
+0x40170e  : test eax, eax
+0x401710  : jne 0xa
+0x401712  : call thunk_FUN_44e6b0 (FUNCTION) 	(main.cpp:358)
+0x401717  : call FUN_44e9d0 (FUNCTION) 	(main.cpp:359)
+0x40171c  : mov ecx, dword ptr [g_61c394 (DATA)] 	(main.cpp:361)
+0x401722  : xor edx, edx
+0x401724  : mov eax, ecx
+0x401726  : mov ebp, 0x258
+0x40172b  : div ebp
+0x40172d  : test edx, edx
+0x40172f  : jne 0x33
+0x401731  : mov edx, dword ptr [g_61c390 (DATA)] 	(main.cpp:363)
+0x401737  : mov eax, dword ptr [g_61c37c (DATA)]
+0x40173c  : sub edx, eax
+0x40173e  : push edx
+0x40173f  : push ecx
+0x401740  : push "game loop alive: frame=%d tickDelta=%d" (STRING)
+0x401745  : call traceLog (FUNCTION)
+0x40174a  : add esp, 0xc
+0x40174d  : jmp 0x15 	(main.cpp:366)
+0x40174f  : cmp dword ptr [esp + 0x14], 0x12 	(main.cpp:368)
+0x401754  : je 0x17
+0x401756  : lea eax, [esp + 0x10] 	(main.cpp:372)
+0x40175a  : push eax
+0x40175b  : call edi
+0x40175d  : lea ecx, [esp + 0x10] 	(main.cpp:373)
+0x401761  : push ecx
+0x401762  : call ebx
+0x401764  : mov eax, dword ptr [SHOULD_STOP (DATA)] 	(main.cpp:376)
+0x401769  : test eax, eax
+0x40176b  : je -0x7c
+0x40176d  : push 0 	(main.cpp:378)
+0x40176f  : call dword ptr [->USER32.dll::DestroyWindow (IMPORT)]
+0x401775  : call FUN_44ea50 (FUNCTION) 	(main.cpp:382)
+0x40177a  : mov eax, dword ptr [esp + 0x18] 	(main.cpp:383)
+0x40177e  : pop ebp
+0x40177f  : pop edi
+0x401780  : pop esi
+0x401781  : pop ebx
+0x401782  : add esp, 0x1c 	(main.cpp:384)
+0x401785  : ret 0x10
+; exitError
+0x4017d0  : push 1 	(common.cpp:21)
+0x4017d2  : call _exit (FUNCTION)
+; windowCreateInternal
+0x4017e0  : push esi 	(windowInit.cpp:158)
+0x4017e1  : mov esi, dword ptr [USER32.dll::GetSystemMetrics (IMPORT)]
+0x4017e7  : push edi
+0x4017e8  : push 0x11
+0x4017ea  : call esi
+0x4017ec  : push 0x10 	(windowInit.cpp:160)
+0x4017ee  : mov edi, eax
+0x4017f0  : call esi
+0x4017f2  : mov ecx, dword ptr [esp + 0xc] 	(windowInit.cpp:162)
+0x4017f6  : mov edx, dword ptr [esp + 0x14]
+0x4017fa  : push 0
+0x4017fc  : push ecx
+0x4017fd  : push 0
+0x4017ff  : push 0
+0x401801  : push edi
+0x401802  : push eax
+0x401803  : mov eax, dword ptr [esp + 0x28]
+0x401807  : push 0
+0x401809  : push 0
+0x40180b  : push 0x80000000
+0x401810  : push edx
+0x401811  : push eax
+0x401812  : push 0x40000
+0x401817  : call dword ptr [->USER32.dll::CreateWindowExA (IMPORT)]
+0x40181d  : mov esi, eax
+0x40181f  : test esi, esi 	(windowInit.cpp:163)
+0x401821  : jne 0x3
+0x401823  : pop edi
+0x401824  : pop esi
+0x401825  : ret  	(windowInit.cpp:170)
+0x401826  : push 1 	(windowInit.cpp:167)
+0x401828  : push esi
+0x401829  : call dword ptr [->USER32.dll::ShowWindow (IMPORT)]
+0x40182f  : push esi 	(windowInit.cpp:168)
+0x401830  : call dword ptr [->USER32.dll::UpdateWindow (IMPORT)]
+0x401836  : mov eax, esi 	(windowInit.cpp:169)
+0x401838  : pop edi
+0x401839  : pop esi
+0x40183a  : ret  	(windowInit.cpp:170)
+; ddSetCoopLevel
+0x4018a0  : mov eax, dword ptr [esp + 4] 	(windowInit.cpp:217)
+0x4018a4  : mov edx, dword ptr [esp + 8]
+0x4018a8  : push esi
+0x4018a9  : push 0x13
+0x4018ab  : mov ecx, dword ptr [eax]
+0x4018ad  : push edx
+0x4018ae  : push eax
+0x4018af  : call dword ptr [ecx + 0x50]
+0x4018b2  : mov esi, eax
+0x4018b4  : test esi, esi 	(windowInit.cpp:219)
+0x4018b6  : je 0xf
+0x4018b8  : push esi 	(windowInit.cpp:221)
+0x4018b9  : call ddGetErrMessage (FUNCTION)
+0x4018be  : push eax
+0x4018bf  : call exitError (FUNCTION)
+0x4018c4  : add esp, 8
+0x4018c7  : mov eax, esi 	(windowInit.cpp:223)
+0x4018c9  : pop esi
+0x4018ca  : ret  	(windowInit.cpp:224)
+; windowDDCreate
+0x4018d0  : mov eax, dword ptr [esp + 8] 	(windowInit.cpp:228)
+0x4018d4  : push esi
+0x4018d5  : push edi
+0x4018d6  : mov edi, dword ptr [esp + 0xc]
+0x4018da  : push 0
+0x4018dc  : push edi
+0x4018dd  : push eax
+0x4018de  : call _DirectDrawCreate@12 (FUNCTION)
+0x4018e3  : mov esi, eax
+0x4018e5  : test esi, esi 	(windowInit.cpp:231)
+0x4018e7  : je 0xf
+0x4018e9  : push esi 	(windowInit.cpp:233)
+0x4018ea  : call ddGetErrMessage (FUNCTION)
+0x4018ef  : push eax
+0x4018f0  : call exitError (FUNCTION)
+0x4018f5  : add esp, 8
+0x4018f8  : mov ecx, dword ptr [esp + 0x14] 	(windowInit.cpp:235)
+0x4018fc  : mov edx, dword ptr [edi]
+0x4018fe  : push ecx
+0x4018ff  : push edx
+0x401900  : call ddSetCoopLevel (FUNCTION)
+0x401905  : add esp, 8
+0x401908  : mov eax, esi 	(windowInit.cpp:236)
+0x40190a  : pop edi
+0x40190b  : pop esi
+0x40190c  : ret  	(windowInit.cpp:237)
+; dd4SetCoopLevel
+0x401910  : mov eax, dword ptr [esp + 4] 	(windowInit.cpp:241)
+0x401914  : mov edx, dword ptr [esp + 8]
+0x401918  : push esi
+0x401919  : push 0x13
+0x40191b  : mov ecx, dword ptr [eax]
+0x40191d  : push edx
+0x40191e  : push eax
+0x40191f  : call dword ptr [ecx + 0x50]
+0x401922  : mov esi, eax
+0x401924  : test esi, esi 	(windowInit.cpp:244)
+0x401926  : je 0xf
+0x401928  : push esi 	(windowInit.cpp:246)
+0x401929  : call ddGetErrMessage (FUNCTION)
+0x40192e  : push eax
+0x40192f  : call exitError (FUNCTION)
+0x401934  : add esp, 8
+0x401937  : mov eax, esi 	(windowInit.cpp:248)
+0x401939  : pop esi
+0x40193a  : ret  	(windowInit.cpp:249)
+; ddGetDD4
+0x401940  : mov eax, dword ptr [esp + 4] 	(windowInit.cpp:253)
+0x401944  : push esi
+0x401945  : push edi
+0x401946  : mov edi, dword ptr [esp + 0x10]
+0x40194a  : mov ecx, dword ptr [eax]
+0x40194c  : push edi
+0x40194d  : push IID_IDirectDraw4 (DATA)
+0x401952  : push eax
+0x401953  : call dword ptr [ecx]
+0x401955  : mov esi, eax
+0x401957  : test esi, esi 	(windowInit.cpp:255)
+0x401959  : je 0xf
+0x40195b  : push esi 	(windowInit.cpp:257)
+0x40195c  : call ddGetErrMessage (FUNCTION)
+0x401961  : push eax
+0x401962  : call exitError (FUNCTION)
+0x401967  : add esp, 8
+0x40196a  : mov edx, dword ptr [esp + 0x14] 	(windowInit.cpp:259)
+0x40196e  : mov eax, dword ptr [edi]
+0x401970  : push edx
+0x401971  : push eax
+0x401972  : call dd4SetCoopLevel (FUNCTION)
+0x401977  : add esp, 8
+0x40197a  : mov eax, esi 	(windowInit.cpp:260)
+0x40197c  : pop edi
+0x40197d  : pop esi
+0x40197e  : ret  	(windowInit.cpp:261)
+; ddGetMemory
+0x401980  : sub esp, 0x28 	(windowInit.cpp:300)
+0x401983  : xor eax, eax 	(windowInit.cpp:304)
+0x401985  : lea edx, [esp + 4] 	(windowInit.cpp:306)
+0x401989  : mov dword ptr [esp + 0xc], eax
+0x40198d  : push esi
+0x40198e  : mov esi, dword ptr [esp + 0x30]
+0x401992  : mov dword ptr [esp + 0x14], eax
+0x401996  : mov dword ptr [esp + 0x18], eax
+0x40199a  : push edx
+0x40199b  : mov ecx, dword ptr [esi]
+0x40199d  : lea eax, [esp + 8]
+0x4019a1  : lea edx, [esp + 0x10]
+0x4019a5  : push eax
+0x4019a6  : push edx
+0x4019a7  : push esi
+0x4019a8  : mov dword ptr [esp + 0x14], 0
+0x4019b0  : mov dword ptr [esp + 0x18], 0
+0x4019b8  : mov dword ptr [esp + 0x1c], 0x4000
+0x4019c0  : call dword ptr [ecx + 0x5c]
+0x4019c3  : test eax, eax 	(windowInit.cpp:307)
+0x4019c5  : jne 0x4d
+0x4019c7  : mov eax, dword ptr [esp + 0x34] 	(windowInit.cpp:309)
+0x4019cb  : mov ecx, dword ptr [esp + 4]
+0x4019cf  : mov edx, dword ptr [esp + 0x3c] 	(windowInit.cpp:310)
+0x4019d3  : mov dword ptr [esp + 0x1c], 0x1000 	(windowInit.cpp:317)
+0x4019db  : mov dword ptr [eax], ecx
+0x4019dd  : mov eax, dword ptr [esp + 8]
+0x4019e1  : xor ecx, ecx
+0x4019e3  : mov dword ptr [edx], eax
+0x4019e5  : mov dword ptr [esp + 0x20], ecx
+0x4019e9  : mov edx, dword ptr [esi] 	(windowInit.cpp:318)
+0x4019eb  : mov dword ptr [esp + 0x24], ecx
+0x4019ef  : lea eax, [esp + 8]
+0x4019f3  : mov dword ptr [esp + 0x28], ecx
+0x4019f7  : push eax
+0x4019f8  : lea ecx, [esp + 8]
+0x4019fc  : lea eax, [esp + 0x20]
+0x401a00  : push ecx
+0x401a01  : push eax
+0x401a02  : push esi
+0x401a03  : call dword ptr [edx + 0x5c]
+0x401a06  : test eax, eax 	(windowInit.cpp:319)
+0x401a08  : jne 0xa
+0x401a0a  : mov ecx, dword ptr [esp + 0x38] 	(windowInit.cpp:321)
+0x401a0e  : mov edx, dword ptr [esp + 4]
+0x401a12  : mov dword ptr [ecx], edx
+0x401a14  : pop esi
+0x401a15  : add esp, 0x28 	(windowInit.cpp:330)
+0x401a18  : ret 
+; FUN_422a00
+0x401a20  : ret  	(windowInit.cpp:404)
+; FUN_422a80
+0x403db0  : mov eax, dword ptr [esp + 4] 	(windowInit.cpp:1540)
+0x403db4  : mov edx, dword ptr [esp + 0xc]
+0x403db8  : push esi
+0x403db9  : push edi
+0x403dba  : mov edi, dword ptr [esp + 0x10]
+0x403dbe  : mov ecx, dword ptr [eax]
+0x403dc0  : push 0
+0x403dc2  : push edi
+0x403dc3  : push edx
+0x403dc4  : push eax
+0x403dc5  : call dword ptr [ecx + 0x18]
+0x403dc8  : mov esi, eax
+0x403dca  : test esi, esi 	(windowInit.cpp:1542)
+0x403dcc  : je 0xe
+0x403dce  : push edi 	(windowInit.cpp:1544)
+0x403dcf  : call FUN_422a00 (FUNCTION)
+0x403dd4  : add esp, 4
+0x403dd7  : mov eax, esi 	(windowInit.cpp:1550)
+0x403dd9  : pop edi
+0x403dda  : pop esi
+0x403ddb  : ret  	(windowInit.cpp:1551)
+0x403ddc  : cmp dword ptr [esp + 0x18], 1
+0x403de1  : jne -0xc
+0x403de3  : push 1
+0x403de5  : call _exit (FUNCTION)
+; FUN_422ac0
+0x403df0  : sub esp, 0x7c 	(windowInit.cpp:1555)
+0x403df3  : push esi
+0x403df4  : mov edx, dword ptr [DAT_CAPS (DATA)] 	(windowInit.cpp:1561)
+0x403dfa  : push edi
+0x403dfb  : mov ecx, 0x1e
+0x403e00  : xor eax, eax
+0x403e02  : lea edi, [esp + 0xc]
+0x403e06  : rep stosd dword ptr es:[edi], eax
+0x403e08  : mov eax, dword ptr [esp + 0x90]
+0x403e0f  : mov ecx, dword ptr [esp + 0x94]
+0x403e16  : mov esi, dword ptr [esp + 0x8c] 	(windowInit.cpp:1563)
+0x403e1d  : mov edi, dword ptr [esp + 0x88]
+0x403e24  : mov dword ptr [esp + 0x14], eax
+0x403e28  : mov eax, dword ptr [esp + 0x98]
+0x403e2f  : or edx, eax
+0x403e31  : mov dword ptr [esp + 0x10], ecx
+0x403e35  : or edx, 0x40
+0x403e38  : cmp eax, 0x4000
+0x403e3d  : mov dword ptr [esp + 8], 0x7c
+0x403e45  : mov dword ptr [esp + 0x70], edx
+0x403e49  : mov dword ptr [esp + 0xc], 7
+0x403e51  : jne 0x15
+0x403e53  : lea eax, [esp + 8]
+0x403e57  : push 2
+0x403e59  : push eax
+0x403e5a  : push esi
+0x403e5b  : push edi
+0x403e5c  : call FUN_422a80 (FUNCTION)
+0x403e61  : add esp, 0x10
+0x403e64  : test eax, eax
+0x403e66  : je 0x15
+0x403e68  : lea ecx, [esp + 8] 	(windowInit.cpp:1565)
+0x403e6c  : push 2
+0x403e6e  : push ecx
+0x403e6f  : push esi
+0x403e70  : push edi
+0x403e71  : call FUN_422a80 (FUNCTION)
+0x403e76  : add esp, 0x10
+0x403e79  : test eax, eax 	(windowInit.cpp:1567)
+0x403e7b  : jne 0xd
+0x403e7d  : mov edx, dword ptr [esi] 	(windowInit.cpp:1569)
+0x403e7f  : push 0
+0x403e81  : push edx
+0x403e82  : call clearSurface (FUNCTION)
+0x403e87  : add esp, 8
+0x403e8a  : pop edi
+0x403e8b  : pop esi
+0x403e8c  : add esp, 0x7c 	(windowInit.cpp:1571)
+0x403e8f  : ret 
+; FUN_422c60
+0x403e90  : sub esp, 0x7c 	(windowInit.cpp:1576)
+0x403e93  : push ebx
+0x403e94  : mov ebx, dword ptr [esp + 0x98] 	(windowInit.cpp:1577)
+0x403e9b  : push esi
+0x403e9c  : mov esi, dword ptr [esp + 0x88]
+0x403ea3  : push edi
+0x403ea4  : push 0
+0x403ea6  : mov eax, dword ptr [esi]
+0x403ea8  : push 0
+0x403eaa  : push ebx
+0x403eab  : push 0x1e0
+0x403eb0  : push 0x280
+0x403eb5  : push esi
+0x403eb6  : call dword ptr [eax + 0x54]
+0x403eb9  : test eax, eax 	(windowInit.cpp:1578)
+0x403ebb  : je 0xa
+0x403ebd  : pop edi
+0x403ebe  : pop esi
+0x403ebf  : or eax, 0xffffffff 	(windowInit.cpp:1580)
+0x403ec2  : pop ebx
+0x403ec3  : add esp, 0x7c 	(windowInit.cpp:1601)
+0x403ec6  : ret 
+0x403ec7  : mov ecx, 0x1e 	(windowInit.cpp:1584)
+0x403ecc  : xor eax, eax
+0x403ece  : lea edi, [esp + 0x10]
+0x403ed2  : lea edx, [esp + 0xc] 	(windowInit.cpp:1589)
+0x403ed6  : rep stosd dword ptr es:[edi], eax
+0x403ed8  : mov ecx, dword ptr [DAT_CAPS (DATA)]
+0x403ede  : mov edi, dword ptr [esp + 0x90]
+0x403ee5  : push 2
+0x403ee7  : push edx
+0x403ee8  : or ch, 0x42
+0x403eeb  : push edi
+0x403eec  : push esi
+0x403eed  : mov dword ptr [esp + 0x84], ecx
+0x403ef4  : mov dword ptr [esp + 0x1c], 0x7c
+0x403efc  : mov dword ptr [esp + 0x20], 1
+0x403f04  : call FUN_422a80 (FUNCTION)
+0x403f09  : add esp, 0x10
+0x403f0c  : test eax, eax 	(windowInit.cpp:1590)
+0x403f0e  : jne 0x45 	(windowInit.cpp:1592)
+0x403f10  : push eax 	(windowInit.cpp:1594)
+0x403f11  : mov eax, dword ptr [edi]
+0x403f13  : push eax
+0x403f14  : call clearSurface (FUNCTION)
+0x403f19  : mov ecx, dword ptr [esp + 0x9c] 	(windowInit.cpp:1596)
+0x403f20  : push 0x4000
+0x403f25  : push 0x1e0
+0x403f2a  : push 0x280
+0x403f2f  : push ecx
+0x403f30  : push esi
+0x403f31  : call FUN_422ac0 (FUNCTION)
+0x403f36  : add esp, 0x1c
+0x403f39  : mov dword ptr [g_DD_DISPLAYRESWIDTH (DATA)], 0x280 	(windowInit.cpp:1597)
+0x403f43  : mov dword ptr [g_DD_DISPLAYRESHEIGHT (DATA)], 0x1e0 	(windowInit.cpp:1598)
+0x403f4d  : mov dword ptr [g_DD_DISPLAYRESDEPTH (DATA)], ebx 	(windowInit.cpp:1599)
+0x403f53  : xor eax, eax 	(windowInit.cpp:1600)
+0x403f55  : pop edi
+0x403f56  : pop esi
+0x403f57  : pop ebx
+0x403f58  : add esp, 0x7c 	(windowInit.cpp:1601)
+0x403f5b  : ret 
+; FUN_422f30
+0x403f60  : mov eax, dword ptr [g_DD_DISPLAYRESWIDTH (DATA)] 	(windowInit.cpp:1606)
+0x403f65  : sub esp, 0x80
+0x403f6b  : push ebx
+0x403f6c  : mov ebx, dword ptr [esp + 0x94]
+0x403f73  : push ebp
+0x403f74  : mov ebp, dword ptr [esp + 0x9c]
+0x403f7b  : push esi
+0x403f7c  : cmp eax, ebx
+0x403f7e  : push edi
+0x403f7f  : jne 0x1e
+0x403f81  : cmp dword ptr [g_DD_DISPLAYRESHEIGHT (DATA)], ebp
+0x403f87  : jne 0x16
+0x403f89  : mov edi, dword ptr [esp + 0xa8]
+0x403f90  : mov eax, dword ptr [g_DD_DISPLAYRESDEPTH (DATA)]
+0x403f95  : cmp eax, edi
+0x403f97  : je 0x105
+0x403f9d  : jmp 0x7
+0x403f9f  : mov edi, dword ptr [esp + 0xa8]
+0x403fa6  : mov esi, dword ptr [esp + 0x94] 	(windowInit.cpp:1616)
+0x403fad  : xor eax, eax
+0x403faf  : push eax
+0x403fb0  : push eax
+0x403fb1  : push edi
+0x403fb2  : mov dword ptr [g_005728d8_dd (DATA)], eax
+0x403fb7  : mov ecx, dword ptr [esi]
+0x403fb9  : push ebp
+0x403fba  : push ebx
+0x403fbb  : push esi
+0x403fbc  : mov dword ptr [esp + 0x28], eax
+0x403fc0  : call dword ptr [ecx + 0x54]
+0x403fc3  : test eax, eax 	(windowInit.cpp:1617)
+0x403fc5  : je 0x59
+0x403fc7  : mov ecx, dword ptr [g_005728d8_dd (DATA)] 	(windowInit.cpp:1620)
+0x403fcd  : test ecx, ecx
+0x403fcf  : jne 0x25
+0x403fd1  : mov edx, dword ptr [esp + 0x9c] 	(windowInit.cpp:1622)
+0x403fd8  : mov eax, dword ptr [esp + 0x98]
+0x403fdf  : push edi
+0x403fe0  : push ebp
+0x403fe1  : push ebx
+0x403fe2  : push edx
+0x403fe3  : push eax
+0x403fe4  : push esi
+0x403fe5  : call FUN_422c60 (FUNCTION)
+0x403fea  : add esp, 0x18
+0x403fed  : xor ecx, ecx 	(windowInit.cpp:1623)
+0x403fef  : test eax, eax
+0x403ff1  : sete cl
+0x403ff4  : jmp 0x4
+0x403ff6  : mov ecx, dword ptr [esp + 0x10]
+0x403ffa  : test eax, eax 	(windowInit.cpp:1625)
+0x403ffc  : je 0x1a
+0x403ffe  : mov ecx, dword ptr [esi] 	(windowInit.cpp:1628)
+0x404000  : push 0
+0x404002  : push 0
+0x404004  : push edi
+0x404005  : push ebp
+0x404006  : push ebx
+0x404007  : push esi
+0x404008  : call dword ptr [ecx + 0x54]
+0x40400b  : pop edi
+0x40400c  : pop esi
+0x40400d  : pop ebp
+0x40400e  : xor eax, eax 	(windowInit.cpp:1656)
+0x404010  : pop ebx
+0x404011  : add esp, 0x80 	(windowInit.cpp:1657)
+0x404017  : ret 
+0x404018  : test ecx, ecx 	(windowInit.cpp:1635)
+0x40401a  : jne 0x82
+0x404020  : mov edx, dword ptr [DAT_CAPS (DATA)] 	(windowInit.cpp:1638)
+0x404026  : mov ecx, 0x1e
+0x40402b  : xor eax, eax
+0x40402d  : lea edi, [esp + 0x18]
+0x404031  : rep stosd dword ptr es:[edi], eax
+0x404033  : mov edi, dword ptr [esp + 0x98] 	(windowInit.cpp:1642)
+0x40403a  : lea eax, [esp + 0x14]
+0x40403e  : push 2
+0x404040  : push eax
+0x404041  : or dh, 0x42
+0x404044  : push edi
+0x404045  : push esi
+0x404046  : mov dword ptr [esp + 0x8c], edx
+0x40404d  : mov dword ptr [esp + 0x24], 0x7c
+0x404055  : mov dword ptr [esp + 0x28], 1
+0x40405d  : call FUN_422a80 (FUNCTION)
+0x404062  : add esp, 0x10
+0x404065  : test eax, eax 	(windowInit.cpp:1643)
+0x404067  : jne 0x3b 	(windowInit.cpp:1645)
+0x404069  : mov ecx, dword ptr [edi] 	(windowInit.cpp:1647)
+0x40406b  : push eax
+0x40406c  : push ecx
+0x40406d  : call clearSurface (FUNCTION)
+0x404072  : mov edx, dword ptr [esp + 0xa4] 	(windowInit.cpp:1649)
+0x404079  : push 0x4000
+0x40407e  : push ebp
+0x40407f  : push ebx
+0x404080  : push edx
+0x404081  : push esi
+0x404082  : call FUN_422ac0 (FUNCTION)
+0x404087  : mov eax, dword ptr [esp + 0xc4] 	(windowInit.cpp:1652)
+0x40408e  : add esp, 0x1c
+0x404091  : mov dword ptr [g_DD_DISPLAYRESWIDTH (DATA)], ebx
+0x404097  : mov dword ptr [g_DD_DISPLAYRESHEIGHT (DATA)], ebp
+0x40409d  : mov dword ptr [g_DD_DISPLAYRESDEPTH (DATA)], eax
+0x4040a2  : xor eax, eax 	(windowInit.cpp:1656)
+0x4040a4  : pop edi
+0x4040a5  : pop esi
+0x4040a6  : pop ebp
+0x4040a7  : pop ebx
+0x4040a8  : add esp, 0x80 	(windowInit.cpp:1657)
+0x4040ae  : ret 
+; FUN_4230b0
+0x4040b0  : sub esp, 0x400 	(windowInit.cpp:1666)
+0x4040b6  : push esi
+0x4040b7  : push edi
+0x4040b8  : mov ecx, 0xff 	(windowInit.cpp:1667)
+0x4040bd  : xor eax, eax
+0x4040bf  : lea edi, [esp + 9]
+0x4040c3  : mov byte ptr [esp + 8], 0
+0x4040c8  : rep stosd dword ptr es:[edi], eax
+0x4040ca  : stosw word ptr es:[edi], ax
+0x4040cc  : push 0 	(windowInit.cpp:1669)
+0x4040ce  : stosb byte ptr es:[edi], al
+0x4040cf  : call dword ptr [->USER32.dll::GetDC (IMPORT)]
+0x4040d5  : mov esi, eax
+0x4040d7  : push 0x26 	(windowInit.cpp:1670)
+0x4040d9  : push esi
+0x4040da  : call dword ptr [->GDI32.dll::GetDeviceCaps (IMPORT)]
+0x4040e0  : test ah, 1 	(windowInit.cpp:1671)
+0x4040e3  : je 0x15
+0x4040e5  : lea eax, [esp + 8] 	(windowInit.cpp:1673)
+0x4040e9  : push eax
+0x4040ea  : push 0x100
+0x4040ef  : push 0
+0x4040f1  : push esi
+0x4040f2  : call dword ptr [->GDI32.dll::GetSystemPaletteEntries (IMPORT)]
+0x4040f8  : jmp 0x1d 	(windowInit.cpp:1675)
+0x4040fa  : xor eax, eax 	(windowInit.cpp:1677)
+0x4040fc  : lea ecx, [esp + 9]
+0x404100  : mov byte ptr [ecx - 1], al 	(windowInit.cpp:1679)
+0x404103  : mov byte ptr [ecx], al 	(windowInit.cpp:1680)
+0x404105  : mov byte ptr [ecx + 1], al 	(windowInit.cpp:1681)
+0x404108  : mov byte ptr [ecx + 2], 0 	(windowInit.cpp:1682)
+0x40410c  : inc eax
+0x40410d  : add ecx, 4
+0x404110  : cmp eax, 0x100
+0x404115  : jl -0x17
+0x404117  : push esi 	(windowInit.cpp:1685)
+0x404118  : push 0
+0x40411a  : call dword ptr [->USER32.dll::ReleaseDC (IMPORT)]
+0x404120  : mov eax, dword ptr [g_dd4 (DATA)] 	(windowInit.cpp:1687)
+0x404125  : test eax, eax
+0x404127  : je 0x3b
+0x404129  : mov esi, dword ptr [esp + 0x40c]
+0x404130  : test esi, esi
+0x404132  : je 0x30
+0x404134  : mov ecx, dword ptr [eax] 	(windowInit.cpp:1692)
+0x404136  : push 0
+0x404138  : lea edx, [esp + 0xc]
+0x40413c  : push esi
+0x40413d  : push edx
+0x40413e  : push 0xc
+0x404140  : push eax
+0x404141  : call dword ptr [ecx + 0x14]
+0x404144  : test eax, eax 	(windowInit.cpp:1693)
+0x404146  : jne 0x21
+0x404148  : mov ecx, dword ptr [g_surface (DATA)]
+0x40414e  : test ecx, ecx
+0x404150  : je 0x17
+0x404152  : mov edx, dword ptr [esi] 	(windowInit.cpp:1695)
+0x404154  : mov eax, dword ptr [ecx]
+0x404156  : push edx
+0x404157  : push ecx
+0x404158  : call dword ptr [eax + 0x7c]
+0x40415b  : pop edi
+0x40415c  : pop esi
+0x40415d  : add esp, 0x400 	(windowInit.cpp:1698)
+0x404163  : ret 
+0x404164  : mov eax, 0x80070057 	(windowInit.cpp:1689)
+0x404169  : pop edi
+0x40416a  : pop esi
+0x40416b  : add esp, 0x400 	(windowInit.cpp:1698)
+0x404171  : ret 
+; PurePrintf
+0x404180  : mov eax, dword ptr [avoidGy_1 (DATA)] 	(pure_api.cpp:160)
+0x404185  : inc eax
+0x404186  : mov dword ptr [avoidGy_1 (DATA)], eax
+0x40418b  : xor eax, eax 	(pure_api.cpp:163)
+0x40418d  : ret  	(pure_api.cpp:164)
+; PurifyIsRunning
+0x404190  : mov eax, dword ptr [avoidGy_2 (DATA)] 	(pure_api.cpp:168)
+0x404195  : inc eax
+0x404196  : mov dword ptr [avoidGy_2 (DATA)], eax
+0x40419b  : xor eax, eax 	(pure_api.cpp:170)
+0x40419d  : ret  	(pure_api.cpp:171)
+; PurifyPrintf
+0x4041a0  : mov eax, dword ptr [avoidGy_3 (DATA)] 	(pure_api.cpp:175)
+0x4041a5  : inc eax
+0x4041a6  : mov dword ptr [avoidGy_3 (DATA)], eax
+0x4041ab  : xor eax, eax 	(pure_api.cpp:178)
+0x4041ad  : ret  	(pure_api.cpp:179)
+; PurifyNewInuse
+0x4041b0  : mov eax, dword ptr [avoidGy_4 (DATA)] 	(pure_api.cpp:183)
+0x4041b5  : inc eax
+0x4041b6  : mov dword ptr [avoidGy_4 (DATA)], eax
+0x4041bb  : xor eax, eax 	(pure_api.cpp:185)
+0x4041bd  : ret  	(pure_api.cpp:186)
+; PurifyAllInuse
+0x4041c0  : mov eax, dword ptr [avoidGy_5 (DATA)] 	(pure_api.cpp:190)
+0x4041c5  : inc eax
+0x4041c6  : mov dword ptr [avoidGy_5 (DATA)], eax
+0x4041cb  : xor eax, eax 	(pure_api.cpp:192)
+0x4041cd  : ret  	(pure_api.cpp:193)
+; PurifyClearInuse
+0x4041d0  : mov eax, dword ptr [avoidGy_6 (DATA)] 	(pure_api.cpp:197)
+0x4041d5  : inc eax
+0x4041d6  : mov dword ptr [avoidGy_6 (DATA)], eax
+0x4041db  : xor eax, eax 	(pure_api.cpp:199)
+0x4041dd  : ret  	(pure_api.cpp:200)
+; PurifyNewLeaks
+0x4041e0  : mov eax, dword ptr [avoidGy_7 (DATA)] 	(pure_api.cpp:204)
+0x4041e5  : inc eax
+0x4041e6  : mov dword ptr [avoidGy_7 (DATA)], eax
+0x4041eb  : xor eax, eax 	(pure_api.cpp:206)
+0x4041ed  : ret  	(pure_api.cpp:207)
+; PurifyAllLeaks
+0x4041f0  : mov eax, dword ptr [avoidGy_8 (DATA)] 	(pure_api.cpp:211)
+0x4041f5  : inc eax
+0x4041f6  : mov dword ptr [avoidGy_8 (DATA)], eax
+0x4041fb  : xor eax, eax 	(pure_api.cpp:213)
+0x4041fd  : ret  	(pure_api.cpp:214)
+; PurifyClearLeaks
+0x404200  : mov eax, dword ptr [avoidGy_9 (DATA)] 	(pure_api.cpp:218)
+0x404205  : inc eax
+0x404206  : mov dword ptr [avoidGy_9 (DATA)], eax
+0x40420b  : xor eax, eax 	(pure_api.cpp:220)
+0x40420d  : ret  	(pure_api.cpp:221)
+; PurifyAllHandlesInuse
+0x404210  : mov eax, dword ptr [avoidGy_10 (DATA)] 	(pure_api.cpp:225)
+0x404215  : inc eax
+0x404216  : mov dword ptr [avoidGy_10 (DATA)], eax
+0x40421b  : xor eax, eax 	(pure_api.cpp:227)
+0x40421d  : ret  	(pure_api.cpp:228)
+; PurifyNewHandlesInuse
+0x404220  : mov eax, dword ptr [avoidGy_11 (DATA)] 	(pure_api.cpp:232)
+0x404225  : inc eax
+0x404226  : mov dword ptr [avoidGy_11 (DATA)], eax
+0x40422b  : xor eax, eax 	(pure_api.cpp:234)
+0x40422d  : ret  	(pure_api.cpp:235)
+; PurifyDescribe
+0x404230  : mov eax, dword ptr [avoidGy_12 (DATA)] 	(pure_api.cpp:239)
+0x404235  : inc eax
+0x404236  : mov dword ptr [avoidGy_12 (DATA)], eax
+0x40423b  : xor eax, eax 	(pure_api.cpp:242)
+0x40423d  : ret  	(pure_api.cpp:243)
+; PurifyWhatColors
+0x404240  : mov eax, dword ptr [avoidGy_13 (DATA)] 	(pure_api.cpp:247)
+0x404245  : inc eax
+0x404246  : mov dword ptr [avoidGy_13 (DATA)], eax
+0x40424b  : xor eax, eax 	(pure_api.cpp:251)
+0x40424d  : ret  	(pure_api.cpp:252)
+; PurifyAssertIsReadable
+0x404250  : mov eax, dword ptr [avoidGy_14 (DATA)] 	(pure_api.cpp:256)
+0x404255  : inc eax
+0x404256  : mov dword ptr [avoidGy_14 (DATA)], eax
+0x40425b  : mov eax, 1 	(pure_api.cpp:260)
+0x404260  : ret  	(pure_api.cpp:261)
+; PurifyAssertIsWritable
+0x404270  : mov eax, dword ptr [avoidGy_15 (DATA)] 	(pure_api.cpp:265)
+0x404275  : inc eax
+0x404276  : mov dword ptr [avoidGy_15 (DATA)], eax
+0x40427b  : mov eax, 1 	(pure_api.cpp:269)
+0x404280  : ret  	(pure_api.cpp:270)
+; PurifyIsReadable
+0x404290  : mov eax, dword ptr [avoidGy_16 (DATA)] 	(pure_api.cpp:274)
+0x404295  : inc eax
+0x404296  : mov dword ptr [avoidGy_16 (DATA)], eax
+0x40429b  : mov eax, 1 	(pure_api.cpp:278)
+0x4042a0  : ret  	(pure_api.cpp:279)
+; PurifyIsWritable
+0x4042b0  : mov eax, dword ptr [avoidGy_17 (DATA)] 	(pure_api.cpp:283)
+0x4042b5  : inc eax
+0x4042b6  : mov dword ptr [avoidGy_17 (DATA)], eax
+0x4042bb  : mov eax, 1 	(pure_api.cpp:287)
+0x4042c0  : ret  	(pure_api.cpp:288)
+; PurifyIsInitialized
+0x4042d0  : mov eax, dword ptr [avoidGy_18 (DATA)] 	(pure_api.cpp:292)
+0x4042d5  : inc eax
+0x4042d6  : mov dword ptr [avoidGy_18 (DATA)], eax
+0x4042db  : mov eax, 1 	(pure_api.cpp:296)
+0x4042e0  : ret  	(pure_api.cpp:297)
+; PurifyRed
+0x4042f0  : mov eax, dword ptr [avoidGy_19 (DATA)] 	(pure_api.cpp:301)
+0x4042f5  : inc eax
+0x4042f6  : mov dword ptr [avoidGy_19 (DATA)], eax
+0x4042fb  : xor eax, eax 	(pure_api.cpp:305)
+0x4042fd  : ret  	(pure_api.cpp:306)
+; PurifyGreen
+0x404300  : mov eax, dword ptr [avoidGy_20 (DATA)] 	(pure_api.cpp:310)
+0x404305  : inc eax
+0x404306  : mov dword ptr [avoidGy_20 (DATA)], eax
+0x40430b  : xor eax, eax 	(pure_api.cpp:314)
+0x40430d  : ret  	(pure_api.cpp:315)
+; PurifyYellow
+0x404310  : mov eax, dword ptr [avoidGy_21 (DATA)] 	(pure_api.cpp:319)
+0x404315  : inc eax
+0x404316  : mov dword ptr [avoidGy_21 (DATA)], eax
+0x40431b  : xor eax, eax 	(pure_api.cpp:323)
+0x40431d  : ret  	(pure_api.cpp:324)
+; PurifyBlue
+0x404320  : mov eax, dword ptr [avoidGy_22 (DATA)] 	(pure_api.cpp:328)
+0x404325  : inc eax
+0x404326  : mov dword ptr [avoidGy_22 (DATA)], eax
+0x40432b  : xor eax, eax 	(pure_api.cpp:332)
+0x40432d  : ret  	(pure_api.cpp:333)
+; PurifyMarkAsInitialized
+0x404330  : mov eax, dword ptr [avoidGy_23 (DATA)] 	(pure_api.cpp:337)
+0x404335  : inc eax
+0x404336  : mov dword ptr [avoidGy_23 (DATA)], eax
+0x40433b  : xor eax, eax 	(pure_api.cpp:341)
+0x40433d  : ret  	(pure_api.cpp:342)
+; PurifyMarkAsUninitialized
+0x404340  : mov eax, dword ptr [avoidGy_24 (DATA)] 	(pure_api.cpp:346)
+0x404345  : inc eax
+0x404346  : mov dword ptr [avoidGy_24 (DATA)], eax
+0x40434b  : xor eax, eax 	(pure_api.cpp:350)
+0x40434d  : ret  	(pure_api.cpp:351)
+; PurifyMarkForTrap
+0x404350  : mov eax, dword ptr [avoidGy_25 (DATA)] 	(pure_api.cpp:355)
+0x404355  : inc eax
+0x404356  : mov dword ptr [avoidGy_25 (DATA)], eax
+0x40435b  : xor eax, eax 	(pure_api.cpp:359)
+0x40435d  : ret  	(pure_api.cpp:360)
+; PurifyMarkForNoTrap
+0x404360  : mov eax, dword ptr [avoidGy_26 (DATA)] 	(pure_api.cpp:364)
+0x404365  : inc eax
+0x404366  : mov dword ptr [avoidGy_26 (DATA)], eax
+0x40436b  : xor eax, eax 	(pure_api.cpp:368)
+0x40436d  : ret  	(pure_api.cpp:369)
+; PurifyHeapValidate
+0x404370  : mov eax, dword ptr [avoidGy_27 (DATA)] 	(pure_api.cpp:373)
+0x404375  : inc eax
+0x404376  : mov dword ptr [avoidGy_27 (DATA)], eax
+0x40437b  : mov eax, 1 	(pure_api.cpp:378)
+0x404380  : ret  	(pure_api.cpp:379)
+; PurifySetLateDetectScanCounter
+0x404390  : mov eax, dword ptr [avoidGy_28 (DATA)] 	(pure_api.cpp:383)
+0x404395  : inc eax
+0x404396  : mov dword ptr [avoidGy_28 (DATA)], eax
+0x40439b  : xor eax, eax 	(pure_api.cpp:386)
+0x40439d  : ret  	(pure_api.cpp:387)
+; PurifySetLateDetectScanInterval
+0x4043a0  : mov eax, dword ptr [avoidGy_29 (DATA)] 	(pure_api.cpp:391)
+0x4043a5  : inc eax
+0x4043a6  : mov dword ptr [avoidGy_29 (DATA)], eax
+0x4043ab  : xor eax, eax 	(pure_api.cpp:394)
+0x4043ad  : ret  	(pure_api.cpp:395)
+; CoverageIsRunning
+0x4043b0  : mov eax, dword ptr [avoidGy_30 (DATA)] 	(pure_api.cpp:399)
+0x4043b5  : inc eax
+0x4043b6  : mov dword ptr [avoidGy_30 (DATA)], eax
+0x4043bb  : xor eax, eax 	(pure_api.cpp:401)
+0x4043bd  : ret  	(pure_api.cpp:402)
+; CoverageDisableRecordingData
+0x4043c0  : mov eax, dword ptr [avoidGy_31 (DATA)] 	(pure_api.cpp:406)
+0x4043c5  : inc eax
+0x4043c6  : mov dword ptr [avoidGy_31 (DATA)], eax
+0x4043cb  : xor eax, eax 	(pure_api.cpp:408)
+0x4043cd  : ret  	(pure_api.cpp:409)
+; CoverageStartRecordingData
+0x4043d0  : mov eax, dword ptr [avoidGy_32 (DATA)] 	(pure_api.cpp:413)
+0x4043d5  : inc eax
+0x4043d6  : mov dword ptr [avoidGy_32 (DATA)], eax
+0x4043db  : xor eax, eax 	(pure_api.cpp:415)
+0x4043dd  : ret  	(pure_api.cpp:416)
+; CoverageStopRecordingData
+0x4043e0  : mov eax, dword ptr [avoidGy_33 (DATA)] 	(pure_api.cpp:420)
+0x4043e5  : inc eax
+0x4043e6  : mov dword ptr [avoidGy_33 (DATA)], eax
+0x4043eb  : xor eax, eax 	(pure_api.cpp:422)
+0x4043ed  : ret  	(pure_api.cpp:423)
+; CoverageClearData
+0x4043f0  : mov eax, dword ptr [avoidGy_34 (DATA)] 	(pure_api.cpp:427)
+0x4043f5  : inc eax
+0x4043f6  : mov dword ptr [avoidGy_34 (DATA)], eax
+0x4043fb  : xor eax, eax 	(pure_api.cpp:429)
+0x4043fd  : ret  	(pure_api.cpp:430)
+; CoverageIsRecordingData
+0x404400  : mov eax, dword ptr [avoidGy_35 (DATA)] 	(pure_api.cpp:434)
+0x404405  : inc eax
+0x404406  : mov dword ptr [avoidGy_35 (DATA)], eax
+0x40440b  : xor eax, eax 	(pure_api.cpp:436)
+0x40440d  : ret  	(pure_api.cpp:437)
+; CoverageAddAnnotation
+0x404410  : mov eax, dword ptr [avoidGy_36 (DATA)] 	(pure_api.cpp:441)
+0x404415  : inc eax
+0x404416  : mov dword ptr [avoidGy_36 (DATA)], eax
+0x40441b  : xor eax, eax 	(pure_api.cpp:444)
+0x40441d  : ret  	(pure_api.cpp:445)
+; CoverageSaveData
+0x404420  : mov eax, dword ptr [avoidGy_37 (DATA)] 	(pure_api.cpp:449)
+0x404425  : inc eax
+0x404426  : mov dword ptr [avoidGy_37 (DATA)], eax
+0x40442b  : xor eax, eax 	(pure_api.cpp:451)
+0x40442d  : ret  	(pure_api.cpp:452)
+; QuantifyIsRunning
+0x404430  : mov eax, dword ptr [avoidGy_38 (DATA)] 	(pure_api.cpp:456)
+0x404435  : inc eax
+0x404436  : mov dword ptr [avoidGy_38 (DATA)], eax
+0x40443b  : xor eax, eax 	(pure_api.cpp:458)
+0x40443d  : ret  	(pure_api.cpp:459)
+; QuantifyDisableRecordingData
+0x404440  : mov eax, dword ptr [avoidGy_39 (DATA)] 	(pure_api.cpp:463)
+0x404445  : inc eax
+0x404446  : mov dword ptr [avoidGy_39 (DATA)], eax
+0x40444b  : xor eax, eax 	(pure_api.cpp:465)
+0x40444d  : ret  	(pure_api.cpp:466)
+; QuantifyStartRecordingData
+0x404450  : mov eax, dword ptr [avoidGy_40 (DATA)] 	(pure_api.cpp:470)
+0x404455  : inc eax
+0x404456  : mov dword ptr [avoidGy_40 (DATA)], eax
+0x40445b  : xor eax, eax 	(pure_api.cpp:472)
+0x40445d  : ret  	(pure_api.cpp:473)
+; QuantifyStopRecordingData
+0x404460  : mov eax, dword ptr [avoidGy_41 (DATA)] 	(pure_api.cpp:477)
+0x404465  : inc eax
+0x404466  : mov dword ptr [avoidGy_41 (DATA)], eax
+0x40446b  : xor eax, eax 	(pure_api.cpp:479)
+0x40446d  : ret  	(pure_api.cpp:480)
+; QuantifyClearData
+0x404470  : mov eax, dword ptr [avoidGy_42 (DATA)] 	(pure_api.cpp:484)
+0x404475  : inc eax
+0x404476  : mov dword ptr [avoidGy_42 (DATA)], eax
+0x40447b  : xor eax, eax 	(pure_api.cpp:486)
+0x40447d  : ret  	(pure_api.cpp:487)
+; QuantifyIsRecordingData
+0x404480  : mov eax, dword ptr [avoidGy_43 (DATA)] 	(pure_api.cpp:491)
+0x404485  : inc eax
+0x404486  : mov dword ptr [avoidGy_43 (DATA)], eax
+0x40448b  : xor eax, eax 	(pure_api.cpp:493)
+0x40448d  : ret  	(pure_api.cpp:494)
+; QuantifyAddAnnotation
+0x404490  : mov eax, dword ptr [avoidGy_44 (DATA)] 	(pure_api.cpp:498)
+0x404495  : inc eax
+0x404496  : mov dword ptr [avoidGy_44 (DATA)], eax
+0x40449b  : xor eax, eax 	(pure_api.cpp:501)
+0x40449d  : ret  	(pure_api.cpp:502)
+; QuantifySaveData
+0x4044a0  : mov eax, dword ptr [avoidGy_45 (DATA)] 	(pure_api.cpp:506)
+0x4044a5  : inc eax
+0x4044a6  : mov dword ptr [avoidGy_45 (DATA)], eax
+0x4044ab  : xor eax, eax 	(pure_api.cpp:508)
+0x4044ad  : ret  	(pure_api.cpp:509)
+; PurelockIsRunning
+0x4044b0  : mov eax, dword ptr [avoidGy_46 (DATA)] 	(pure_api.cpp:513)
+0x4044b5  : inc eax
+0x4044b6  : mov dword ptr [avoidGy_46 (DATA)], eax
+0x4044bb  : xor eax, eax 	(pure_api.cpp:515)
+0x4044bd  : ret  	(pure_api.cpp:516)
+; GetGameBuildVersion
+0x4044c0  : push g_VERSION_TIME[0] (DATA) 	(Game.cpp:25)
+0x4044c5  : push g_VERSION_DATE[0] (DATA)
+0x4044ca  : push g_VERSION_FORMAT[0] (DATA)
+0x4044cf  : push g_VERSION_STRING[0] (DATA)
+0x4044d4  : call _sprintf (FUNCTION)
+0x4044d9  : add esp, 0x10
+0x4044dc  : ret  	(Game.cpp:31)
+; Script_ParseGameConfig
+0x4044e0  : sub esp, 0x80 	(Engine_LevelScript.cpp:585)
+0x4044e6  : push esi
+0x4044e7  : push edi
+0x4044e8  : mov ecx, 0x1f 	(Engine_LevelScript.cpp:588)
+0x4044ed  : xor eax, eax
+0x4044ef  : lea edi, [esp + 9]
+0x4044f3  : mov byte ptr [esp + 8], 0
+0x4044f8  : rep stosd dword ptr es:[edi], eax
+0x4044fa  : stosw word ptr es:[edi], ax
+0x4044fc  : stosb byte ptr es:[edi], al
+0x4044fd  : lea eax, [esp + 8] 	(Engine_LevelScript.cpp:589)
+0x404501  : push "Game.cfg" (STRING)
+0x404506  : push eax
+0x404507  : call _sprintf (FUNCTION)
+0x40450c  : lea ecx, [esp + 0x10] 	(Engine_LevelScript.cpp:590)
+0x404510  : push ecx
+0x404511  : call size_of_file (FUNCTION)
+0x404516  : add esp, 0xc
+0x404519  : test eax, eax 	(Engine_LevelScript.cpp:591)
+0x40451b  : jne 0x3c
+0x40451d  : lea edx, [esp + 8] 	(Engine_LevelScript.cpp:593)
+0x404521  : push "D:\\Game\\Game.cfg" (STRING)
+0x404526  : push edx
+0x404527  : call _sprintf (FUNCTION)
+0x40452c  : lea eax, [esp + 0x10] 	(Engine_LevelScript.cpp:594)
+0x404530  : push eax
+0x404531  : call size_of_file (FUNCTION)
+0x404536  : add esp, 0xc
+0x404539  : test eax, eax 	(Engine_LevelScript.cpp:595)
+0x40453b  : jne 0x1c
+0x40453d  : lea ecx, [esp + 8] 	(Engine_LevelScript.cpp:597)
+0x404541  : push "C:\\Game\\Game.cfg" (STRING)
+0x404546  : push ecx
+0x404547  : call _sprintf (FUNCTION)
+0x40454c  : lea edx, [esp + 0x10] 	(Engine_LevelScript.cpp:598)
+0x404550  : push edx
+0x404551  : call size_of_file (FUNCTION)
+0x404556  : add esp, 0xc
+0x404559  : lea eax, [esp + 8] 	(Engine_LevelScript.cpp:601)
+0x40455d  : push eax
+0x40455e  : call size_of_file (FUNCTION)
+0x404563  : add esp, 4
+0x404566  : test eax, eax 	(Engine_LevelScript.cpp:602)
+0x404568  : je 0xfb
+0x40456e  : push 0x80 	(Engine_LevelScript.cpp:604)
+0x404573  : push g_GameDirectory[0] (DATA)
+0x404578  : lea ecx, [esp + 0x10]
+0x40457c  : push "GAMELOCATION" (STRING)
+0x404581  : push ecx
+0x404582  : call readConfigValue (FUNCTION)
+0x404587  : push g_DISPLAYRESWIDTH (DATA) 	(Engine_LevelScript.cpp:605)
+0x40458c  : lea edx, [esp + 0x1c]
+0x404590  : push "DISPLAYRESWIDTH" (STRING)
+0x404595  : push edx
+0x404596  : call readConfigInt (FUNCTION)
+0x40459b  : push g_DISPLAYRESHEIGHT (DATA) 	(Engine_LevelScript.cpp:606)
+0x4045a0  : lea eax, [esp + 0x28]
+0x4045a4  : push "DISPLAYRESHEIGHT" (STRING)
+0x4045a9  : push eax
+0x4045aa  : call readConfigInt (FUNCTION)
+0x4045af  : push g_DISPLAYRESDEPTH (DATA) 	(Engine_LevelScript.cpp:607)
+0x4045b4  : lea ecx, [esp + 0x34]
+0x4045b8  : push "DISPLAYRESDEPTH" (STRING)
+0x4045bd  : push ecx
+0x4045be  : call readConfigInt (FUNCTION)
+0x4045c3  : push 0x40 	(Engine_LevelScript.cpp:608)
+0x4045c5  : push g_LevelScript (DATA)
+0x4045ca  : lea edx, [esp + 0x44]
+0x4045ce  : push "LEVELSCRIPT" (STRING)
+0x4045d3  : push edx
+0x4045d4  : call readConfigValue (FUNCTION)
+0x4045d9  : add esp, 0x44
+0x4045dc  : push "config\\lvscript.cfg" (STRING) 	(Engine_LevelScript.cpp:610)
+0x4045e1  : call size_of_file (FUNCTION)
+0x4045e6  : mov edi, eax
+0x4045e8  : push edi 	(Engine_LevelScript.cpp:611)
+0x4045e9  : push g_LevelScript (DATA)
+0x4045ee  : push "level script %s, lvscript.cfg size %d" (STRING)
+0x4045f3  : call traceLog (FUNCTION)
+0x4045f8  : add esp, 0x10
+0x4045fb  : test edi, edi 	(Engine_LevelScript.cpp:612)
+0x4045fd  : jle 0x6a
+0x4045ff  : lea eax, [edi + 1] 	(Engine_LevelScript.cpp:614)
+0x404602  : push eax
+0x404603  : call _malloc (FUNCTION)
+0x404608  : mov esi, eax
+0x40460a  : add esp, 4
+0x40460d  : test esi, esi 	(Engine_LevelScript.cpp:615)
+0x40460f  : je 0x4b
+0x404611  : push edi 	(Engine_LevelScript.cpp:617)
+0x404612  : push esi
+0x404613  : push "config\\lvscript.cfg" (STRING)
+0x404618  : call bload (FUNCTION)
+0x40461d  : mov edi, eax
+0x40461f  : push g_LevelScript (DATA) 	(Engine_LevelScript.cpp:620)
+0x404624  : push esi
+0x404625  : mov byte ptr [edi + esi], 0
+0x404629  : call findLevelScriptSection (FUNCTION)
+0x40462e  : push eax
+0x40462f  : push g_LevelScript (DATA)
+0x404634  : push edi
+0x404635  : push "lvscript loaded %d, section %s present %d" (STRING)
+0x40463a  : call traceLog (FUNCTION)
+0x40463f  : push g_LevelScript (DATA) 	(Engine_LevelScript.cpp:621)
+0x404644  : push esi
+0x404645  : call parseLevelScriptSummary (FUNCTION)
+0x40464a  : push esi 	(Engine_LevelScript.cpp:622)
+0x40464b  : call _free (FUNCTION)
+0x404650  : add esp, 0x30
+0x404653  : pop edi
+0x404654  : pop esi
+0x404655  : add esp, 0x80 	(Engine_LevelScript.cpp:632)
+0x40465b  : ret 
+0x40465c  : push "lvscript alloc failed" (STRING) 	(Engine_LevelScript.cpp:626)
+0x404661  : call traceLog (FUNCTION)
+0x404666  : add esp, 4
+0x404669  : pop edi
+0x40466a  : pop esi
+0x40466b  : add esp, 0x80 	(Engine_LevelScript.cpp:632)
+0x404671  : ret 
+; FUN_44b170
+0x405b30  : push edi 	(io_wad.cpp:213)
+0x405b31  : mov edi, g_GameDirectory[0] (DATA)
+0x405b36  : or ecx, 0xffffffff
+0x405b39  : xor eax, eax
+0x405b3b  : repne scasb al, byte ptr es:[edi]
+0x405b3d  : not ecx
+0x405b3f  : dec ecx
+0x405b40  : pop edi
+0x405b41  : mov eax, ecx
+0x405b43  : mov ecx, dword ptr [esp + 4] 	(io_wad.cpp:218)
+0x405b47  : cmp byte ptr [eax + ecx], 0x5c
+0x405b4b  : jne 0xa
+0x405b4d  : mov dl, byte ptr [eax + ecx + 1]
+0x405b51  : inc eax
+0x405b52  : cmp dl, 0x5c
+0x405b55  : je -0xa
+0x405b57  : ret  	(io_wad.cpp:225)
+; FUN_44b140
+0x405b60  : mov eax, dword ptr [esp + 8] 	(io_wad.cpp:230)
+0x405b64  : mov cl, byte ptr [eax]
+0x405b66  : test cl, cl 	(io_wad.cpp:233)
+0x405b68  : je 0x1f
+0x405b6a  : mov edx, dword ptr [esp + 4]
+0x405b6e  : cmp cl, 0x5c 	(io_wad.cpp:235)
+0x405b71  : jne 0x7
+0x405b73  : cmp byte ptr [eax + 1], 0x5c
+0x405b77  : jne 0x1
+0x405b79  : inc eax 	(io_wad.cpp:233)
+0x405b7a  : mov cl, byte ptr [eax] 	(io_wad.cpp:239)
+0x405b7c  : inc eax 	(io_wad.cpp:240)
+0x405b7d  : mov byte ptr [edx], cl 	(io_wad.cpp:241)
+0x405b7f  : inc edx 	(io_wad.cpp:242)
+0x405b80  : mov cl, byte ptr [eax] 	(io_wad.cpp:243)
+0x405b82  : test cl, cl
+0x405b84  : jne -0x18
+0x405b86  : mov byte ptr [edx], cl 	(io_wad.cpp:245)
+0x405b88  : ret  	(io_wad.cpp:247)
+0x405b89  : mov eax, dword ptr [esp + 4] 	(io_wad.cpp:245)
+0x405b8d  : mov byte ptr [eax], 0
+0x405b90  : ret  	(io_wad.cpp:247)
+; WAD_SplitFileName
+0x405ba0  : sub esp, 0x80 	(io_wad.cpp:276)
+0x405ba6  : or ecx, 0xffffffff 	(io_wad.cpp:280)
+0x405ba9  : xor eax, eax
+0x405bab  : lea edx, [esp]
+0x405baf  : push ebx
+0x405bb0  : push ebp
+0x405bb1  : push esi
+0x405bb2  : push edi
+0x405bb3  : mov edi, dword ptr [esp + 0x94]
+0x405bba  : repne scasb al, byte ptr es:[edi]
+0x405bbc  : not ecx
+0x405bbe  : sub edi, ecx
+0x405bc0  : mov eax, ecx
+0x405bc2  : mov esi, edi
+0x405bc4  : mov edi, edx
+0x405bc6  : shr ecx, 2
+0x405bc9  : rep movsd dword ptr es:[edi], dword ptr [esi]
+0x405bcb  : mov ecx, eax
+0x405bcd  : xor eax, eax 	(io_wad.cpp:281)
+0x405bcf  : and ecx, 3
+0x405bd2  : rep movsb byte ptr es:[edi], byte ptr [esi]
+0x405bd4  : lea edi, [esp + 0x10]
+0x405bd8  : or ecx, 0xffffffff
+0x405bdb  : repne scasb al, byte ptr es:[edi]
+0x405bdd  : not ecx
+0x405bdf  : dec ecx
+0x405be0  : mov esi, ecx
+0x405be2  : mov cl, 0x5c 	(io_wad.cpp:286)
+0x405be4  : dec esi
+0x405be5  : cmp byte ptr [esp + esi + 0x10], cl
+0x405be9  : je 0xd
+0x405beb  : test esi, esi
+0x405bed  : jle 0x9
+0x405bef  : mov al, byte ptr [esp + esi + 0xf]
+0x405bf3  : dec esi 	(io_wad.cpp:288)
+0x405bf4  : cmp al, cl
+0x405bf6  : jne -0xd
+0x405bf8  : mov al, byte ptr [esp + esi + 0x10] 	(io_wad.cpp:296)
+0x405bfc  : lea ebx, [esp + esi + 0x10]
+0x405c00  : cmp al, cl
+0x405c02  : jne 0xa
+0x405c04  : mov eax, ebx 	(io_wad.cpp:293)
+0x405c06  : mov dl, byte ptr [eax + 1] 	(io_wad.cpp:296)
+0x405c09  : inc eax 	(io_wad.cpp:298)
+0x405c0a  : cmp dl, cl
+0x405c0c  : je -0x8
+0x405c0e  : lea ecx, [esp + 0x10] 	(io_wad.cpp:304)
+0x405c12  : push ecx
+0x405c13  : call FUN_44b170 (FUNCTION)
+0x405c18  : mov ebp, dword ptr [esp + 0xa0] 	(io_wad.cpp:305)
+0x405c1f  : lea edi, [esp + eax + 0x14]
+0x405c23  : push edi
+0x405c24  : push ebp
+0x405c25  : call FUN_44b140 (FUNCTION)
+0x405c2a  : add esp, 0xc
+0x405c2d  : test esi, esi 	(io_wad.cpp:308)
+0x405c2f  : jge 0xc
+0x405c31  : mov esi, dword ptr [esp + 0x98] 	(io_wad.cpp:310)
+0x405c38  : mov byte ptr [esi], 0
+0x405c3b  : jmp 0x14 	(io_wad.cpp:312)
+0x405c3d  : mov esi, dword ptr [esp + 0x98] 	(io_wad.cpp:315)
+0x405c44  : push edi
+0x405c45  : push esi
+0x405c46  : mov byte ptr [ebx], 0
+0x405c49  : call FUN_44b140 (FUNCTION)
+0x405c4e  : add esp, 8
+0x405c51  : push ebp 	(io_wad.cpp:319)
+0x405c52  : push ebp
+0x405c53  : call tolower (FUNCTION)
+0x405c58  : push esi 	(io_wad.cpp:320)
+0x405c59  : push esi
+0x405c5a  : call tolower (FUNCTION)
+0x405c5f  : add esp, 0x10
+0x405c62  : pop edi
+0x405c63  : pop esi
+0x405c64  : pop ebp
+0x405c65  : pop ebx
+0x405c66  : add esp, 0x80 	(io_wad.cpp:322)
+0x405c6c  : ret 
+; bload
+0x405c70  : sub esp, 0x290 	(io_wad.cpp:326)
+0x405c76  : push ebx
+0x405c77  : push ebp
+0x405c78  : mov ebp, dword ptr [esp + 0x29c] 	(io_wad.cpp:327)
+0x405c7f  : push esi
+0x405c80  : push edi
+0x405c81  : push "rb" (STRING)
+0x405c86  : push ebp
+0x405c87  : call _fopen (UNK)
+0x405c8c  : mov esi, eax
+0x405c8e  : xor ebx, ebx 	(io_wad.cpp:328)
+0x405c90  : add esp, 8
+0x405c93  : cmp esi, ebx
+0x405c95  : jne 0xea
+0x405c9b  : cmp byte ptr [g_GameDirectory[0] (DATA)], bl
+0x405ca1  : je 0x10e
+0x405ca7  : mov ecx, 0x40 	(io_wad.cpp:330)
+0x405cac  : xor eax, eax
+0x405cae  : lea edi, [esp + 0x91]
+0x405cb5  : mov byte ptr [esp + 0x90], bl
+0x405cbc  : rep stosd dword ptr es:[edi], eax
+0x405cbe  : stosw word ptr es:[edi], ax
+0x405cc0  : stosb byte ptr es:[edi], al
+0x405cc1  : mov edi, g_GameDirectory[0] (DATA) 	(io_wad.cpp:331)
+0x405cc6  : or ecx, 0xffffffff
+0x405cc9  : xor eax, eax
+0x405ccb  : lea edx, [esp + 0x90]
+0x405cd2  : repne scasb al, byte ptr es:[edi]
+0x405cd4  : not ecx
+0x405cd6  : sub edi, ecx
+0x405cd8  : mov eax, ecx
+0x405cda  : mov esi, edi
+0x405cdc  : mov edi, edx
+0x405cde  : shr ecx, 2
+0x405ce1  : rep movsd dword ptr es:[edi], dword ptr [esi]
+0x405ce3  : mov ecx, eax
+0x405ce5  : xor eax, eax 	(io_wad.cpp:332)
+0x405ce7  : and ecx, 3
+0x405cea  : rep movsb byte ptr es:[edi], byte ptr [esi]
+0x405cec  : lea edi, [esp + 0x90]
+0x405cf3  : or ecx, 0xffffffff
+0x405cf6  : repne scasb al, byte ptr es:[edi]
+0x405cf8  : not ecx
+0x405cfa  : dec ecx
+0x405cfb  : cmp byte ptr [esp + ecx + 0x8f], 0x5c
+0x405d03  : je 0x37
+0x405d05  : cmp byte ptr [ebp], 0x5c
+0x405d09  : je 0x31
+0x405d0b  : mov edi, "\\" (STRING) 	(io_wad.cpp:334)
+0x405d10  : or ecx, 0xffffffff
+0x405d13  : xor eax, eax
+0x405d15  : lea edx, [esp + 0x90]
+0x405d1c  : repne scasb al, byte ptr es:[edi]
+0x405d1e  : not ecx
+0x405d20  : sub edi, ecx
+0x405d22  : mov esi, edi
+0x405d24  : mov edi, edx
+0x405d26  : mov edx, ecx
+0x405d28  : or ecx, 0xffffffff
+0x405d2b  : repne scasb al, byte ptr es:[edi]
+0x405d2d  : mov ecx, edx
+0x405d2f  : dec edi
+0x405d30  : shr ecx, 2
+0x405d33  : rep movsd dword ptr es:[edi], dword ptr [esi]
+0x405d35  : mov ecx, edx
+0x405d37  : and ecx, 3
+0x405d3a  : rep movsb byte ptr es:[edi], byte ptr [esi]
+0x405d3c  : mov edi, ebp 	(io_wad.cpp:336)
+0x405d3e  : or ecx, 0xffffffff
+0x405d41  : xor eax, eax
+0x405d43  : lea edx, [esp + 0x90]
+0x405d4a  : repne scasb al, byte ptr es:[edi]
+0x405d4c  : not ecx
+0x405d4e  : sub edi, ecx
+0x405d50  : push "rb" (STRING) 	(io_wad.cpp:337)
+0x405d55  : mov esi, edi
+0x405d57  : mov edi, edx
+0x405d59  : mov edx, ecx
+0x405d5b  : or ecx, 0xffffffff
+0x405d5e  : repne scasb al, byte ptr es:[edi]
+0x405d60  : mov ecx, edx
+0x405d62  : dec edi
+0x405d63  : shr ecx, 2
+0x405d66  : rep movsd dword ptr es:[edi], dword ptr [esi]
+0x405d68  : mov ecx, edx
+0x405d6a  : lea eax, [esp + 0x94]
+0x405d71  : and ecx, 3
+0x405d74  : push eax
+0x405d75  : rep movsb byte ptr es:[edi], byte ptr [esi]
+0x405d77  : call _fopen (UNK)
+0x405d7c  : mov esi, eax
+0x405d7e  : add esp, 8
+0x405d81  : cmp esi, ebx 	(io_wad.cpp:339)
+0x405d83  : je 0x30
+0x405d85  : mov ecx, dword ptr [esp + 0x2ac] 	(io_wad.cpp:341)
+0x405d8c  : mov edx, dword ptr [esp + 0x2a8]
+0x405d93  : push esi
+0x405d94  : push ecx
+0x405d95  : push 1
+0x405d97  : push edx
+0x405d98  : call _fread (UNK)
+0x405d9d  : push esi 	(io_wad.cpp:342)
+0x405d9e  : mov edi, eax
+0x405da0  : call _fclose (UNK)
+0x405da5  : add esp, 0x14
+0x405da8  : mov eax, edi 	(io_wad.cpp:374)
+0x405daa  : pop edi
+0x405dab  : pop esi
+0x405dac  : pop ebp
+0x405dad  : pop ebx
+0x405dae  : add esp, 0x290 	(io_wad.cpp:375)
+0x405db4  : ret 
+0x405db5  : mov ecx, 0x1f 	(io_wad.cpp:346)
+0x405dba  : xor eax, eax
+0x405dbc  : lea edi, [esp + 0x11]
+0x405dc0  : mov byte ptr [esp + 0x10], bl
+0x405dc4  : rep stosd dword ptr es:[edi], eax
+0x405dc6  : stosw word ptr es:[edi], ax
+0x405dc8  : stosb byte ptr es:[edi], al
+0x405dc9  : lea eax, [esp + 0x10] 	(io_wad.cpp:347)
+0x405dcd  : push 0x80
+0x405dd2  : push eax
+0x405dd3  : push ebp
+0x405dd4  : call splitPathRoot (FUNCTION)
+0x405dd9  : lea ecx, [esp + 0x1c] 	(io_wad.cpp:348)
+0x405ddd  : push ecx
+0x405dde  : call findWadForRoot (FUNCTION)
+0x405de3  : mov edx, eax
+0x405de5  : add esp, 0x10
+0x405de8  : cmp edx, ebx 	(io_wad.cpp:349)
+0x405dea  : jne 0xd
+0x405dec  : pop edi
+0x405ded  : pop esi
+0x405dee  : pop ebp
+0x405def  : xor eax, eax 	(io_wad.cpp:351)
+0x405df1  : pop ebx
+0x405df2  : add esp, 0x290 	(io_wad.cpp:375)
+0x405df8  : ret 
+0x405df9  : mov ecx, 0x40 	(io_wad.cpp:354)
+0x405dfe  : xor eax, eax
+0x405e00  : lea edi, [esp + 0x195]
+0x405e07  : mov byte ptr [esp + 0x194], bl
+0x405e0e  : rep stosd dword ptr es:[edi], eax
+0x405e10  : stosw word ptr es:[edi], ax
+0x405e12  : stosb byte ptr es:[edi], al
+0x405e13  : lea eax, [esp + 0x194] 	(io_wad.cpp:355)
+0x405e1a  : mov dword ptr [esp + 0x298], ebx
+0x405e21  : push eax
+0x405e22  : push ebp
+0x405e23  : push edx
+0x405e24  : mov dword ptr [esp + 0x2a8], ebx
+0x405e2b  : call findFileInWad (FUNCTION)
+0x405e30  : add esp, 0xc
+0x405e33  : test eax, eax
+0x405e35  : jne 0xb
+0x405e37  : pop edi
+0x405e38  : pop esi
+0x405e39  : pop ebp
+0x405e3a  : pop ebx
+0x405e3b  : add esp, 0x290 	(io_wad.cpp:375)
+0x405e41  : ret 
+0x405e42  : lea ecx, [esp + 0x194] 	(io_wad.cpp:360)
+0x405e49  : push "rb" (STRING)
+0x405e4e  : push ecx
+0x405e4f  : call _fopen (UNK)
+0x405e54  : mov esi, eax
+0x405e56  : add esp, 8
+0x405e59  : cmp esi, ebx 	(io_wad.cpp:361)
+0x405e5b  : jne 0xd
+0x405e5d  : pop edi
+0x405e5e  : pop esi
+0x405e5f  : pop ebp
+0x405e60  : xor eax, eax 	(io_wad.cpp:363)
+0x405e62  : pop ebx
+0x405e63  : add esp, 0x290 	(io_wad.cpp:375)
+0x405e69  : ret 
+0x405e6a  : mov edi, dword ptr [esp + 0x29c] 	(io_wad.cpp:366)
+0x405e71  : mov eax, dword ptr [esp + 0x2ac] 	(io_wad.cpp:367)
+0x405e78  : cmp edi, eax
+0x405e7a  : jle 0x2
+0x405e7c  : mov edi, eax 	(io_wad.cpp:369)
+0x405e7e  : mov edx, dword ptr [esp + 0x298] 	(io_wad.cpp:371)
+0x405e85  : push ebx
+0x405e86  : push edx
+0x405e87  : push esi
+0x405e88  : call _fseek (UNK)
+0x405e8d  : mov eax, dword ptr [esp + 0x2b4] 	(io_wad.cpp:372)
+0x405e94  : push esi
+0x405e95  : push edi
+0x405e96  : push 1
+0x405e98  : push eax
+0x405e99  : call _fread (UNK)
+0x405e9e  : push esi 	(io_wad.cpp:373)
+0x405e9f  : mov edi, eax
+0x405ea1  : call _fclose (UNK)
+0x405ea6  : add esp, 0x20
+0x405ea9  : mov eax, edi 	(io_wad.cpp:374)
+0x405eab  : pop edi
+0x405eac  : pop esi
+0x405ead  : pop ebp
+0x405eae  : pop ebx
+0x405eaf  : add esp, 0x290 	(io_wad.cpp:375)
+0x405eb5  : ret 
+; size_of_file
+0x406240  : sub esp, 0x204 	(io_wad.cpp:379)
+0x406246  : push ebp
+0x406247  : mov ebp, dword ptr [esp + 0x20c] 	(io_wad.cpp:383)
+0x40624e  : push esi
+0x40624f  : lea eax, [esp + 0x1cc]
+0x406256  : push edi
+0x406257  : lea ecx, [esp + 0x190]
+0x40625e  : push eax
+0x40625f  : push ecx
+0x406260  : push ebp
+0x406261  : call WAD_SplitFileName (FUNCTION)
+0x406266  : mov ecx, 0x1f 	(io_wad.cpp:384)
+0x40626b  : xor eax, eax
+0x40626d  : lea edi, [esp + 0x19]
+0x406271  : mov byte ptr [esp + 0x18], 0
+0x406276  : rep stosd dword ptr es:[edi], eax
+0x406278  : stosw word ptr es:[edi], ax
+0x40627a  : lea edx, [esp + 0x18] 	(io_wad.cpp:385)
+0x40627e  : push 0x80
+0x406283  : push edx
+0x406284  : push ebp
+0x406285  : stosb byte ptr es:[edi], al
+0x406286  : call splitPathRoot (FUNCTION)
+0x40628b  : lea eax, [esp + 0x24] 	(io_wad.cpp:386)
+0x40628f  : push eax
+0x406290  : call findWadForRoot (FUNCTION)
+0x406295  : add esp, 0x1c
+0x406298  : test eax, eax 	(io_wad.cpp:387)
+0x40629a  : je 0x12
+0x40629c  : push ebp 	(io_wad.cpp:389)
+0x40629d  : push eax
+0x40629e  : call sizeOfFileInWad (FUNCTION)
+0x4062a3  : add esp, 8
+0x4062a6  : test eax, eax 	(io_wad.cpp:390)
+0x4062a8  : jne 0x12d 	(io_wad.cpp:392)
+0x4062ae  : push "rb" (STRING) 	(io_wad.cpp:532)
+0x4062b3  : push ebp
+0x4062b4  : call _fopen (UNK)
+0x4062b9  : mov esi, eax
+0x4062bb  : add esp, 8
+0x4062be  : test esi, esi 	(io_wad.cpp:533)
+0x4062c0  : jne 0xf8
+0x4062c6  : mov al, byte ptr [g_GameDirectory[0] (DATA)]
+0x4062cb  : test al, al
+0x4062cd  : je 0xdf
+0x4062d3  : mov ecx, 0x40 	(io_wad.cpp:535)
+0x4062d8  : xor eax, eax
+0x4062da  : lea edi, [esp + 0x8d]
+0x4062e1  : mov byte ptr [esp + 0x8c], 0
+0x4062e9  : rep stosd dword ptr es:[edi], eax
+0x4062eb  : stosw word ptr es:[edi], ax
+0x4062ed  : stosb byte ptr es:[edi], al
+0x4062ee  : mov edi, g_GameDirectory[0] (DATA) 	(io_wad.cpp:536)
+0x4062f3  : or ecx, 0xffffffff
+0x4062f6  : xor eax, eax
+0x4062f8  : lea edx, [esp + 0x8c]
+0x4062ff  : repne scasb al, byte ptr es:[edi]
+0x406301  : not ecx
+0x406303  : sub edi, ecx
+0x406305  : mov eax, ecx
+0x406307  : mov esi, edi
+0x406309  : mov edi, edx
+0x40630b  : shr ecx, 2
+0x40630e  : rep movsd dword ptr es:[edi], dword ptr [esi]
+0x406310  : mov ecx, eax
+0x406312  : xor eax, eax 	(io_wad.cpp:537)
+0x406314  : and ecx, 3
+0x406317  : rep movsb byte ptr es:[edi], byte ptr [esi]
+0x406319  : lea edi, [esp + 0x8c]
+0x406320  : or ecx, 0xffffffff
+0x406323  : repne scasb al, byte ptr es:[edi]
+0x406325  : not ecx
+0x406327  : dec ecx
+0x406328  : cmp byte ptr [esp + ecx + 0x8b], 0x5c
+0x406330  : je 0x37
+0x406332  : cmp byte ptr [ebp], 0x5c
+0x406336  : je 0x31
+0x406338  : mov edi, "\\" (STRING) 	(io_wad.cpp:539)
+0x40633d  : or ecx, 0xffffffff
+0x406340  : xor eax, eax
+0x406342  : lea edx, [esp + 0x8c]
+0x406349  : repne scasb al, byte ptr es:[edi]
+0x40634b  : not ecx
+0x40634d  : sub edi, ecx
+0x40634f  : mov esi, edi
+0x406351  : mov edi, edx
+0x406353  : mov edx, ecx
+0x406355  : or ecx, 0xffffffff
+0x406358  : repne scasb al, byte ptr es:[edi]
+0x40635a  : mov ecx, edx
+0x40635c  : dec edi
+0x40635d  : shr ecx, 2
+0x406360  : rep movsd dword ptr es:[edi], dword ptr [esi]
+0x406362  : mov ecx, edx
+0x406364  : and ecx, 3
+0x406367  : rep movsb byte ptr es:[edi], byte ptr [esi]
+0x406369  : mov edi, ebp 	(io_wad.cpp:541)
+0x40636b  : or ecx, 0xffffffff
+0x40636e  : xor eax, eax
+0x406370  : lea edx, [esp + 0x8c]
+0x406377  : repne scasb al, byte ptr es:[edi]
+0x406379  : not ecx
+0x40637b  : sub edi, ecx
+0x40637d  : push "rb" (STRING) 	(io_wad.cpp:542)
+0x406382  : mov esi, edi
+0x406384  : mov ebp, ecx
+0x406386  : mov edi, edx
+0x406388  : or ecx, 0xffffffff
+0x40638b  : repne scasb al, byte ptr es:[edi]
+0x40638d  : mov ecx, ebp
+0x40638f  : dec edi
+0x406390  : shr ecx, 2
+0x406393  : rep movsd dword ptr es:[edi], dword ptr [esi]
+0x406395  : mov ecx, ebp
+0x406397  : lea eax, [esp + 0x90]
+0x40639e  : and ecx, 3
+0x4063a1  : push eax
+0x4063a2  : rep movsb byte ptr es:[edi], byte ptr [esi]
+0x4063a4  : call _fopen (UNK)
+0x4063a9  : mov esi, eax
+0x4063ab  : add esp, 8
+0x4063ae  : test esi, esi 	(io_wad.cpp:544)
+0x4063b0  : jne 0xc
+0x4063b2  : pop edi
+0x4063b3  : pop esi
+0x4063b4  : xor eax, eax 	(io_wad.cpp:546)
+0x4063b6  : pop ebp
+0x4063b7  : add esp, 0x204 	(io_wad.cpp:553)
+0x4063bd  : ret 
+0x4063be  : push 2 	(io_wad.cpp:549)
+0x4063c0  : push 0
+0x4063c2  : push esi
+0x4063c3  : call _fseek (UNK)
+0x4063c8  : push esi 	(io_wad.cpp:550)
+0x4063c9  : call _ftell (UNK)
+0x4063ce  : push esi 	(io_wad.cpp:551)
+0x4063cf  : mov edi, eax
+0x4063d1  : call _fclose (UNK)
+0x4063d6  : add esp, 0x14
+0x4063d9  : mov eax, edi 	(io_wad.cpp:552)
+0x4063db  : pop edi
+0x4063dc  : pop esi
+0x4063dd  : pop ebp
+0x4063de  : add esp, 0x204 	(io_wad.cpp:553)
+0x4063e4  : ret 
+; tolower
+0x406450  : mov edx, dword ptr [esp + 8] 	(io_wad.cpp:557)
+0x406454  : mov al, byte ptr [edx]
+0x406456  : test al, al 	(io_wad.cpp:561)
+0x406458  : je 0x1b
+0x40645a  : mov ecx, dword ptr [esp + 4]
+0x40645e  : inc edx 	(io_wad.cpp:563)
+0x40645f  : cmp al, 0x41 	(io_wad.cpp:564)
+0x406461  : jl 0x6
+0x406463  : cmp al, 0x5a
+0x406465  : jg 0x2
+0x406467  : add al, 0x20 	(io_wad.cpp:566)
+0x406469  : mov byte ptr [ecx], al 	(io_wad.cpp:568)
+0x40646b  : mov al, byte ptr [edx] 	(io_wad.cpp:570)
+0x40646d  : inc ecx
+0x40646e  : test al, al
+0x406470  : jne -0x14
+0x406472  : mov byte ptr [ecx], al 	(io_wad.cpp:572)
+0x406474  : ret  	(io_wad.cpp:575)
+0x406475  : mov eax, dword ptr [esp + 4] 	(io_wad.cpp:572)
+0x406479  : mov byte ptr [eax], 0
+0x40647c  : ret  	(io_wad.cpp:575)
+; __cinit
+0x4065eb  : mov eax, dword ptr [__FPinit (DATA)]
+0x4065f0  : test eax, eax
+0x4065f2  : je 0x2
+0x4065f4  : call eax
+0x4065f6  : push ___xi_z (DATA)
+0x4065fb  : push ___xi_a (DATA)
+0x406600  : call <OFFSET4>
+0x406605  : push ___xc_z (DATA)
+0x40660a  : push ___xc_a (DATA)
+0x40660f  : call <OFFSET4>
+0x406614  : add esp, 0x10
+0x406617  : ret 
+; _exit
+0x406618  : push 0
+0x40661a  : push 0
+0x40661c  : push dword ptr [esp + 0xc]
+0x406620  : call <OFFSET1>
+0x406625  : add esp, 0xc
+0x406628  : ret 
+; __exit
+0x406629  : push 0
+0x40662b  : push 1
+0x40662d  : push dword ptr [esp + 0xc]
+0x406631  : call <OFFSET1>
+0x406636  : add esp, 0xc
+0x406639  : ret 
+; _sprintf
+0x4066ed  : push ebp
+0x4066ee  : mov ebp, esp
+0x4066f0  : sub esp, 0x20
+0x4066f3  : mov eax, dword ptr [ebp + 8]
+0x4066f6  : push esi
+0x4066f7  : mov dword ptr [ebp - 0x18], eax
+0x4066fa  : mov dword ptr [ebp - 0x20], eax
+0x4066fd  : lea eax, [ebp + 0x10]
+0x406700  : mov dword ptr [ebp - 0x14], 0x42
+0x406707  : push eax
+0x406708  : lea eax, [ebp - 0x20]
+0x40670b  : push dword ptr [ebp + 0xc]
+0x40670e  : mov dword ptr [ebp - 0x1c], 0x7fffffff
+0x406715  : push eax
+0x406716  : call __output (UNK)
+0x40671b  : add esp, 0xc
+0x40671e  : dec dword ptr [ebp - 0x1c]
+0x406721  : mov esi, eax
+0x406723  : js 0x8
+0x406725  : mov eax, dword ptr [ebp - 0x20]
+0x406728  : and byte ptr [eax], 0
+0x40672b  : jmp 0xd
+0x40672d  : lea eax, [ebp - 0x20]
+0x406730  : push eax
+0x406731  : push 0
+0x406733  : call __flsbuf (UNK)
+0x406738  : pop ecx
+0x406739  : pop ecx
+0x40673a  : mov eax, esi
+0x40673c  : pop esi
+0x40673d  : leave 
+0x40673e  : ret 
+; _free
+0x40673f  : push esi
+0x406740  : mov esi, dword ptr [esp + 8]
+0x406744  : test esi, esi
+0x406746  : je 0x24
+0x406748  : push esi
+0x406749  : call ___sbh_find_block (FUNCTION)
+0x40674e  : pop ecx
+0x40674f  : test eax, eax
+0x406751  : push esi
+0x406752  : je 0xa
+0x406754  : push eax
+0x406755  : call ___sbh_free_block (FUNCTION)
+0x40675a  : pop ecx
+0x40675b  : pop ecx
+0x40675c  : pop esi
+0x40675d  : ret 
+0x40675e  : push 0
+0x406760  : push dword ptr [__crtheap (DATA)]
+0x406766  : call dword ptr [->KERNEL32.dll::HeapFree (IMPORT)]
+0x40676c  : pop esi
+0x40676d  : ret 
+; _malloc
+0x40676e  : push dword ptr [__newmode (DATA)]
+0x406774  : push dword ptr [esp + 8]
+0x406778  : call __nh_malloc (FUNCTION)
+0x40677d  : pop ecx
+0x40677e  : pop ecx
+0x40677f  : ret 
+; __nh_malloc
+0x406780  : cmp dword ptr [esp + 4], -0x20
+0x406785  : ja 0x22
+0x406787  : push dword ptr [esp + 4]
+0x40678b  : call __heap_alloc (FUNCTION)
+0x406790  : test eax, eax
+0x406792  : pop ecx
+0x406793  : jne 0x16
+0x406795  : cmp dword ptr [esp + 8], eax
+0x406799  : je 0x10
+0x40679b  : push dword ptr [esp + 4]
+0x40679f  : call __callnewh (FUNCTION)
+0x4067a4  : test eax, eax
+0x4067a6  : pop ecx
+0x4067a7  : jne -0x22
+0x4067a9  : xor eax, eax
+0x4067ab  : ret 
+; __heap_alloc
+0x4067ac  : push esi
+0x4067ad  : mov esi, dword ptr [esp + 8]
+0x4067b1  : cmp esi, dword ptr [___sbh_threshold (DATA)]
+0x4067b7  : ja 0xb
+0x4067b9  : push esi
+0x4067ba  : call ___sbh_alloc_block (FUNCTION)
+0x4067bf  : test eax, eax
+0x4067c1  : pop ecx
+0x4067c2  : jne 0x1c
+0x4067c4  : test esi, esi
+0x4067c6  : jne 0x3
+0x4067c8  : push 1
+0x4067ca  : pop esi
+0x4067cb  : add esi, 0xf
+0x4067ce  : and esi, 0xfffffff0
+0x4067d1  : push esi
+0x4067d2  : push 0
+0x4067d4  : push dword ptr [__crtheap (DATA)]
+0x4067da  : call dword ptr [->KERNEL32.dll::HeapAlloc (IMPORT)]
+0x4067e0  : pop esi
+0x4067e1  : ret 
+; _strncpy
+0x4067f0  : mov ecx, dword ptr [esp + 0xc]
+0x4067f4  : push edi
+0x4067f5  : test ecx, ecx
+0x4067f7  : je 0x7a
+0x4067f9  : push esi
+0x4067fa  : push ebx
+0x4067fb  : mov ebx, ecx
+0x4067fd  : mov esi, dword ptr [esp + 0x14]
+0x406801  : test esi, 3
+0x406807  : mov edi, dword ptr [esp + 0x10]
+0x40680b  : jne 0x7
+0x40680d  : shr ecx, 2
+0x406810  : jne 0x6f
+0x406812  : jmp 0x21
+0x406814  : mov al, byte ptr [esi]
+0x406816  : inc esi
+0x406817  : mov byte ptr [edi], al
+0x406819  : inc edi
+0x40681a  : dec ecx
+0x40681b  : je 0x25
+0x40681d  : test al, al
+0x40681f  : je 0x29
+0x406821  : test esi, 3
+0x406827  : jne -0x15
+0x406829  : mov ebx, ecx
+0x40682b  : shr ecx, 2
+0x40682e  : jne 0x51
+0x406830  : and ebx, 3
+0x406833  : je 0xd
+0x406835  : mov al, byte ptr [esi]
+0x406837  : inc esi
+0x406838  : mov byte ptr [edi], al
+0x40683a  : inc edi
+0x40683b  : test al, al
+0x40683d  : je 0x2f
+0x40683f  : dec ebx
+0x406840  : jne -0xd
+0x406842  : mov eax, dword ptr [esp + 0x10]
+0x406846  : pop ebx
+0x406847  : pop esi
+0x406848  : pop edi
+0x406849  : ret 
+0x40684a  : test edi, 3
+0x406850  : je 0x12
+0x406852  : mov byte ptr [edi], al
+0x406854  : inc edi
+0x406855  : dec ecx
+0x406856  : je 0x8a
+0x40685c  : test edi, 3
+0x406862  : jne -0x12
+0x406864  : mov ebx, ecx
+0x406866  : shr ecx, 2
+0x406869  : jne 0x6c
+0x40686b  : mov byte ptr [edi], al
+0x40686d  : inc edi
+0x40686e  : dec ebx
+0x40686f  : jne -0x6
+0x406871  : pop ebx
+0x406872  : pop esi
+0x406873  : mov eax, dword ptr [esp + 8]
+0x406877  : pop edi
+0x406878  : ret 
+0x406879  : mov dword ptr [edi], edx
+0x40687b  : add edi, 4
+0x40687e  : dec ecx
+0x40687f  : je -0x51
+0x406881  : mov edx, 0x7efefeff
+0x406886  : mov eax, dword ptr [esi]
+0x406888  : add edx, eax
+0x40688a  : xor eax, 0xffffffff
+0x40688d  : xor eax, edx
+0x40688f  : mov edx, dword ptr [esi]
+0x406891  : add esi, 4
+0x406894  : test eax, 0x81010100
+0x406899  : je -0x22
+0x40689b  : test dl, dl
+0x40689d  : je 0x2c
+0x40689f  : test dh, dh
+0x4068a1  : je 0x1e
+0x4068a3  : test edx, 0xff0000
+0x4068a9  : je 0xc
+0x4068ab  : test edx, 0xff000000
+0x4068b1  : jne -0x3a
+0x4068b3  : mov dword ptr [edi], edx
+0x4068b5  : jmp 0x18
+0x4068b7  : and edx, 0xffff
+0x4068bd  : mov dword ptr [edi], edx
+0x4068bf  : jmp 0xe
+0x4068c1  : and edx, 0xff
+0x4068c7  : mov dword ptr [edi], edx
+0x4068c9  : jmp 0x4
+0x4068cb  : xor edx, edx
+0x4068cd  : mov dword ptr [edi], edx
+0x4068cf  : add edi, 4
+0x4068d2  : xor eax, eax
+0x4068d4  : dec ecx
+0x4068d5  : je 0xa
+0x4068d7  : xor eax, eax
+0x4068d9  : mov dword ptr [edi], eax
+0x4068db  : add edi, 4
+0x4068de  : dec ecx
+0x4068df  : jne -0x8
+0x4068e1  : and ebx, 3
+0x4068e4  : jne -0x7b
+0x4068e6  : mov eax, dword ptr [esp + 0x10]
+0x4068ea  : pop ebx
+0x4068eb  : pop esi
+0x4068ec  : pop edi
+0x4068ed  : ret 
+; _WinMainCRTStartup
+0x406e38  : push ebp
+0x406e39  : mov ebp, esp
+0x406e3b  : push -1
+0x406e3d  : push <OFFSET1>
+0x406e42  : push __except_handler3 (FUNCTION)
+0x406e47  : mov eax, dword ptr fs:[0]
+0x406e4d  : push eax
+0x406e4e  : mov dword ptr fs:[0], esp
+0x406e55  : sub esp, 0x58
+0x406e58  : push ebx
+0x406e59  : push esi
+0x406e5a  : push edi
+0x406e5b  : mov dword ptr [ebp - 0x18], esp
+0x406e5e  : call dword ptr [->KERNEL32.dll::GetVersion (IMPORT)]
+0x406e64  : xor edx, edx
+0x406e66  : mov dl, ah
+0x406e68  : mov dword ptr [__winminor (DATA)], edx
+0x406e6e  : mov ecx, eax
+0x406e70  : and ecx, 0xff
+0x406e76  : mov dword ptr [__winmajor (DATA)], ecx
+0x406e7c  : shl ecx, 8
+0x406e7f  : add ecx, edx
+0x406e81  : mov dword ptr [__winver (DATA)], ecx
+0x406e87  : shr eax, 0x10
+0x406e8a  : mov dword ptr [__osver (DATA)], eax
+0x406e8f  : xor esi, esi
+0x406e91  : push esi
+0x406e92  : call __heap_init (FUNCTION)
+0x406e97  : pop ecx
+0x406e98  : test eax, eax
+0x406e9a  : jne 0x8
+0x406e9c  : push 0x1c
+0x406e9e  : call <OFFSET9>
+0x406ea3  : pop ecx
+0x406ea4  : mov dword ptr [ebp - 4], esi
+0x406ea7  : call __ioinit (FUNCTION)
+0x406eac  : call dword ptr [->KERNEL32.dll::GetCommandLineA (IMPORT)]
+0x406eb2  : mov dword ptr [__acmdln (DATA)], eax
+0x406eb7  : call ___crtGetEnvironmentStringsA (FUNCTION)
+0x406ebc  : mov dword ptr [__aenvptr (DATA)], eax
+0x406ec1  : call __setargv (FUNCTION)
+0x406ec6  : call __setenvp (FUNCTION)
+0x406ecb  : call __cinit (FUNCTION)
+0x406ed0  : mov dword ptr [ebp - 0x30], esi
+0x406ed3  : lea eax, [ebp - 0x5c]
+0x406ed6  : push eax
+0x406ed7  : call dword ptr [->KERNEL32.dll::GetStartupInfoA (IMPORT)]
+0x406edd  : call __wincmdln (FUNCTION)
+0x406ee2  : mov dword ptr [ebp - 0x64], eax
+0x406ee5  : test byte ptr [ebp - 0x30], 1
+0x406ee9  : je 0x6
+0x406eeb  : movzx eax, word ptr [ebp - 0x2c]
+0x406eef  : jmp 0x3
+0x406ef1  : push 0xa
+0x406ef3  : pop eax
+0x406ef4  : push eax
+0x406ef5  : push dword ptr [ebp - 0x64]
+0x406ef8  : push esi
+0x406ef9  : push esi
+0x406efa  : call dword ptr [->KERNEL32.dll::GetModuleHandleA (IMPORT)]
+0x406f00  : push eax
+0x406f01  : call WinMain (FUNCTION)
+0x406f06  : mov dword ptr [ebp - 0x60], eax
+0x406f09  : push eax
+0x406f0a  : call _exit (FUNCTION)
+0x406f0f  : mov eax, dword ptr [ebp - 0x14]
+0x406f12  : mov ecx, dword ptr [eax]
+0x406f14  : mov ecx, dword ptr [ecx]
+0x406f16  : mov dword ptr [ebp - 0x68], ecx
+0x406f19  : push eax
+0x406f1a  : push ecx
+0x406f1b  : call __XcptFilter (FUNCTION)
+0x406f20  : pop ecx
+0x406f21  : pop ecx
+0x406f22  : ret 
+0x406f23  : mov esp, dword ptr [ebp - 0x18]
+0x406f26  : push dword ptr [ebp - 0x68]
+0x406f29  : call __exit (FUNCTION)
+; __amsg_exit
+0x406f2e  : cmp dword ptr [___error_mode (DATA)], 1
+0x406f35  : jne 0x5
+0x406f37  : call __FF_MSGBANNER (FUNCTION)
+0x406f3c  : push dword ptr [esp + 4]
+0x406f40  : call __NMSG_WRITE (FUNCTION)
+0x406f45  : push 0xff
+0x406f4a  : call dword ptr [->__exit (FUNCTION)]
+0x406f50  : pop ecx
+0x406f51  : pop ecx
+0x406f52  : ret 
+; __heap_init
+0x4081e7  : xor eax, eax
+0x4081e9  : push 0
+0x4081eb  : cmp dword ptr [esp + 8], eax
+0x4081ef  : push 0x1000
+0x4081f4  : sete al
+0x4081f7  : push eax
+0x4081f8  : call dword ptr [->KERNEL32.dll::HeapCreate (IMPORT)]
+0x4081fe  : test eax, eax
+0x408200  : mov dword ptr [__crtheap (DATA)], eax
+0x408205  : je 0x15
+0x408207  : call ___sbh_heap_init (FUNCTION)
+0x40820c  : test eax, eax
+0x40820e  : jne 0xf
+0x408210  : push dword ptr [__crtheap (DATA)]
+0x408216  : call dword ptr [->KERNEL32.dll::HeapDestroy (IMPORT)]
+0x40821c  : xor eax, eax
+0x40821e  : ret 
+0x40821f  : push 1
+0x408221  : pop eax
+0x408222  : ret 
+; ___sbh_heap_init
+0x408223  : push 0x140
+0x408228  : push 0
+0x40822a  : push dword ptr [__crtheap (DATA)]
+0x408230  : call dword ptr [->KERNEL32.dll::HeapAlloc (IMPORT)]
+0x408236  : test eax, eax
+0x408238  : mov dword ptr [___sbh_pHeaderList (DATA)], eax
+0x40823d  : jne 0x1
+0x40823f  : ret 
+0x408240  : and dword ptr [___sbh_pHeaderDefer (DATA)], 0
+0x408247  : and dword ptr [___sbh_cntHeaderList (DATA)], 0
+0x40824e  : push 1
+0x408250  : mov dword ptr [___sbh_pHeaderScan (DATA)], eax
+0x408255  : mov dword ptr [___sbh_sizeHeaderList (DATA)], 0x10
+0x40825f  : pop eax
+0x408260  : ret 
+; ___sbh_find_block
+0x408261  : mov eax, dword ptr [___sbh_cntHeaderList (DATA)]
+0x408266  : lea ecx, [eax + eax*4]
+0x408269  : mov eax, dword ptr [___sbh_pHeaderList (DATA)]
+0x40826e  : lea ecx, [eax + ecx*4]
+0x408271  : cmp eax, ecx
+0x408273  : jae 0x14
+0x408275  : mov edx, dword ptr [esp + 4]
+0x408279  : sub edx, dword ptr [eax + 0xc]
+0x40827c  : cmp edx, 0x100000
+0x408282  : jb 0x7
+0x408284  : add eax, 0x14
+0x408287  : jmp -0x18
+0x408289  : xor eax, eax
+0x40828b  : ret 
+; ___sbh_free_block
+0x40828c  : push ebp
+0x40828d  : mov ebp, esp
+0x40828f  : sub esp, 0x14
+0x408292  : mov edx, dword ptr [ebp + 0xc]
+0x408295  : mov ecx, dword ptr [ebp + 8]
+0x408298  : push ebx
+0x408299  : push esi
+0x40829a  : mov eax, dword ptr [ecx + 0x10]
+0x40829d  : mov esi, edx
+0x40829f  : sub esi, dword ptr [ecx + 0xc]
+0x4082a2  : mov ebx, dword ptr [edx - 4]
+0x4082a5  : add edx, -4
+0x4082a8  : push edi
+0x4082a9  : shr esi, 0xf
+0x4082ac  : mov ecx, esi
+0x4082ae  : mov edi, dword ptr [edx - 4]
+0x4082b1  : imul ecx, ecx, 0x204
+0x4082b7  : dec ebx
+0x4082b8  : mov dword ptr [ebp - 4], edi
+0x4082bb  : lea ecx, [ecx + eax + 0x144]
+0x4082c2  : mov dword ptr [ebp - 0xc], ebx
+0x4082c5  : mov dword ptr [ebp - 0x10], ecx
+0x4082c8  : mov ecx, dword ptr [ebx + edx]
+0x4082cb  : test cl, 1
+0x4082ce  : mov dword ptr [ebp - 8], ecx
+0x4082d1  : jne 0x7f
+0x4082d3  : sar ecx, 4
+0x4082d6  : push 0x3f
+0x4082d8  : dec ecx
+0x4082d9  : pop edi
+0x4082da  : mov dword ptr [ebp + 0xc], ecx
+0x4082dd  : cmp ecx, edi
+0x4082df  : jbe 0x3
+0x4082e1  : mov dword ptr [ebp + 0xc], edi
+0x4082e4  : mov ecx, dword ptr [ebx + edx + 4]
+0x4082e8  : cmp ecx, dword ptr [ebx + edx + 8]
+0x4082ec  : jne 0x48
+0x4082ee  : mov ecx, dword ptr [ebp + 0xc]
+0x4082f1  : cmp ecx, 0x20
+0x4082f4  : jae 0x1c
+0x4082f6  : mov edi, 0x80000000
+0x4082fb  : shr edi, cl
+0x4082fd  : lea ecx, [ecx + eax + 4]
+0x408301  : not edi
+0x408303  : and dword ptr [eax + esi*4 + 0x44], edi
+0x408307  : dec byte ptr [ecx]
+0x408309  : jne 0x2b
+0x40830b  : mov ecx, dword ptr [ebp + 8]
+0x40830e  : and dword ptr [ecx], edi
+0x408310  : jmp 0x24
+0x408312  : add ecx, -0x20
+0x408315  : mov edi, 0x80000000
+0x40831a  : shr edi, cl
+0x40831c  : mov ecx, dword ptr [ebp + 0xc]
+0x40831f  : lea ecx, [ecx + eax + 4]
+0x408323  : not edi
+0x408325  : and dword ptr [eax + esi*4 + 0xc4], edi
+0x40832c  : dec byte ptr [ecx]
+0x40832e  : jne 0x6
+0x408330  : mov ecx, dword ptr [ebp + 8]
+0x408333  : and dword ptr [ecx + 4], edi
+0x408336  : mov ecx, dword ptr [ebx + edx + 8]
+0x40833a  : mov edi, dword ptr [ebx + edx + 4]
+0x40833e  : mov dword ptr [ecx + 4], edi
+0x408341  : mov ecx, dword ptr [ebx + edx + 4]
+0x408345  : mov edi, dword ptr [ebx + edx + 8]
+0x408349  : add ebx, dword ptr [ebp - 8]
+0x40834c  : mov dword ptr [ecx + 8], edi
+0x40834f  : mov dword ptr [ebp - 0xc], ebx
+0x408352  : mov edi, ebx
+0x408354  : sar edi, 4
+0x408357  : dec edi
+0x408358  : cmp edi, 0x3f
+0x40835b  : jbe 0x3
+0x40835d  : push 0x3f
+0x40835f  : pop edi
+0x408360  : mov ecx, dword ptr [ebp - 4]
+0x408363  : and ecx, 1
+0x408366  : mov dword ptr [ebp - 0x14], ecx
+0x408369  : jne 0xa0
+0x40836f  : sub edx, dword ptr [ebp - 4]
+0x408372  : mov ecx, dword ptr [ebp - 4]
+0x408375  : sar ecx, 4
+0x408378  : push 0x3f
+0x40837a  : mov dword ptr [ebp - 8], edx
+0x40837d  : dec ecx
+0x40837e  : pop edx
+0x40837f  : cmp ecx, edx
+0x408381  : mov dword ptr [ebp + 0xc], ecx
+0x408384  : jbe 0x5
+0x408386  : mov dword ptr [ebp + 0xc], edx
+0x408389  : mov ecx, edx
+0x40838b  : add ebx, dword ptr [ebp - 4]
+0x40838e  : mov edi, ebx
+0x408390  : mov dword ptr [ebp - 0xc], ebx
+0x408393  : sar edi, 4
+0x408396  : dec edi
+0x408397  : cmp edi, edx
+0x408399  : jbe 0x2
+0x40839b  : mov edi, edx
+0x40839d  : cmp ecx, edi
+0x40839f  : je 0x6b
+0x4083a1  : mov ecx, dword ptr [ebp - 8]
+0x4083a4  : mov edx, dword ptr [ecx + 4]
+0x4083a7  : cmp edx, dword ptr [ecx + 8]
+0x4083aa  : jne 0x48
+0x4083ac  : mov ecx, dword ptr [ebp + 0xc]
+0x4083af  : cmp ecx, 0x20
+0x4083b2  : jae 0x1c
+0x4083b4  : mov edx, 0x80000000
+0x4083b9  : shr edx, cl
+0x4083bb  : lea ecx, [ecx + eax + 4]
+0x4083bf  : not edx
+0x4083c1  : and dword ptr [eax + esi*4 + 0x44], edx
+0x4083c5  : dec byte ptr [ecx]
+0x4083c7  : jne 0x2b
+0x4083c9  : mov ecx, dword ptr [ebp + 8]
+0x4083cc  : and dword ptr [ecx], edx
+0x4083ce  : jmp 0x24
+0x4083d0  : add ecx, -0x20
+0x4083d3  : mov edx, 0x80000000
+0x4083d8  : shr edx, cl
+0x4083da  : mov ecx, dword ptr [ebp + 0xc]
+0x4083dd  : lea ecx, [ecx + eax + 4]
+0x4083e1  : not edx
+0x4083e3  : and dword ptr [eax + esi*4 + 0xc4], edx
+0x4083ea  : dec byte ptr [ecx]
+0x4083ec  : jne 0x6
+0x4083ee  : mov ecx, dword ptr [ebp + 8]
+0x4083f1  : and dword ptr [ecx + 4], edx
+0x4083f4  : mov ecx, dword ptr [ebp - 8]
+0x4083f7  : mov edx, dword ptr [ecx + 8]
+0x4083fa  : mov ecx, dword ptr [ecx + 4]
+0x4083fd  : mov dword ptr [edx + 4], ecx
+0x408400  : mov ecx, dword ptr [ebp - 8]
+0x408403  : mov edx, dword ptr [ecx + 4]
+0x408406  : mov ecx, dword ptr [ecx + 8]
+0x408409  : mov dword ptr [edx + 8], ecx
+0x40840c  : mov edx, dword ptr [ebp - 8]
+0x40840f  : cmp dword ptr [ebp - 0x14], 0
+0x408413  : jne 0x9
+0x408415  : cmp dword ptr [ebp + 0xc], edi
+0x408418  : je 0x89
+0x40841e  : mov ecx, dword ptr [ebp - 0x10]
+0x408421  : lea ecx, [ecx + edi*8]
+0x408424  : mov ecx, dword ptr [ecx + 4]
+0x408427  : mov dword ptr [edx + 4], ecx
+0x40842a  : mov ecx, dword ptr [ebp - 0x10]
+0x40842d  : lea ecx, [ecx + edi*8]
+0x408430  : mov dword ptr [edx + 8], ecx
+0x408433  : mov dword ptr [ecx + 4], edx
+0x408436  : mov ecx, dword ptr [edx + 4]
+0x408439  : mov dword ptr [ecx + 8], edx
+0x40843c  : mov ecx, dword ptr [edx + 4]
+0x40843f  : cmp ecx, dword ptr [edx + 8]
+0x408442  : jne 0x63
+0x408444  : mov cl, byte ptr [edi + eax + 4]
+0x408448  : cmp edi, 0x20
+0x40844b  : mov byte ptr [ebp + 0xf], cl
+0x40844e  : inc cl
+0x408450  : mov byte ptr [edi + eax + 4], cl
+0x408454  : jae 0x25
+0x408456  : cmp byte ptr [ebp + 0xf], 0
+0x40845a  : jne 0xe
+0x40845c  : mov ebx, 0x80000000
+0x408461  : mov ecx, edi
+0x408463  : shr ebx, cl
+0x408465  : mov ecx, dword ptr [ebp + 8]
+0x408468  : or dword ptr [ecx], ebx
+0x40846a  : mov ebx, 0x80000000
+0x40846f  : mov ecx, edi
+0x408471  : shr ebx, cl
+0x408473  : lea eax, [eax + esi*4 + 0x44]
+0x408477  : or dword ptr [eax], ebx
+0x408479  : jmp 0x29
+0x40847b  : cmp byte ptr [ebp + 0xf], 0
+0x40847f  : jne 0x10
+0x408481  : lea ecx, [edi - 0x20]
+0x408484  : mov ebx, 0x80000000
+0x408489  : shr ebx, cl
+0x40848b  : mov ecx, dword ptr [ebp + 8]
+0x40848e  : or dword ptr [ecx + 4], ebx
+0x408491  : lea ecx, [edi - 0x20]
+0x408494  : mov edi, 0x80000000
+0x408499  : shr edi, cl
+0x40849b  : lea eax, [eax + esi*4 + 0xc4]
+0x4084a2  : or dword ptr [eax], edi
+0x4084a4  : mov ebx, dword ptr [ebp - 0xc]
+0x4084a7  : mov eax, dword ptr [ebp - 0x10]
+0x4084aa  : mov dword ptr [edx], ebx
+0x4084ac  : mov dword ptr [ebx + edx - 4], ebx
+0x4084b0  : dec dword ptr [eax]
+0x4084b2  : jne 0xfa
+0x4084b8  : mov eax, dword ptr [___sbh_pHeaderDefer (DATA)]
+0x4084bd  : test eax, eax
+0x4084bf  : je 0xdf
+0x4084c5  : mov ecx, dword ptr [___sbh_indGroupDefer (DATA)]
+0x4084cb  : mov edi, dword ptr [KERNEL32.dll::VirtualFree (IMPORT)]
+0x4084d1  : shl ecx, 0xf
+0x4084d4  : add ecx, dword ptr [eax + 0xc]
+0x4084d7  : mov ebx, 0x8000
+0x4084dc  : push 0x4000
+0x4084e1  : push ebx
+0x4084e2  : push ecx
+0x4084e3  : call edi
+0x4084e5  : mov ecx, dword ptr [___sbh_indGroupDefer (DATA)]
+0x4084eb  : mov eax, dword ptr [___sbh_pHeaderDefer (DATA)]
+0x4084f0  : mov edx, 0x80000000
+0x4084f5  : shr edx, cl
+0x4084f7  : or dword ptr [eax + 8], edx
+0x4084fa  : mov eax, dword ptr [___sbh_pHeaderDefer (DATA)]
+0x4084ff  : mov ecx, dword ptr [___sbh_indGroupDefer (DATA)]
+0x408505  : mov eax, dword ptr [eax + 0x10]
+0x408508  : and dword ptr [eax + ecx*4 + 0xc4], 0
+0x408510  : mov eax, dword ptr [___sbh_pHeaderDefer (DATA)]
+0x408515  : mov eax, dword ptr [eax + 0x10]
+0x408518  : dec byte ptr [eax + 0x43]
+0x40851b  : mov eax, dword ptr [___sbh_pHeaderDefer (DATA)]
+0x408520  : mov ecx, dword ptr [eax + 0x10]
+0x408523  : cmp byte ptr [ecx + 0x43], 0
+0x408527  : jne 0x9
+0x408529  : and dword ptr [eax + 4], 0xfffffffe
+0x40852d  : mov eax, dword ptr [___sbh_pHeaderDefer (DATA)]
+0x408532  : cmp dword ptr [eax + 8], -1
+0x408536  : jne 0x6c
+0x408538  : push ebx
+0x408539  : push 0
+0x40853b  : push dword ptr [eax + 0xc]
+0x40853e  : call edi
+0x408540  : mov eax, dword ptr [___sbh_pHeaderDefer (DATA)]
+0x408545  : push dword ptr [eax + 0x10]
+0x408548  : push 0
+0x40854a  : push dword ptr [__crtheap (DATA)]
+0x408550  : call dword ptr [->KERNEL32.dll::HeapFree (IMPORT)]
+0x408556  : mov eax, dword ptr [___sbh_cntHeaderList (DATA)]
+0x40855b  : mov edx, dword ptr [___sbh_pHeaderList (DATA)]
+0x408561  : lea eax, [eax + eax*4]
+0x408564  : shl eax, 2
+0x408567  : mov ecx, eax
+0x408569  : mov eax, dword ptr [___sbh_pHeaderDefer (DATA)]
+0x40856e  : sub ecx, eax
+0x408570  : lea ecx, [ecx + edx - 0x14]
+0x408574  : push ecx
+0x408575  : lea ecx, [eax + 0x14]
+0x408578  : push ecx
+0x408579  : push eax
+0x40857a  : call _memmove (DATA)
+0x40857f  : mov eax, dword ptr [ebp + 8]
+0x408582  : add esp, 0xc
+0x408585  : dec dword ptr [___sbh_cntHeaderList (DATA)]
+0x40858b  : cmp eax, dword ptr [___sbh_pHeaderDefer (DATA)]
+0x408591  : jbe 0x3
+0x408593  : sub eax, 0x14
+0x408596  : mov ecx, dword ptr [___sbh_pHeaderList (DATA)]
+0x40859c  : mov dword ptr [___sbh_pHeaderScan (DATA)], ecx
+0x4085a2  : jmp 0x3
+0x4085a4  : mov eax, dword ptr [ebp + 8]
+0x4085a7  : mov dword ptr [___sbh_pHeaderDefer (DATA)], eax
+0x4085ac  : mov dword ptr [___sbh_indGroupDefer (DATA)], esi
+0x4085b2  : pop edi
+0x4085b3  : pop esi
+0x4085b4  : pop ebx
+0x4085b5  : leave 
+0x4085b6  : ret 
+; ___sbh_alloc_block
+0x4085b7  : push ebp
+0x4085b8  : mov ebp, esp
+0x4085ba  : sub esp, 0x14
+0x4085bd  : mov eax, dword ptr [___sbh_cntHeaderList (DATA)]
+0x4085c2  : mov edx, dword ptr [___sbh_pHeaderList (DATA)]
+0x4085c8  : push ebx
+0x4085c9  : push esi
+0x4085ca  : lea eax, [eax + eax*4]
+0x4085cd  : push edi
+0x4085ce  : lea edi, [edx + eax*4]
+0x4085d1  : mov eax, dword ptr [ebp + 8]
+0x4085d4  : mov dword ptr [ebp - 4], edi
+0x4085d7  : lea ecx, [eax + 0x17]
+0x4085da  : and ecx, 0xfffffff0
+0x4085dd  : mov dword ptr [ebp - 0x10], ecx
+0x4085e0  : sar ecx, 4
+0x4085e3  : dec ecx
+0x4085e4  : cmp ecx, 0x20
+0x4085e7  : jge 0xe
+0x4085e9  : or esi, 0xffffffff
+0x4085ec  : shr esi, cl
+0x4085ee  : or dword ptr [ebp - 8], 0xffffffff
+0x4085f2  : mov dword ptr [ebp - 0xc], esi
+0x4085f5  : jmp 0x10
+0x4085f7  : add ecx, -0x20
+0x4085fa  : or eax, 0xffffffff
+0x4085fd  : xor esi, esi
+0x4085ff  : shr eax, cl
+0x408601  : mov dword ptr [ebp - 0xc], esi
+0x408604  : mov dword ptr [ebp - 8], eax
+0x408607  : mov eax, dword ptr [___sbh_pHeaderScan (DATA)]
+0x40860c  : mov ebx, eax
+0x40860e  : cmp ebx, edi
+0x408610  : mov dword ptr [ebp + 8], ebx
+0x408613  : jae 0x19
+0x408615  : mov ecx, dword ptr [ebx + 4]
+0x408618  : mov edi, dword ptr [ebx]
+0x40861a  : and ecx, dword ptr [ebp - 8]
+0x40861d  : and edi, esi
+0x40861f  : or ecx, edi
+0x408621  : jne 0xb
+0x408623  : add ebx, 0x14
+0x408626  : cmp ebx, dword ptr [ebp - 4]
+0x408629  : mov dword ptr [ebp + 8], ebx
+0x40862c  : jb -0x19
+0x40862e  : cmp ebx, dword ptr [ebp - 4]
+0x408631  : jne 0x79
+0x408633  : mov ebx, edx
+0x408635  : cmp ebx, eax
+0x408637  : mov dword ptr [ebp + 8], ebx
+0x40863a  : jae 0x15
+0x40863c  : mov ecx, dword ptr [ebx + 4]
+0x40863f  : mov edi, dword ptr [ebx]
+0x408641  : and ecx, dword ptr [ebp - 8]
+0x408644  : and edi, esi
+0x408646  : or ecx, edi
+0x408648  : jne 0x5
+0x40864a  : add ebx, 0x14
+0x40864d  : jmp -0x1a
+0x40864f  : cmp ebx, eax
+0x408651  : jne 0x59
+0x408653  : cmp ebx, dword ptr [ebp - 4]
+0x408656  : jae 0x11
+0x408658  : cmp dword ptr [ebx + 8], 0
+0x40865c  : jne 0x8
+0x40865e  : add ebx, 0x14
+0x408661  : mov dword ptr [ebp + 8], ebx
+0x408664  : jmp -0x13
+0x408666  : cmp ebx, dword ptr [ebp - 4]
+0x408669  : jne 0x26
+0x40866b  : mov ebx, edx
+0x40866d  : cmp ebx, eax
+0x40866f  : mov dword ptr [ebp + 8], ebx
+0x408672  : jae 0xd
+0x408674  : cmp dword ptr [ebx + 8], 0
+0x408678  : jne 0x5
+0x40867a  : add ebx, 0x14
+0x40867d  : jmp -0x12
+0x40867f  : cmp ebx, eax
+0x408681  : jne 0xe
+0x408683  : call ___sbh_alloc_new_region (DATA)
+0x408688  : mov ebx, eax
+0x40868a  : test ebx, ebx
+0x40868c  : mov dword ptr [ebp + 8], ebx
+0x40868f  : je 0x14
+0x408691  : push ebx
+0x408692  : call ___sbh_alloc_new_group (DATA)
+0x408697  : pop ecx
+0x408698  : mov ecx, dword ptr [ebx + 0x10]
+0x40869b  : mov dword ptr [ecx], eax
+0x40869d  : mov eax, dword ptr [ebx + 0x10]
+0x4086a0  : cmp dword ptr [eax], -1
+0x4086a3  : jne 0x7
+0x4086a5  : xor eax, eax
+0x4086a7  : jmp 0x20f
+0x4086ac  : mov dword ptr [___sbh_pHeaderScan (DATA)], ebx
+0x4086b2  : mov eax, dword ptr [ebx + 0x10]
+0x4086b5  : mov edx, dword ptr [eax]
+0x4086b7  : cmp edx, -1
+0x4086ba  : mov dword ptr [ebp - 4], edx
+0x4086bd  : je 0x14
+0x4086bf  : mov ecx, dword ptr [eax + edx*4 + 0xc4]
+0x4086c6  : mov edi, dword ptr [eax + edx*4 + 0x44]
+0x4086ca  : and ecx, dword ptr [ebp - 8]
+0x4086cd  : and edi, esi
+0x4086cf  : or ecx, edi
+0x4086d1  : jne 0x37
+0x4086d3  : mov edx, dword ptr [eax + 0xc4]
+0x4086d9  : mov esi, dword ptr [eax + 0x44]
+0x4086dc  : and edx, dword ptr [ebp - 8]
+0x4086df  : and esi, dword ptr [ebp - 0xc]
+0x4086e2  : and dword ptr [ebp - 4], 0
+0x4086e6  : lea ecx, [eax + 0x44]
+0x4086e9  : or edx, esi
+0x4086eb  : mov esi, dword ptr [ebp - 0xc]
+0x4086ee  : jne 0x17
+0x4086f0  : mov edx, dword ptr [ecx + 0x84]
+0x4086f6  : inc dword ptr [ebp - 4]
+0x4086f9  : and edx, dword ptr [ebp - 8]
+0x4086fc  : add ecx, 4
+0x4086ff  : mov edi, esi
+0x408701  : and edi, dword ptr [ecx]
+0x408703  : or edx, edi
+0x408705  : je -0x17
+0x408707  : mov edx, dword ptr [ebp - 4]
+0x40870a  : mov ecx, edx
+0x40870c  : xor edi, edi
+0x40870e  : imul ecx, ecx, 0x204
+0x408714  : lea ecx, [ecx + eax + 0x144]
+0x40871b  : mov dword ptr [ebp - 0xc], ecx
+0x40871e  : mov ecx, dword ptr [eax + edx*4 + 0x44]
+0x408722  : and ecx, esi
+0x408724  : jne 0xd
+0x408726  : mov ecx, dword ptr [eax + edx*4 + 0xc4]
+0x40872d  : push 0x20
+0x40872f  : and ecx, dword ptr [ebp - 8]
+0x408732  : pop edi
+0x408733  : test ecx, ecx
+0x408735  : jl 0x5
+0x408737  : shl ecx, 1
+0x408739  : inc edi
+0x40873a  : jmp -0x9
+0x40873c  : mov ecx, dword ptr [ebp - 0xc]
+0x40873f  : mov edx, dword ptr [ecx + edi*8 + 4]
+0x408743  : mov ecx, dword ptr [edx]
+0x408745  : sub ecx, dword ptr [ebp - 0x10]
+0x408748  : mov esi, ecx
+0x40874a  : mov dword ptr [ebp - 8], ecx
+0x40874d  : sar esi, 4
+0x408750  : dec esi
+0x408751  : cmp esi, 0x3f
+0x408754  : jle 0x3
+0x408756  : push 0x3f
+0x408758  : pop esi
+0x408759  : cmp esi, edi
+0x40875b  : je 0x10d
+0x408761  : mov ecx, dword ptr [edx + 4]
+0x408764  : cmp ecx, dword ptr [edx + 8]
+0x408767  : jne 0x61
+0x408769  : cmp edi, 0x20
+0x40876c  : jge 0x2b
+0x40876e  : mov ebx, 0x80000000
+0x408773  : mov ecx, edi
+0x408775  : shr ebx, cl
+0x408777  : mov ecx, dword ptr [ebp - 4]
+0x40877a  : lea edi, [eax + edi + 4]
+0x40877e  : not ebx
+0x408780  : mov dword ptr [ebp - 0x14], ebx
+0x408783  : and ebx, dword ptr [eax + ecx*4 + 0x44]
+0x408787  : mov dword ptr [eax + ecx*4 + 0x44], ebx
+0x40878b  : dec byte ptr [edi]
+0x40878d  : jne 0x38
+0x40878f  : mov ebx, dword ptr [ebp + 8]
+0x408792  : mov ecx, dword ptr [ebp - 0x14]
+0x408795  : and dword ptr [ebx], ecx
+0x408797  : jmp 0x31
+0x408799  : lea ecx, [edi - 0x20]
+0x40879c  : mov ebx, 0x80000000
+0x4087a1  : shr ebx, cl
+0x4087a3  : mov ecx, dword ptr [ebp - 4]
+0x4087a6  : lea edi, [eax + edi + 4]
+0x4087aa  : lea ecx, [eax + ecx*4 + 0xc4]
+0x4087b1  : not ebx
+0x4087b3  : and dword ptr [ecx], ebx
+0x4087b5  : dec byte ptr [edi]
+0x4087b7  : mov dword ptr [ebp - 0x14], ebx
+0x4087ba  : jne 0xb
+0x4087bc  : mov ebx, dword ptr [ebp + 8]
+0x4087bf  : mov ecx, dword ptr [ebp - 0x14]
+0x4087c2  : and dword ptr [ebx + 4], ecx
+0x4087c5  : jmp 0x3
+0x4087c7  : mov ebx, dword ptr [ebp + 8]
+0x4087ca  : mov ecx, dword ptr [edx + 8]
+0x4087cd  : mov edi, dword ptr [edx + 4]
+0x4087d0  : cmp dword ptr [ebp - 8], 0
+0x4087d4  : mov dword ptr [ecx + 4], edi
+0x4087d7  : mov ecx, dword ptr [edx + 4]
+0x4087da  : mov edi, dword ptr [edx + 8]
+0x4087dd  : mov dword ptr [ecx + 8], edi
+0x4087e0  : je 0x94
+0x4087e6  : mov ecx, dword ptr [ebp - 0xc]
+0x4087e9  : mov edi, dword ptr [ecx + esi*8 + 4]
+0x4087ed  : lea ecx, [ecx + esi*8]
+0x4087f0  : mov dword ptr [edx + 4], edi
+0x4087f3  : mov dword ptr [edx + 8], ecx
+0x4087f6  : mov dword ptr [ecx + 4], edx
+0x4087f9  : mov ecx, dword ptr [edx + 4]
+0x4087fc  : mov dword ptr [ecx + 8], edx
+0x4087ff  : mov ecx, dword ptr [edx + 4]
+0x408802  : cmp ecx, dword ptr [edx + 8]
+0x408805  : jne 0x64
+0x408807  : mov cl, byte ptr [esi + eax + 4]
+0x40880b  : cmp esi, 0x20
+0x40880e  : mov byte ptr [ebp + 0xb], cl
+0x408811  : jge 0x29
+0x408813  : inc cl
+0x408815  : cmp byte ptr [ebp + 0xb], 0
+0x408819  : mov byte ptr [esi + eax + 4], cl
+0x40881d  : jne 0xb
+0x40881f  : mov edi, 0x80000000
+0x408824  : mov ecx, esi
+0x408826  : shr edi, cl
+0x408828  : or dword ptr [ebx], edi
+0x40882a  : mov edi, 0x80000000
+0x40882f  : mov ecx, esi
+0x408831  : shr edi, cl
+0x408833  : mov ecx, dword ptr [ebp - 4]
+0x408836  : or dword ptr [eax + ecx*4 + 0x44], edi
+0x40883a  : jmp 0x2f
+0x40883c  : inc cl
+0x40883e  : cmp byte ptr [ebp + 0xb], 0
+0x408842  : mov byte ptr [esi + eax + 4], cl
+0x408846  : jne 0xd
+0x408848  : lea ecx, [esi - 0x20]
+0x40884b  : mov edi, 0x80000000
+0x408850  : shr edi, cl
+0x408852  : or dword ptr [ebx + 4], edi
+0x408855  : mov ecx, dword ptr [ebp - 4]
+0x408858  : lea edi, [eax + ecx*4 + 0xc4]
+0x40885f  : lea ecx, [esi - 0x20]
+0x408862  : mov esi, 0x80000000
+0x408867  : shr esi, cl
+0x408869  : or dword ptr [edi], esi
+0x40886b  : mov ecx, dword ptr [ebp - 8]
+0x40886e  : test ecx, ecx
+0x408870  : je 0xb
+0x408872  : mov dword ptr [edx], ecx
+0x408874  : mov dword ptr [ecx + edx - 4], ecx
+0x408878  : jmp 0x3
+0x40887a  : mov ecx, dword ptr [ebp - 8]
+0x40887d  : mov esi, dword ptr [ebp - 0x10]
+0x408880  : add edx, ecx
+0x408882  : lea ecx, [esi + 1]
+0x408885  : mov dword ptr [edx], ecx
+0x408887  : mov dword ptr [edx + esi - 4], ecx
+0x40888b  : mov esi, dword ptr [ebp - 0xc]
+0x40888e  : mov ecx, dword ptr [esi]
+0x408890  : test ecx, ecx
+0x408892  : lea edi, [ecx + 1]
+0x408895  : mov dword ptr [esi], edi
+0x408897  : jne 0x1a
+0x408899  : cmp ebx, dword ptr [___sbh_pHeaderDefer (DATA)]
+0x40889f  : jne 0x12
+0x4088a1  : mov ecx, dword ptr [ebp - 4]
+0x4088a4  : cmp ecx, dword ptr [___sbh_indGroupDefer (DATA)]
+0x4088aa  : jne 0x7
+0x4088ac  : and dword ptr [___sbh_pHeaderDefer (DATA)], 0
+0x4088b3  : mov ecx, dword ptr [ebp - 4]
+0x4088b6  : mov dword ptr [eax], ecx
+0x4088b8  : lea eax, [edx + 4]
+0x4088bb  : pop edi
+0x4088bc  : pop esi
+0x4088bd  : pop ebx
+0x4088be  : leave 
+0x4088bf  : ret 
+; __callnewh
+0x408a6c  : mov eax, dword ptr [?_pnhHeap@@3P6AHI@ZA (DATA)]
+0x408a71  : test eax, eax
+0x408a73  : je 0xf
+0x408a75  : push dword ptr [esp + 4]
+0x408a79  : call eax
+0x408a7b  : test eax, eax
+0x408a7d  : pop ecx
+0x408a7e  : je 0x4
+0x408a80  : push 1
+0x408a82  : pop eax
+0x408a83  : ret 
+0x408a84  : xor eax, eax
+0x408a86  : ret 
+; _memcpy
+0x408eb0  : push ebp
+0x408eb1  : mov ebp, esp
+0x408eb3  : push edi
+0x408eb4  : push esi
+0x408eb5  : mov esi, dword ptr [ebp + 0xc]
+0x408eb8  : mov ecx, dword ptr [ebp + 0x10]
+0x408ebb  : mov edi, dword ptr [ebp + 8]
+0x408ebe  : mov eax, ecx
+0x408ec0  : mov edx, ecx
+0x408ec2  : add eax, esi
+0x408ec4  : cmp edi, esi
+0x408ec6  : jbe 0x8
+0x408ec8  : cmp edi, eax
+0x408eca  : jb 0x178
+0x408ed0  : test edi, 3
+0x408ed6  : jne 0x14
+0x408ed8  : shr ecx, 2
+0x408edb  : and edx, 3
+0x408ede  : cmp ecx, 8
+0x408ee1  : jb 0x29
+0x408ee3  : rep movsd dword ptr es:[edi], dword ptr [esi]
+0x408ee5  : jmp dword ptr [edx*4 + <OFFSET1>]
+0x408eec  : mov eax, edi
+0x408eee  : mov edx, 3
+0x408ef3  : sub ecx, 4
+0x408ef6  : jb 0xc
+0x408ef8  : and eax, 3
+0x408efb  : add ecx, eax
+0x408efd  : jmp dword ptr [eax*4 + <OFFSET2>]
+0x408f04  : jmp dword ptr [ecx*4 + <OFFSET3>]
+0x408f0b  : nop 
+0x408f0c  : jmp dword ptr [ecx*4 + <OFFSET4>]
+; __ioinit
+0x4091e5  : sub esp, 0x44
+0x4091e8  : push ebx
+0x4091e9  : push ebp
+0x4091ea  : push esi
+0x4091eb  : push edi
+0x4091ec  : push 0x100
+0x4091f1  : call _malloc (FUNCTION)
+0x4091f6  : mov esi, eax
+0x4091f8  : pop ecx
+0x4091f9  : test esi, esi
+0x4091fb  : jne 0x8
+0x4091fd  : push 0x1b
+0x4091ff  : call __amsg_exit (FUNCTION)
+0x409204  : pop ecx
+0x409205  : mov dword ptr [___pioinfo (DATA)], esi
+0x40920b  : mov dword ptr [__nhandle (DATA)], 0x20
+0x409215  : lea eax, [esi + 0x100]
+0x40921b  : cmp esi, eax
+0x40921d  : jae 0x1a
+0x40921f  : and byte ptr [esi + 4], 0
+0x409223  : or dword ptr [esi], 0xffffffff
+0x409226  : mov byte ptr [esi + 5], 0xa
+0x40922a  : mov eax, dword ptr [___pioinfo (DATA)]
+0x40922f  : add esi, 8
+0x409232  : add eax, 0x100
+0x409237  : jmp -0x1e
+0x409239  : lea eax, [esp + 0x10]
+0x40923d  : push eax
+0x40923e  : call dword ptr [->KERNEL32.dll::GetStartupInfoA (IMPORT)]
+0x409244  : cmp word ptr [esp + 0x42], 0
+0x40924a  : je 0xc5
+0x409250  : mov eax, dword ptr [esp + 0x44]
+0x409254  : test eax, eax
+0x409256  : je 0xb9
+0x40925c  : mov esi, dword ptr [eax]
+0x40925e  : lea ebp, [eax + 4]
+0x409261  : mov eax, 0x800
+0x409266  : cmp esi, eax
+0x409268  : lea ebx, [esi + ebp]
+0x40926b  : jl 0x2
+0x40926d  : mov esi, eax
+0x40926f  : cmp dword ptr [__nhandle (DATA)], esi
+0x409275  : jge 0x52
+0x409277  : mov edi, ___pioinfo+4 (OFFSET)
+0x40927c  : push 0x100
+0x409281  : call _malloc (FUNCTION)
+0x409286  : test eax, eax
+0x409288  : pop ecx
+0x409289  : je 0x38
+0x40928b  : add dword ptr [__nhandle (DATA)], 0x20
+0x409292  : mov dword ptr [edi], eax
+0x409294  : lea ecx, [eax + 0x100]
+0x40929a  : cmp eax, ecx
+0x40929c  : jae 0x18
+0x40929e  : and byte ptr [eax + 4], 0
+0x4092a2  : or dword ptr [eax], 0xffffffff
+0x4092a5  : mov byte ptr [eax + 5], 0xa
+0x4092a9  : mov ecx, dword ptr [edi]
+0x4092ab  : add eax, 8
+0x4092ae  : add ecx, 0x100
+0x4092b4  : jmp -0x1c
+0x4092b6  : add edi, 4
+0x4092b9  : cmp dword ptr [__nhandle (DATA)], esi
+0x4092bf  : jl -0x45
+0x4092c1  : jmp 0x6
+0x4092c3  : mov esi, dword ptr [__nhandle (DATA)]
+0x4092c9  : xor edi, edi
+0x4092cb  : test esi, esi
+0x4092cd  : jle 0x46
+0x4092cf  : mov eax, dword ptr [ebx]
+0x4092d1  : cmp eax, -1
+0x4092d4  : je 0x36
+0x4092d6  : mov cl, byte ptr [ebp]
+0x4092d9  : test cl, 1
+0x4092dc  : je 0x2e
+0x4092de  : test cl, 8
+0x4092e1  : jne 0xb
+0x4092e3  : push eax
+0x4092e4  : call dword ptr [->KERNEL32.dll::GetFileType (IMPORT)]
+0x4092ea  : test eax, eax
+0x4092ec  : je 0x1e
+0x4092ee  : mov eax, edi
+0x4092f0  : mov ecx, edi
+0x4092f2  : sar eax, 5
+0x4092f5  : and ecx, 0x1f
+0x4092f8  : mov eax, dword ptr [eax*4 + ___pioinfo (DATA)]
+0x4092ff  : lea eax, [eax + ecx*8]
+0x409302  : mov ecx, dword ptr [ebx]
+0x409304  : mov dword ptr [eax], ecx
+0x409306  : mov cl, byte ptr [ebp]
+0x409309  : mov byte ptr [eax + 4], cl
+0x40930c  : inc edi
+0x40930d  : inc ebp
+0x40930e  : add ebx, 4
+0x409311  : cmp edi, esi
+0x409313  : jl -0x46
+0x409315  : xor ebx, ebx
+0x409317  : mov eax, dword ptr [___pioinfo (DATA)]
+0x40931c  : cmp dword ptr [eax + ebx*8], -1
+0x409320  : lea esi, [eax + ebx*8]
+0x409323  : jne 0x4d
+0x409325  : test ebx, ebx
+0x409327  : mov byte ptr [esi + 4], 0x81
+0x40932b  : jne 0x5
+0x40932d  : push -0xa
+0x40932f  : pop eax
+0x409330  : jmp 0xa
+0x409332  : mov eax, ebx
+0x409334  : dec eax
+0x409335  : neg eax
+0x409337  : sbb eax, eax
+0x409339  : add eax, -0xb
+0x40933c  : push eax
+0x40933d  : call dword ptr [->KERNEL32.dll::GetStdHandle (IMPORT)]
+0x409343  : mov edi, eax
+0x409345  : cmp edi, -1
+0x409348  : je 0x17
+0x40934a  : push edi
+0x40934b  : call dword ptr [->KERNEL32.dll::GetFileType (IMPORT)]
+0x409351  : test eax, eax
+0x409353  : je 0xc
+0x409355  : and eax, 0xff
+0x40935a  : mov dword ptr [esi], edi
+0x40935c  : cmp eax, 2
+0x40935f  : jne 0x6
+0x409361  : or byte ptr [esi + 4], 0x40
+0x409365  : jmp 0xf
+0x409367  : cmp eax, 3
+0x40936a  : jne 0xa
+0x40936c  : or byte ptr [esi + 4], 8
+0x409370  : jmp 0x4
+0x409372  : or byte ptr [esi + 4], 0x80
+0x409376  : inc ebx
+0x409377  : cmp ebx, 3
+0x40937a  : jl -0x65
+0x40937c  : push dword ptr [__nhandle (DATA)]
+0x409382  : call dword ptr [->KERNEL32.dll::SetHandleCount (IMPORT)]
+0x409388  : pop edi
+0x409389  : pop esi
+0x40938a  : pop ebp
+0x40938b  : pop ebx
+0x40938c  : add esp, 0x44
+0x40938f  : ret 
+; __XcptFilter
+0x409390  : push ebp
+0x409391  : mov ebp, esp
+0x409393  : push ebx
+0x409394  : push dword ptr [ebp + 8]
+0x409397  : call <OFFSET1>
+0x40939c  : test eax, eax
+0x40939e  : pop ecx
+0x40939f  : je 0x120
+0x4093a5  : mov ebx, dword ptr [eax + 8]
+0x4093a8  : test ebx, ebx
+0x4093aa  : je 0x115
+0x4093b0  : cmp ebx, 5
+0x4093b3  : jne 0xc
+0x4093b5  : and dword ptr [eax + 8], 0
+0x4093b9  : push 1
+0x4093bb  : pop eax
+0x4093bc  : jmp 0x10d
+0x4093c1  : cmp ebx, 1
+0x4093c4  : je 0xf6
+0x4093ca  : mov ecx, dword ptr [__pxcptinfoptrs (DATA)]
+0x4093d0  : mov dword ptr [ebp + 8], ecx
+0x4093d3  : mov ecx, dword ptr [ebp + 0xc]
+0x4093d6  : mov dword ptr [__pxcptinfoptrs (DATA)], ecx
+0x4093dc  : mov ecx, dword ptr [eax + 4]
+0x4093df  : cmp ecx, 8
+0x4093e2  : jne 0xc8
+0x4093e8  : mov ecx, dword ptr [__First_FPE_Indx (DATA)]
+0x4093ee  : mov edx, dword ptr [__Num_FPE (DATA)]
+0x4093f4  : add edx, ecx
+0x4093f6  : push esi
+0x4093f7  : cmp ecx, edx
+0x4093f9  : jge 0x15
+0x4093fb  : lea esi, [ecx + ecx*2]
+0x4093fe  : sub edx, ecx
+0x409400  : lea esi, [esi*4 + <OFFSET5>]
+0x409407  : and dword ptr [esi], 0
+0x40940a  : add esi, 0xc
+0x40940d  : dec edx
+0x40940e  : jne -0x9
+0x409410  : mov eax, dword ptr [eax]
+0x409412  : mov esi, dword ptr [__fpecode (DATA)]
+0x409418  : cmp eax, 0xc000008e
+0x40941d  : jne 0xc
+0x40941f  : mov dword ptr [__fpecode (DATA)], 0x83
+0x409429  : jmp 0x70
+0x40942b  : cmp eax, 0xc0000090
+0x409430  : jne 0xc
+0x409432  : mov dword ptr [__fpecode (DATA)], 0x81
+0x40943c  : jmp 0x5d
+0x40943e  : cmp eax, 0xc0000091
+0x409443  : jne 0xc
+0x409445  : mov dword ptr [__fpecode (DATA)], 0x84
+0x40944f  : jmp 0x4a
+0x409451  : cmp eax, 0xc0000093
+0x409456  : jne 0xc
+0x409458  : mov dword ptr [__fpecode (DATA)], 0x85
+0x409462  : jmp 0x37
+0x409464  : cmp eax, 0xc000008d
+0x409469  : jne 0xc
+0x40946b  : mov dword ptr [__fpecode (DATA)], 0x82
+0x409475  : jmp 0x24
+0x409477  : cmp eax, 0xc000008f
+0x40947c  : jne 0xc
+0x40947e  : mov dword ptr [__fpecode (DATA)], 0x86
+0x409488  : jmp 0x11
+0x40948a  : cmp eax, 0xc0000092
+0x40948f  : jne 0xa
+0x409491  : mov dword ptr [__fpecode (DATA)], 0x8a
+0x40949b  : push dword ptr [__fpecode (DATA)]
+0x4094a1  : push 8
+0x4094a3  : call ebx
+0x4094a5  : pop ecx
+0x4094a6  : mov dword ptr [__fpecode (DATA)], esi
+0x4094ac  : pop ecx
+0x4094ad  : pop esi
+0x4094ae  : jmp 0x8
+0x4094b0  : and dword ptr [eax + 8], 0
+0x4094b4  : push ecx
+0x4094b5  : call ebx
+0x4094b7  : pop ecx
+0x4094b8  : mov eax, dword ptr [ebp + 8]
+0x4094bb  : mov dword ptr [__pxcptinfoptrs (DATA)], eax
+0x4094c0  : or eax, 0xffffffff
+0x4094c3  : jmp 0x9
+0x4094c5  : push dword ptr [ebp + 0xc]
+0x4094c8  : call dword ptr [->KERNEL32.dll::UnhandledExceptionFilter (IMPORT)]
+0x4094ce  : pop ebx
+0x4094cf  : pop ebp
+0x4094d0  : ret 
+; __wincmdln
+0x409514  : cmp dword ptr [___mbctype_initialized (DATA)], 0
+0x40951b  : jne 0x5
+0x40951d  : call $CRT_C_Initializer(2) (FUNCTION)
+0x409522  : push esi
+0x409523  : mov esi, dword ptr [__acmdln (DATA)]
+0x409529  : mov al, byte ptr [esi]
+0x40952b  : cmp al, 0x22
+0x40952d  : jne 0x25
+0x40952f  : mov al, byte ptr [esi + 1]
+0x409532  : inc esi
+0x409533  : cmp al, 0x22
+0x409535  : je 0x15
+0x409537  : test al, al
+0x409539  : je 0x11
+0x40953b  : movzx eax, al
+0x40953e  : push eax
+0x40953f  : call __ismbblead (FUNCTION)
+0x409544  : test eax, eax
+0x409546  : pop ecx
+0x409547  : je -0x1a
+0x409549  : inc esi
+0x40954a  : jmp -0x1d
+0x40954c  : cmp byte ptr [esi], 0x22
+0x40954f  : jne 0xd
+0x409551  : inc esi
+0x409552  : jmp 0xa
+0x409554  : cmp al, 0x20
+0x409556  : jbe 0x6
+0x409558  : inc esi
+0x409559  : cmp byte ptr [esi], 0x20
+0x40955c  : ja -0x6
+0x40955e  : mov al, byte ptr [esi]
+0x409560  : test al, al
+0x409562  : je 0x4
+0x409564  : cmp al, 0x20
+0x409566  : jbe -0x17
+0x409568  : mov eax, esi
+0x40956a  : pop esi
+0x40956b  : ret 
+; __setenvp
+0x40956c  : push ebx
+0x40956d  : xor ebx, ebx
+0x40956f  : cmp dword ptr [___mbctype_initialized (DATA)], ebx
+0x409575  : push esi
+0x409576  : push edi
+0x409577  : jne 0x5
+0x409579  : call $CRT_C_Initializer(2) (FUNCTION)
+0x40957e  : mov esi, dword ptr [__aenvptr (DATA)]
+0x409584  : xor edi, edi
+0x409586  : mov al, byte ptr [esi]
+0x409588  : cmp al, bl
+0x40958a  : je 0x12
+0x40958c  : cmp al, 0x3d
+0x40958e  : je 0x1
+0x409590  : inc edi
+0x409591  : push esi
+0x409592  : call _strlen (FUNCTION)
+0x409597  : pop ecx
+0x409598  : lea esi, [esi + eax + 1]
+0x40959c  : jmp -0x18
+0x40959e  : lea eax, [edi*4 + 4]
+0x4095a5  : push eax
+0x4095a6  : call _malloc (FUNCTION)
+0x4095ab  : mov esi, eax
+0x4095ad  : pop ecx
+0x4095ae  : cmp esi, ebx
+0x4095b0  : mov dword ptr [__environ (DATA)], esi
+0x4095b6  : jne 0x8
+0x4095b8  : push 9
+0x4095ba  : call __amsg_exit (FUNCTION)
+0x4095bf  : pop ecx
+0x4095c0  : mov edi, dword ptr [__aenvptr (DATA)]
+0x4095c6  : cmp byte ptr [edi], bl
+0x4095c8  : je 0x39
+0x4095ca  : push ebp
+0x4095cb  : push edi
+0x4095cc  : call _strlen (FUNCTION)
+0x4095d1  : mov ebp, eax
+0x4095d3  : pop ecx
+0x4095d4  : inc ebp
+0x4095d5  : cmp byte ptr [edi], 0x3d
+0x4095d8  : je 0x22
+0x4095da  : push ebp
+0x4095db  : call _malloc (FUNCTION)
+0x4095e0  : cmp eax, ebx
+0x4095e2  : pop ecx
+0x4095e3  : mov dword ptr [esi], eax
+0x4095e5  : jne 0x8
+0x4095e7  : push 9
+0x4095e9  : call __amsg_exit (FUNCTION)
+0x4095ee  : pop ecx
+0x4095ef  : push edi
+0x4095f0  : push dword ptr [esi]
+0x4095f2  : call _strcpy (FUNCTION)
+0x4095f7  : pop ecx
+0x4095f8  : add esi, 4
+0x4095fb  : pop ecx
+0x4095fc  : add edi, ebp
+0x4095fe  : cmp byte ptr [edi], bl
+0x409600  : jne -0x37
+0x409602  : pop ebp
+0x409603  : push dword ptr [__aenvptr (DATA)]
+0x409609  : call _free (FUNCTION)
+0x40960e  : pop ecx
+0x40960f  : mov dword ptr [__aenvptr (DATA)], ebx
+0x409615  : mov dword ptr [esi], ebx
+0x409617  : pop edi
+0x409618  : pop esi
+0x409619  : mov dword ptr [___env_initialized (DATA)], 1
+0x409623  : pop ebx
+0x409624  : ret 
+; __setargv
+0x409625  : push ebp
+0x409626  : mov ebp, esp
+0x409628  : push ecx
+0x409629  : push ecx
+0x40962a  : push ebx
+0x40962b  : xor ebx, ebx
+0x40962d  : cmp dword ptr [___mbctype_initialized (DATA)], ebx
+0x409633  : push esi
+0x409634  : push edi
+0x409635  : jne 0x5
+0x409637  : call $CRT_C_Initializer(2) (FUNCTION)
+0x40963c  : mov esi, <OFFSET3>
+0x409641  : push 0x104
+0x409646  : push esi
+0x409647  : push ebx
+0x409648  : call dword ptr [->KERNEL32.dll::GetModuleFileNameA (IMPORT)]
+0x40964e  : mov eax, dword ptr [__acmdln (DATA)]
+0x409653  : mov dword ptr [__pgmptr (DATA)], esi
+0x409659  : mov edi, esi
+0x40965b  : cmp byte ptr [eax], bl
+0x40965d  : je 0x2
+0x40965f  : mov edi, eax
+0x409661  : lea eax, [ebp - 8]
+0x409664  : push eax
+0x409665  : lea eax, [ebp - 4]
+0x409668  : push eax
+0x409669  : push ebx
+0x40966a  : push ebx
+0x40966b  : push edi
+0x40966c  : call <OFFSET7>
+0x409671  : mov eax, dword ptr [ebp - 8]
+0x409674  : mov ecx, dword ptr [ebp - 4]
+0x409677  : lea eax, [eax + ecx*4]
+0x40967a  : push eax
+0x40967b  : call _malloc (FUNCTION)
+0x409680  : mov esi, eax
+0x409682  : add esp, 0x18
+0x409685  : cmp esi, ebx
+0x409687  : jne 0x8
+0x409689  : push 8
+0x40968b  : call __amsg_exit (FUNCTION)
+0x409690  : pop ecx
+0x409691  : lea eax, [ebp - 8]
+0x409694  : push eax
+0x409695  : lea eax, [ebp - 4]
+0x409698  : push eax
+0x409699  : mov eax, dword ptr [ebp - 4]
+0x40969c  : lea eax, [esi + eax*4]
+0x40969f  : push eax
+0x4096a0  : push esi
+0x4096a1  : push edi
+0x4096a2  : call <OFFSET7>
+0x4096a7  : mov eax, dword ptr [ebp - 4]
+0x4096aa  : add esp, 0x14
+0x4096ad  : dec eax
+0x4096ae  : mov dword ptr [___argv (DATA)], esi
+0x4096b4  : pop edi
+0x4096b5  : pop esi
+0x4096b6  : mov dword ptr [___argc (DATA)], eax
+0x4096bb  : pop ebx
+0x4096bc  : leave 
+0x4096bd  : ret 
+; ___crtGetEnvironmentStringsA
+0x409872  : push ecx
+0x409873  : push ecx
+0x409874  : mov eax, dword ptr [<OFFSET1>]
+0x409879  : push ebx
+0x40987a  : push ebp
+0x40987b  : mov ebp, dword ptr [KERNEL32.dll::GetEnvironmentStringsW (IMPORT)]
+0x409881  : push esi
+0x409882  : push edi
+0x409883  : xor ebx, ebx
+0x409885  : xor esi, esi
+0x409887  : xor edi, edi
+0x409889  : cmp eax, ebx
+0x40988b  : jne 0x33
+0x40988d  : call ebp
+0x40988f  : mov esi, eax
+0x409891  : cmp esi, ebx
+0x409893  : je 0xc
+0x409895  : mov dword ptr [<OFFSET1>], 1
+0x40989f  : jmp 0x28
+0x4098a1  : call dword ptr [->KERNEL32.dll::GetEnvironmentStrings (IMPORT)]
+0x4098a7  : mov edi, eax
+0x4098a9  : cmp edi, ebx
+0x4098ab  : je 0xea
+0x4098b1  : mov dword ptr [<OFFSET1>], 2
+0x4098bb  : jmp 0x8f
+0x4098c0  : cmp eax, 1
+0x4098c3  : jne 0x81
+0x4098c9  : cmp esi, ebx
+0x4098cb  : jne 0xc
+0x4098cd  : call ebp
+0x4098cf  : mov esi, eax
+0x4098d1  : cmp esi, ebx
+0x4098d3  : je 0xc2
+0x4098d9  : cmp word ptr [esi], bx
+0x4098dc  : mov eax, esi
+0x4098de  : je 0xe
+0x4098e0  : inc eax
+0x4098e1  : inc eax
+0x4098e2  : cmp word ptr [eax], bx
+0x4098e5  : jne -0x7
+0x4098e7  : inc eax
+0x4098e8  : inc eax
+0x4098e9  : cmp word ptr [eax], bx
+0x4098ec  : jne -0xe
+0x4098ee  : sub eax, esi
+0x4098f0  : mov edi, dword ptr [KERNEL32.dll::WideCharToMultiByte (IMPORT)]
+0x4098f6  : sar eax, 1
+0x4098f8  : push ebx
+0x4098f9  : push ebx
+0x4098fa  : inc eax
+0x4098fb  : push ebx
+0x4098fc  : push ebx
+0x4098fd  : push eax
+0x4098fe  : push esi
+0x4098ff  : push ebx
+0x409900  : push ebx
+0x409901  : mov dword ptr [esp + 0x34], eax
+0x409905  : call edi
+0x409907  : mov ebp, eax
+0x409909  : cmp ebp, ebx
+0x40990b  : je 0x32
+0x40990d  : push ebp
+0x40990e  : call _malloc (FUNCTION)
+0x409913  : cmp eax, ebx
+0x409915  : pop ecx
+0x409916  : mov dword ptr [esp + 0x10], eax
+0x40991a  : je 0x23
+0x40991c  : push ebx
+0x40991d  : push ebx
+0x40991e  : push ebp
+0x40991f  : push eax
+0x409920  : push dword ptr [esp + 0x24]
+0x409924  : push esi
+0x409925  : push ebx
+0x409926  : push ebx
+0x409927  : call edi
+0x409929  : test eax, eax
+0x40992b  : jne 0xe
+0x40992d  : push dword ptr [esp + 0x10]
+0x409931  : call _free (FUNCTION)
+0x409936  : pop ecx
+0x409937  : mov dword ptr [esp + 0x10], ebx
+0x40993b  : mov ebx, dword ptr [esp + 0x10]
+0x40993f  : push esi
+0x409940  : call dword ptr [->KERNEL32.dll::FreeEnvironmentStringsW (IMPORT)]
+0x409946  : mov eax, ebx
+0x409948  : jmp 0x53
+0x40994a  : cmp eax, 2
+0x40994d  : jne 0x4c
+0x40994f  : cmp edi, ebx
+0x409951  : jne 0xc
+0x409953  : call dword ptr [->KERNEL32.dll::GetEnvironmentStrings (IMPORT)]
+0x409959  : mov edi, eax
+0x40995b  : cmp edi, ebx
+0x40995d  : je 0x3c
+0x40995f  : cmp byte ptr [edi], bl
+0x409961  : mov eax, edi
+0x409963  : je 0xa
+0x409965  : inc eax
+0x409966  : cmp byte ptr [eax], bl
+0x409968  : jne -0x5
+0x40996a  : inc eax
+0x40996b  : cmp byte ptr [eax], bl
+0x40996d  : jne -0xa
+0x40996f  : sub eax, edi
+0x409971  : inc eax
+0x409972  : mov ebp, eax
+0x409974  : push ebp
+0x409975  : call _malloc (FUNCTION)
+0x40997a  : mov esi, eax
+0x40997c  : pop ecx
+0x40997d  : cmp esi, ebx
+0x40997f  : jne 0x4
+0x409981  : xor esi, esi
+0x409983  : jmp 0xb
+0x409985  : push ebp
+0x409986  : push edi
+0x409987  : push esi
+0x409988  : call _memcpy (FUNCTION)
+0x40998d  : add esp, 0xc
+0x409990  : push edi
+0x409991  : call dword ptr [->KERNEL32.dll::FreeEnvironmentStringsA (IMPORT)]
+0x409997  : mov eax, esi
+0x409999  : jmp 0x2
+0x40999b  : xor eax, eax
+0x40999d  : pop edi
+0x40999e  : pop esi
+0x40999f  : pop ebp
+0x4099a0  : pop ebx
+0x4099a1  : pop ecx
+0x4099a2  : pop ecx
+0x4099a3  : ret 
+; __global_unwind2
+0x4099a4  : push ebp
+0x4099a5  : mov ebp, esp
+0x4099a7  : push ebx
+0x4099a8  : push esi
+0x4099a9  : push edi
+0x4099aa  : push ebp
+0x4099ab  : push 0
+0x4099ad  : push 0
+0x4099af  : push <OFFSET1>
+0x4099b4  : push dword ptr [ebp + 8]
+0x4099b7  : call KERNEL32.dll::RtlUnwind (IMPORT)
+0x4099bc  : pop ebp
+0x4099bd  : pop edi
+0x4099be  : pop esi
+0x4099bf  : pop ebx
+0x4099c0  : mov esp, ebp
+0x4099c2  : pop ebp
+0x4099c3  : ret 
+0x4099c4  : mov ecx, dword ptr [esp + 4]
+0x4099c8  : test dword ptr [ecx + 4], 6
+0x4099cf  : mov eax, 1
+0x4099d4  : je 0xf
+0x4099d6  : mov eax, dword ptr [esp + 8]
+0x4099da  : mov edx, dword ptr [esp + 0x10]
+0x4099de  : mov dword ptr [edx], eax
+0x4099e0  : mov eax, 3
+0x4099e5  : ret 
+; __local_unwind2
+0x4099e6  : push ebx
+0x4099e7  : push esi
+0x4099e8  : push edi
+0x4099e9  : mov eax, dword ptr [esp + 0x10]
+0x4099ed  : push eax
+0x4099ee  : push -2
+0x4099f0  : push <OFFSET1>
+0x4099f5  : push dword ptr fs:[0]
+0x4099fc  : mov dword ptr fs:[0], esp
+0x409a03  : mov eax, dword ptr [esp + 0x20]
+0x409a07  : mov ebx, dword ptr [eax + 8]
+0x409a0a  : mov esi, dword ptr [eax + 0xc]
+0x409a0d  : cmp esi, -1
+0x409a10  : je 0x2e
+0x409a12  : cmp esi, dword ptr [esp + 0x24]
+0x409a16  : je 0x28
+0x409a18  : lea esi, [esi + esi*2]
+0x409a1b  : mov ecx, dword ptr [ebx + esi*4]
+0x409a1e  : mov dword ptr [esp + 8], ecx
+0x409a22  : mov dword ptr [eax + 0xc], ecx
+0x409a25  : cmp dword ptr [ebx + esi*4 + 4], 0
+0x409a2a  : jne 0x12
+0x409a2c  : push 0x101
+0x409a31  : mov eax, dword ptr [ebx + esi*4 + 8]
+0x409a35  : call __NLG_Notify (FUNCTION)
+0x409a3a  : call dword ptr [ebx + esi*4 + 8]
+; __NLG_Notify
+0x409a7a  : push ebx
+0x409a7b  : push ecx
+0x409a7c  : mov ebx, __NLG_Destination (UNK)
+0x409a81  : mov ecx, dword ptr [ebp + 8]
+0x409a84  : mov dword ptr [ebx + 8], ecx
+0x409a87  : mov dword ptr [ebx + 4], eax
+0x409a8a  : mov dword ptr [ebx + 0xc], ebp
+; __except_handler3
+0x409a9c  : push ebp
+0x409a9d  : mov ebp, esp
+0x409a9f  : sub esp, 8
+0x409aa2  : push ebx
+0x409aa3  : push esi
+0x409aa4  : push edi
+0x409aa5  : push ebp
+0x409aa6  : cld 
+0x409aa7  : mov ebx, dword ptr [ebp + 0xc]
+0x409aaa  : mov eax, dword ptr [ebp + 8]
+0x409aad  : test dword ptr [eax + 4], 6
+0x409ab4  : jne 0x82
+0x409aba  : mov dword ptr [ebp - 8], eax
+0x409abd  : mov eax, dword ptr [ebp + 0x10]
+0x409ac0  : mov dword ptr [ebp - 4], eax
+0x409ac3  : lea eax, [ebp - 8]
+0x409ac6  : mov dword ptr [ebx - 4], eax
+0x409ac9  : mov esi, dword ptr [ebx + 0xc]
+0x409acc  : mov edi, dword ptr [ebx + 8]
+0x409acf  : cmp esi, -1
+0x409ad2  : je 0x61
+0x409ad4  : lea ecx, [esi + esi*2]
+0x409ad7  : cmp dword ptr [edi + ecx*4 + 4], 0
+0x409adc  : je 0x45
+0x409ade  : push esi
+0x409adf  : push ebp
+0x409ae0  : lea ebp, [ebx + 0x10]
+0x409ae3  : call dword ptr [edi + ecx*4 + 4]
+0x409ae7  : pop ebp
+0x409ae8  : pop esi
+0x409ae9  : mov ebx, dword ptr [ebp + 0xc]
+0x409aec  : or eax, eax
+0x409aee  : je 0x33
+0x409af0  : js 0x3c
+0x409af2  : mov edi, dword ptr [ebx + 8]
+0x409af5  : push ebx
+0x409af6  : call __global_unwind2 (FUNCTION)
+0x409afb  : add esp, 4
+0x409afe  : lea ebp, [ebx + 0x10]
+0x409b01  : push esi
+0x409b02  : push ebx
+0x409b03  : call __local_unwind2 (FUNCTION)
+0x409b08  : add esp, 8
+0x409b0b  : lea ecx, [esi + esi*2]
+0x409b0e  : push 1
+0x409b10  : mov eax, dword ptr [edi + ecx*4 + 8]
+0x409b14  : call __NLG_Notify (FUNCTION)
+0x409b19  : mov eax, dword ptr [edi + ecx*4]
+0x409b1c  : mov dword ptr [ebx + 0xc], eax
+0x409b1f  : call dword ptr [edi + ecx*4 + 8]
+0x409b23  : mov edi, dword ptr [ebx + 8]
+0x409b26  : lea ecx, [esi + esi*2]
+0x409b29  : mov esi, dword ptr [edi + ecx*4]
+0x409b2c  : jmp -0x5f
+0x409b2e  : mov eax, 0
+0x409b33  : jmp 0x1c
+0x409b35  : mov eax, 1
+0x409b3a  : jmp 0x15
+0x409b3c  : push ebp
+0x409b3d  : lea ebp, [ebx + 0x10]
+0x409b40  : push -1
+0x409b42  : push ebx
+0x409b43  : call __local_unwind2 (FUNCTION)
+0x409b48  : add esp, 8
+0x409b4b  : pop ebp
+0x409b4c  : mov eax, 1
+0x409b51  : pop ebp
+0x409b52  : pop edi
+0x409b53  : pop esi
+0x409b54  : pop ebx
+0x409b55  : mov esp, ebp
+0x409b57  : pop ebp
+0x409b58  : ret 
+; __FF_MSGBANNER
+0x409b74  : mov eax, dword ptr [___error_mode (DATA)]
+0x409b79  : cmp eax, 1
+0x409b7c  : je 0xd
+0x409b7e  : test eax, eax
+0x409b80  : jne 0x2a
+0x409b82  : cmp dword ptr [___app_type (DATA)], 1
+0x409b89  : jne 0x21
+0x409b8b  : push 0xfc
+0x409b90  : call __NMSG_WRITE (FUNCTION)
+0x409b95  : mov eax, dword ptr [__adbgmsg (DATA)]
+0x409b9a  : pop ecx
+0x409b9b  : test eax, eax
+0x409b9d  : je 0x2
+0x409b9f  : call eax
+0x409ba1  : push 0xff
+0x409ba6  : call __NMSG_WRITE (FUNCTION)
+0x409bab  : pop ecx
+0x409bac  : ret 
+; __NMSG_WRITE
+0x409bad  : push ebp
+0x409bae  : mov ebp, esp
+0x409bb0  : sub esp, 0x1a4
+0x409bb6  : mov edx, dword ptr [ebp + 8]
+0x409bb9  : xor ecx, ecx
+0x409bbb  : mov eax, <OFFSET1>
+0x409bc0  : cmp edx, dword ptr [eax]
+0x409bc2  : je 0xb
+0x409bc4  : add eax, 8
+0x409bc7  : inc ecx
+0x409bc8  : cmp eax, 0x413910
+0x409bcd  : jl -0xf
+0x409bcf  : push esi
+0x409bd0  : mov esi, ecx
+0x409bd2  : shl esi, 3
+0x409bd5  : cmp edx, dword ptr [esi + <OFFSET1>]
+0x409bdb  : jne 0x11c
+0x409be1  : mov eax, dword ptr [___error_mode (DATA)]
+0x409be6  : cmp eax, 1
+0x409be9  : je 0xe8
+0x409bef  : test eax, eax
+0x409bf1  : jne 0xd
+0x409bf3  : cmp dword ptr [___app_type (DATA)], 1
+0x409bfa  : je 0xd7
+0x409c00  : cmp edx, 0xfc
+0x409c06  : je 0xf1
+0x409c0c  : lea eax, [ebp - 0x1a4]
+0x409c12  : push 0x104
+0x409c17  : push eax
+0x409c18  : push 0
+0x409c1a  : call dword ptr [->KERNEL32.dll::GetModuleFileNameA (IMPORT)]
+0x409c20  : test eax, eax
+0x409c22  : jne 0x13
+0x409c24  : lea eax, [ebp - 0x1a4]
+0x409c2a  : push "<program name unknown>" (STRING)
+0x409c2f  : push eax
+0x409c30  : call _strcpy (FUNCTION)
+0x409c35  : pop ecx
+0x409c36  : pop ecx
+0x409c37  : lea eax, [ebp - 0x1a4]
+0x409c3d  : push edi
+0x409c3e  : push eax
+0x409c3f  : lea edi, [ebp - 0x1a4]
+0x409c45  : call _strlen (FUNCTION)
+0x409c4a  : inc eax
+0x409c4b  : pop ecx
+0x409c4c  : cmp eax, 0x3c
+0x409c4f  : jbe 0x29
+0x409c51  : lea eax, [ebp - 0x1a4]
+0x409c57  : push eax
+0x409c58  : call _strlen (FUNCTION)
+0x409c5d  : mov edi, eax
+0x409c5f  : lea eax, [ebp - 0x1a4]
+0x409c65  : sub eax, 0x3b
+0x409c68  : push 3
+0x409c6a  : add edi, eax
+0x409c6c  : push "..." (STRING)
+0x409c71  : push edi
+0x409c72  : call _strncpy (FUNCTION)
+0x409c77  : add esp, 0x10
+0x409c7a  : lea eax, [ebp - 0xa0]
+0x409c80  : push "Runtime Error!\n\nProgram: " (STRING)
+0x409c85  : push eax
+0x409c86  : call _strcpy (FUNCTION)
+0x409c8b  : lea eax, [ebp - 0xa0]
+0x409c91  : push edi
+0x409c92  : push eax
+0x409c93  : call _strcat (FUNCTION)
+0x409c98  : lea eax, [ebp - 0xa0]
+0x409c9e  : push "\n\n" (STRING)
+0x409ca3  : push eax
+0x409ca4  : call _strcat (FUNCTION)
+0x409ca9  : push dword ptr [esi + 0x413884]
+0x409caf  : lea eax, [ebp - 0xa0]
+0x409cb5  : push eax
+0x409cb6  : call _strcat (FUNCTION)
+0x409cbb  : push 0x12010
+0x409cc0  : lea eax, [ebp - 0xa0]
+0x409cc6  : push "Microsoft Visual C++ Runtime Library" (STRING)
+0x409ccb  : push eax
+0x409ccc  : call ___crtMessageBoxA (FUNCTION)
+0x409cd1  : add esp, 0x2c
+0x409cd4  : pop edi
+0x409cd5  : jmp 0x26
+0x409cd7  : lea eax, [ebp + 8]
+0x409cda  : lea esi, [esi + 0x413884]
+0x409ce0  : push 0
+0x409ce2  : push eax
+0x409ce3  : push dword ptr [esi]
+0x409ce5  : call _strlen (FUNCTION)
+0x409cea  : pop ecx
+0x409ceb  : push eax
+0x409cec  : push dword ptr [esi]
+0x409cee  : push -0xc
+0x409cf0  : call dword ptr [->KERNEL32.dll::GetStdHandle (IMPORT)]
+0x409cf6  : push eax
+0x409cf7  : call dword ptr [->KERNEL32.dll::WriteFile (IMPORT)]
+0x409cfd  : pop esi
+0x409cfe  : leave 
+0x409cff  : ret 
+; _strcpy
+0x40a320  : push edi
+0x40a321  : mov edi, dword ptr [esp + 8]
+0x40a325  : jmp 0x6a
+0x40a327  : lea esp, [esp]
+0x40a32e  : mov edi, edi
+; _strcat
+0x40a330  : mov ecx, dword ptr [esp + 4]
+0x40a334  : push edi
+0x40a335  : test ecx, 3
+0x40a33b  : je 0xf
+0x40a33d  : mov al, byte ptr [ecx]
+0x40a33f  : inc ecx
+0x40a340  : test al, al
+0x40a342  : je 0x3b
+0x40a344  : test ecx, 3
+0x40a34a  : jne -0xf
+0x40a34c  : mov eax, dword ptr [ecx]
+0x40a34e  : mov edx, 0x7efefeff
+0x40a353  : add edx, eax
+0x40a355  : xor eax, 0xffffffff
+0x40a358  : xor eax, edx
+0x40a35a  : add ecx, 4
+0x40a35d  : test eax, 0x81010100
+0x40a362  : je -0x18
+0x40a364  : mov eax, dword ptr [ecx - 4]
+0x40a367  : test al, al
+0x40a369  : je 0x23
+0x40a36b  : test ah, ah
+0x40a36d  : je 0x1a
+0x40a36f  : test eax, 0xff0000
+0x40a374  : je 0xe
+0x40a376  : test eax, 0xff000000
+0x40a37b  : je 0x2
+0x40a37d  : jmp -0x33
+0x40a37f  : lea edi, [ecx - 1]
+0x40a382  : jmp 0xd
+0x40a384  : lea edi, [ecx - 2]
+0x40a387  : jmp 0x8
+0x40a389  : lea edi, [ecx - 3]
+0x40a38c  : jmp 0x3
+0x40a38e  : lea edi, [ecx - 4]
+0x40a391  : mov ecx, dword ptr [esp + 0xc]
+0x40a395  : test ecx, 3
+0x40a39b  : je 0x19
+0x40a39d  : mov dl, byte ptr [ecx]
+0x40a39f  : inc ecx
+0x40a3a0  : test dl, dl
+0x40a3a2  : je 0x64
+0x40a3a4  : mov byte ptr [edi], dl
+0x40a3a6  : inc edi
+0x40a3a7  : test ecx, 3
+0x40a3ad  : jne -0x12
+0x40a3af  : jmp 0x5
+0x40a3b1  : mov dword ptr [edi], edx
+0x40a3b3  : add edi, 4
+0x40a3b6  : mov edx, 0x7efefeff
+0x40a3bb  : mov eax, dword ptr [ecx]
+0x40a3bd  : add edx, eax
+0x40a3bf  : xor eax, 0xffffffff
+0x40a3c2  : xor eax, edx
+0x40a3c4  : mov edx, dword ptr [ecx]
+0x40a3c6  : add ecx, 4
+0x40a3c9  : test eax, 0x81010100
+0x40a3ce  : je -0x1f
+0x40a3d0  : test dl, dl
+0x40a3d2  : je 0x34
+0x40a3d4  : test dh, dh
+0x40a3d6  : je 0x27
+0x40a3d8  : test edx, 0xff0000
+0x40a3de  : je 0x12
+0x40a3e0  : test edx, 0xff000000
+0x40a3e6  : je 0x2
+0x40a3e8  : jmp -0x39
+0x40a3ea  : mov dword ptr [edi], edx
+0x40a3ec  : mov eax, dword ptr [esp + 8]
+0x40a3f0  : pop edi
+0x40a3f1  : ret 
+0x40a3f2  : mov word ptr [edi], dx
+0x40a3f5  : mov eax, dword ptr [esp + 8]
+0x40a3f9  : mov byte ptr [edi + 2], 0
+0x40a3fd  : pop edi
+0x40a3fe  : ret 
+0x40a3ff  : mov word ptr [edi], dx
+0x40a402  : mov eax, dword ptr [esp + 8]
+0x40a406  : pop edi
+0x40a407  : ret 
+0x40a408  : mov byte ptr [edi], dl
+0x40a40a  : mov eax, dword ptr [esp + 8]
+0x40a40e  : pop edi
+0x40a40f  : ret 
+; _strlen
+0x40a950  : mov ecx, dword ptr [esp + 4]
+0x40a954  : test ecx, 3
+0x40a95a  : je 0x14
+0x40a95c  : mov al, byte ptr [ecx]
+0x40a95e  : inc ecx
+0x40a95f  : test al, al
+0x40a961  : je 0x40
+0x40a963  : test ecx, 3
+0x40a969  : jne -0xf
+0x40a96b  : add eax, 0
+0x40a970  : mov eax, dword ptr [ecx]
+0x40a972  : mov edx, 0x7efefeff
+0x40a977  : add edx, eax
+0x40a979  : xor eax, 0xffffffff
+0x40a97c  : xor eax, edx
+0x40a97e  : add ecx, 4
+0x40a981  : test eax, 0x81010100
+0x40a986  : je -0x18
+0x40a988  : mov eax, dword ptr [ecx - 4]
+0x40a98b  : test al, al
+0x40a98d  : je 0x32
+0x40a98f  : test ah, ah
+0x40a991  : je 0x24
+0x40a993  : test eax, 0xff0000
+0x40a998  : je 0x13
+0x40a99a  : test eax, 0xff000000
+0x40a99f  : je 0x2
+0x40a9a1  : jmp -0x33
+0x40a9a3  : lea eax, [ecx - 1]
+0x40a9a6  : mov ecx, dword ptr [esp + 4]
+0x40a9aa  : sub eax, ecx
+0x40a9ac  : ret 
+0x40a9ad  : lea eax, [ecx - 2]
+0x40a9b0  : mov ecx, dword ptr [esp + 4]
+0x40a9b4  : sub eax, ecx
+0x40a9b6  : ret 
+0x40a9b7  : lea eax, [ecx - 3]
+0x40a9ba  : mov ecx, dword ptr [esp + 4]
+0x40a9be  : sub eax, ecx
+0x40a9c0  : ret 
+0x40a9c1  : lea eax, [ecx - 4]
+0x40a9c4  : mov ecx, dword ptr [esp + 4]
+0x40a9c8  : sub eax, ecx
+0x40a9ca  : ret 
+; $CRT_C_Initializer(1)
+0x40ae02  : mov eax, dword ptr [__nstream (UNK)]
+0x40ae07  : push esi
+0x40ae08  : push 0x14
+0x40ae0a  : test eax, eax
+0x40ae0c  : pop esi
+0x40ae0d  : jne 0x7
+0x40ae0f  : mov eax, 0x200
+0x40ae14  : jmp 0x6
+0x40ae16  : cmp eax, esi
+0x40ae18  : jge 0x7
+0x40ae1a  : mov eax, esi
+0x40ae1c  : mov dword ptr [__nstream (UNK)], eax
+0x40ae21  : push 4
+0x40ae23  : push eax
+0x40ae24  : call _calloc (UNK)
+0x40ae29  : pop ecx
+0x40ae2a  : mov dword ptr [___piob (UNK)], eax
+0x40ae2f  : test eax, eax
+0x40ae31  : pop ecx
+0x40ae32  : jne 0x21
+0x40ae34  : push 4
+0x40ae36  : push esi
+0x40ae37  : mov dword ptr [__nstream (UNK)], esi
+0x40ae3d  : call _calloc (UNK)
+0x40ae42  : pop ecx
+0x40ae43  : mov dword ptr [___piob (UNK)], eax
+0x40ae48  : test eax, eax
+0x40ae4a  : pop ecx
+0x40ae4b  : jne 0x8
+0x40ae4d  : push 0x1a
+0x40ae4f  : call __amsg_exit (FUNCTION)
+0x40ae54  : pop ecx
+0x40ae55  : xor ecx, ecx
+0x40ae57  : mov eax, __iob (UNK)
+0x40ae5c  : mov edx, dword ptr [___piob (UNK)]
+0x40ae62  : mov dword ptr [ecx + edx], eax
+0x40ae65  : add eax, 0x20
+0x40ae68  : add ecx, 4
+0x40ae6b  : cmp eax, 0x413d28
+0x40ae70  : jl -0x16
+0x40ae72  : xor edx, edx
+0x40ae74  : mov ecx, <OFFSET6>
+0x40ae79  : mov eax, edx
+0x40ae7b  : mov esi, edx
+0x40ae7d  : sar eax, 5
+0x40ae80  : and esi, 0x1f
+0x40ae83  : mov eax, dword ptr [eax*4 + ___pioinfo (DATA)]
+0x40ae8a  : mov eax, dword ptr [eax + esi*8]
+0x40ae8d  : cmp eax, -1
+0x40ae90  : je 0x4
+0x40ae92  : test eax, eax
+0x40ae94  : jne 0x3
+0x40ae96  : or dword ptr [ecx], 0xffffffff
+0x40ae99  : add ecx, 0x20
+0x40ae9c  : inc edx
+0x40ae9d  : cmp ecx, 0x413b18
+0x40aea3  : jl -0x2c
+0x40aea5  : pop esi
+0x40aea6  : ret 
+; __ismbblead
+0x40b47b  : push 4
+0x40b47d  : push 0
+0x40b47f  : push dword ptr [esp + 0xc]
+0x40b483  : call <OFFSET1>
+0x40b488  : add esp, 0xc
+0x40b48b  : ret 
+; __setmbcp
+0x40b4bd  : push ebp
+0x40b4be  : mov ebp, esp
+0x40b4c0  : sub esp, 0x18
+0x40b4c3  : push ebx
+0x40b4c4  : push esi
+0x40b4c5  : push edi
+0x40b4c6  : push dword ptr [ebp + 8]
+0x40b4c9  : call <OFFSET1>
+0x40b4ce  : mov esi, eax
+0x40b4d0  : pop ecx
+0x40b4d1  : cmp esi, dword ptr [___mbcodepage (DATA)]
+0x40b4d7  : mov dword ptr [ebp + 8], esi
+0x40b4da  : je 0x16a
+0x40b4e0  : xor ebx, ebx
+0x40b4e2  : cmp esi, ebx
+0x40b4e4  : je 0x156
+0x40b4ea  : xor edx, edx
+0x40b4ec  : mov eax, 0x413d38
+0x40b4f1  : cmp dword ptr [eax], esi
+0x40b4f3  : je 0x72
+0x40b4f5  : add eax, 0x30
+0x40b4f8  : inc edx
+0x40b4f9  : cmp eax, 0x413e28
+0x40b4fe  : jl -0xf
+0x40b500  : lea eax, [ebp - 0x18]
+0x40b503  : push eax
+0x40b504  : push esi
+0x40b505  : call dword ptr [->KERNEL32.dll::GetCPInfo (IMPORT)]
+0x40b50b  : cmp eax, 1
+0x40b50e  : jne 0x124
+0x40b514  : push 0x40
+0x40b516  : xor eax, eax
+0x40b518  : pop ecx
+0x40b519  : mov edi, __mbctype (UNK)
+0x40b51e  : cmp dword ptr [ebp - 0x18], 1
+0x40b522  : mov dword ptr [___mbcodepage (DATA)], esi
+0x40b528  : rep stosd dword ptr es:[edi], eax
+0x40b52a  : stosb byte ptr es:[edi], al
+0x40b52b  : mov dword ptr [___mblcid (DATA)], ebx
+0x40b531  : jbe 0xef
+0x40b537  : cmp byte ptr [ebp - 0x12], 0
+0x40b53b  : je 0xbb
+0x40b541  : lea ecx, [ebp - 0x11]
+0x40b544  : mov dl, byte ptr [ecx]
+0x40b546  : test dl, dl
+0x40b548  : je 0xae
+0x40b54e  : movzx eax, byte ptr [ecx - 1]
+0x40b552  : movzx edx, dl
+0x40b555  : cmp eax, edx
+0x40b557  : ja 0x93
+0x40b55d  : or byte ptr [eax + <OFFSET6>], 4
+0x40b564  : inc eax
+0x40b565  : jmp -0x12
+0x40b567  : push 0x40
+0x40b569  : xor eax, eax
+0x40b56b  : pop ecx
+0x40b56c  : mov edi, __mbctype (UNK)
+0x40b571  : rep stosd dword ptr es:[edi], eax
+0x40b573  : lea esi, [edx + edx*2]
+0x40b576  : mov dword ptr [ebp - 4], ebx
+0x40b579  : shl esi, 4
+0x40b57c  : stosb byte ptr es:[edi], al
+0x40b57d  : lea ebx, [esi + 0x413d48]
+0x40b583  : cmp byte ptr [ebx], 0
+0x40b586  : mov ecx, ebx
+0x40b588  : je 0x2c
+0x40b58a  : mov dl, byte ptr [ecx + 1]
+0x40b58d  : test dl, dl
+0x40b58f  : je 0x25
+0x40b591  : movzx eax, byte ptr [ecx]
+0x40b594  : movzx edi, dl
+0x40b597  : cmp eax, edi
+0x40b599  : ja 0x14
+0x40b59b  : mov edx, dword ptr [ebp - 4]
+0x40b59e  : mov dl, byte ptr [edx + 0x413d30]
+0x40b5a4  : or byte ptr [eax + <OFFSET6>], dl
+0x40b5aa  : inc eax
+0x40b5ab  : cmp eax, edi
+0x40b5ad  : jbe -0xb
+0x40b5af  : inc ecx
+0x40b5b0  : inc ecx
+0x40b5b1  : cmp byte ptr [ecx], 0
+0x40b5b4  : jne -0x2c
+0x40b5b6  : inc dword ptr [ebp - 4]
+0x40b5b9  : add ebx, 8
+0x40b5bc  : cmp dword ptr [ebp - 4], 4
+0x40b5c0  : jb -0x3f
+0x40b5c2  : mov eax, dword ptr [ebp + 8]
+0x40b5c5  : mov dword ptr [___ismbcodepage (DATA)], 1
+0x40b5cf  : push eax
+0x40b5d0  : mov dword ptr [___mbcodepage (DATA)], eax
+0x40b5d5  : call <OFFSET8>
+0x40b5da  : lea esi, [esi + 0x413d3c]
+0x40b5e0  : mov edi, ___mbulinfo (UNK)
+0x40b5e5  : movsd dword ptr es:[edi], dword ptr [esi]
+0x40b5e6  : movsd dword ptr es:[edi], dword ptr [esi]
+0x40b5e7  : pop ecx
+0x40b5e8  : mov dword ptr [___mblcid (DATA)], eax
+0x40b5ed  : movsd dword ptr es:[edi], dword ptr [esi]
+0x40b5ee  : jmp 0x55
+0x40b5f0  : inc ecx
+0x40b5f1  : inc ecx
+0x40b5f2  : cmp byte ptr [ecx - 1], 0
+0x40b5f6  : jne -0xb8
+0x40b5fc  : push 1
+0x40b5fe  : pop eax
+0x40b5ff  : or byte ptr [eax + <OFFSET6>], 8
+0x40b606  : inc eax
+0x40b607  : cmp eax, 0xff
+0x40b60c  : jb -0xf
+0x40b60e  : push esi
+0x40b60f  : call <OFFSET8>
+0x40b614  : pop ecx
+0x40b615  : mov dword ptr [___mblcid (DATA)], eax
+0x40b61a  : mov dword ptr [___ismbcodepage (DATA)], 1
+0x40b624  : jmp 0x6
+0x40b626  : mov dword ptr [___ismbcodepage (DATA)], ebx
+0x40b62c  : xor eax, eax
+0x40b62e  : mov edi, ___mbulinfo (UNK)
+0x40b633  : stosd dword ptr es:[edi], eax
+0x40b634  : stosd dword ptr es:[edi], eax
+0x40b635  : stosd dword ptr es:[edi], eax
+0x40b636  : jmp 0xd
+0x40b638  : cmp dword ptr [<OFFSET10>], ebx
+0x40b63e  : je 0xe
+0x40b640  : call <OFFSET11>
+0x40b645  : call <OFFSET12>
+0x40b64a  : xor eax, eax
+0x40b64c  : jmp 0x3
+0x40b64e  : or eax, 0xffffffff
+0x40b651  : pop edi
+0x40b652  : pop esi
+0x40b653  : pop ebx
+0x40b654  : leave 
+0x40b655  : ret 
+; $CRT_C_Initializer(2)
+0x40b881  : cmp dword ptr [___mbctype_initialized (DATA)], 0
+0x40b888  : jne 0x12
+0x40b88a  : push -3
+0x40b88c  : call __setmbcp (FUNCTION)
+0x40b891  : pop ecx
+0x40b892  : mov dword ptr [___mbctype_initialized (DATA)], 1
+0x40b89c  : ret 
+; ___crtMessageBoxA
+0x40b89d  : push ebx
+0x40b89e  : xor ebx, ebx
+0x40b8a0  : cmp dword ptr [<OFFSET1>], ebx
+0x40b8a6  : push esi
+0x40b8a7  : push edi
+0x40b8a8  : jne 0x42
+0x40b8aa  : push "user32.dll" (STRING)
+0x40b8af  : call dword ptr [->KERNEL32.dll::LoadLibraryA (IMPORT)]
+0x40b8b5  : mov edi, eax
+0x40b8b7  : cmp edi, ebx
+0x40b8b9  : je 0x67
+0x40b8bb  : mov esi, dword ptr [KERNEL32.dll::GetProcAddress (IMPORT)]
+0x40b8c1  : push "MessageBoxA" (STRING)
+0x40b8c6  : push edi
+0x40b8c7  : call esi
+0x40b8c9  : test eax, eax
+0x40b8cb  : mov dword ptr [<OFFSET1>], eax
+0x40b8d0  : je 0x50
+0x40b8d2  : push "GetActiveWindow" (STRING)
+0x40b8d7  : push edi
+0x40b8d8  : call esi
+0x40b8da  : push "GetLastActivePopup" (STRING)
+0x40b8df  : push edi
+0x40b8e0  : mov dword ptr [<OFFSET8>], eax
+0x40b8e5  : call esi
+0x40b8e7  : mov dword ptr [<OFFSET9>], eax
+0x40b8ec  : mov eax, dword ptr [<OFFSET8>]
+0x40b8f1  : test eax, eax
+0x40b8f3  : je 0x16
+0x40b8f5  : call eax
+0x40b8f7  : mov ebx, eax
+0x40b8f9  : test ebx, ebx
+0x40b8fb  : je 0xe
+0x40b8fd  : mov eax, dword ptr [<OFFSET9>]
+0x40b902  : test eax, eax
+0x40b904  : je 0x5
+0x40b906  : push ebx
+0x40b907  : call eax
+0x40b909  : mov ebx, eax
+0x40b90b  : push dword ptr [esp + 0x18]
+0x40b90f  : push dword ptr [esp + 0x18]
+0x40b913  : push dword ptr [esp + 0x18]
+0x40b917  : push ebx
+0x40b918  : call dword ptr [<OFFSET10>]
+0x40b91e  : pop edi
+0x40b91f  : pop esi
+0x40b920  : pop ebx
+0x40b921  : ret 
+0x40b922  : xor eax, eax
+0x40b924  : jmp -0x8
