@@ -834,22 +834,48 @@ __declspec(naked) DWORD __fastcall FUN_42e980(void *)
 }
 
 // FUNCTION: STUNTGP_D3D 0x434820
-DWORD FUN_434820()
+__declspec(naked) DWORD FUN_434820()
 {
-    LARGE_INTEGER counter = {0};
-    QueryPerformanceCounter(&counter);
-    return counter.LowPart;
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        sub esp, 8
+        lea eax, [ebp - 8]
+        push eax
+        call dword ptr [QueryPerformanceCounter]
+        mov eax, dword ptr [ebp - 8]
+        mov esp, ebp
+        pop ebp
+        ret
+    }
 }
 
 // FUNCTION: STUNTGP_D3D 0x434840
-void FUN_434840()
+__declspec(naked) void FUN_434840()
 {
-    LARGE_INTEGER frequency = {0};
-    QueryPerformanceFrequency(&frequency);
-    g_612d0c = frequency.LowPart;
-    g_612d08 = frequency.LowPart / 60;
-    g_612d00 = FUN_434820();
-    g_612d04 = FUN_434820();
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        sub esp, 8
+        lea eax, [ebp - 8]
+        push eax
+        call dword ptr [QueryPerformanceFrequency]
+        mov ecx, dword ptr [ebp - 8]
+        mov eax, 88888889h
+        mul ecx
+        shr edx, 5
+        mov dword ptr [g_612d0c], ecx
+        mov dword ptr [g_612d08], edx
+        call FUN_434820
+        mov dword ptr [g_612d00], eax
+        call FUN_434820
+        mov dword ptr [g_612d04], eax
+        mov esp, ebp
+        pop ebp
+        ret
+    }
 }
 
 // FUNCTION: STUNTGP_D3D 0x42ea00
@@ -1537,11 +1563,105 @@ __declspec(naked) void FUN_45ec30()
     }
 }
 
-// STUB: STUNTGP_D3D 0x445d70
-void __fastcall FUN_445d70(DWORD index)
+// FUNCTION: STUNTGP_D3D 0x445d70
+__declspec(naked) void __fastcall FUN_445d70(DWORD)
 {
-    FUN_445d10();
-    g_612944 = index;
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        sub esp, 148h
+        push ebx
+        push esi
+        mov ebx, ecx
+        push edi
+        mov ecx, 69h
+        xor eax, eax
+        mov edi, OFFSET g_6127a0
+        xor esi, esi
+        rep stosd
+        mov dword ptr [ebp - 4], esi
+        mov dword ptr [ebp - 8], esi
+        call FUN_445d10
+        mov eax, dword ptr [g_60f350]
+        test eax, eax
+        je loadFile
+        mov eax, OFFSET g_60f350
+    countLoop:
+        mov ecx, dword ptr [eax + 8]
+        add eax, 8
+        inc esi
+        test ecx, ecx
+        jne countLoop
+        mov dword ptr [ebp - 8], esi
+    loadFile:
+        mov ecx, OFFSET g_GameTextPath
+        call FUN_445ca0
+        mov esi, eax
+        lea eax, [ebp - 4]
+        push eax
+        mov edx, esi
+        lea ecx, [ebp - 48h]
+        call FUN_445b80
+        test eax, eax
+        je cleanup
+    parseEntry:
+        xor edi, edi
+        test ebx, ebx
+        je lineScan
+    skipEntry:
+        lea ecx, [ebp - 4]
+        mov edx, esi
+        push ecx
+        lea ecx, [ebp - 148h]
+        call FUN_445b80
+        test eax, eax
+        je lineScan
+        inc edi
+        cmp edi, ebx
+        jne skipEntry
+    lineScan:
+        mov ecx, dword ptr [ebp - 4]
+        mov al, byte ptr [ecx + esi]
+        test al, al
+        je lineEnd
+    lineLoop:
+        cmp al, 0ah
+        je lineEnd
+        inc ecx
+        mov dword ptr [ebp - 4], ecx
+        mov al, byte ptr [ecx + esi]
+        test al, al
+        jne lineLoop
+    lineEnd:
+        lea edx, [ebp - 4]
+        mov ecx, esi
+        call FUN_445ae0
+        mov edx, dword ptr [ebp - 8]
+        lea ecx, [ebp - 48h]
+        push edx
+        lea edx, [ebp - 148h]
+        call FUN_445e60
+        mov dword ptr [ebp - 8], eax
+        lea eax, [ebp - 4]
+        push eax
+        mov edx, esi
+        lea ecx, [ebp - 48h]
+        call FUN_445b80
+        test eax, eax
+        jne parseEntry
+    cleanup:
+        push esi
+        call free
+        add esp, 4
+        mov dword ptr [g_612944], ebx
+        pop edi
+        pop esi
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret
+    }
 }
 
 // FUNCTION: STUNTGP_D3D 0x445d10
@@ -1808,11 +1928,16 @@ void FUN_460c90()
     g_48979c = 0xff;
 }
 
+// Original resets broad game/session state, clears car/player slot arrays, and
+// calls several setup routines. This is live from FUN_442030, so keep disabled
+// until the surrounding initializers are recovered.
 // STUB: STUNTGP_D3D 0x445fa0
 void FUN_445fa0()
 {
 }
 
+// Original performs the main per-level setup chain, including object/track setup,
+// camera/state setup, and several global flags. This is live from FUN_442030.
 // STUB: STUNTGP_D3D 0x42e6e0
 void FUN_42e6e0()
 {
@@ -2677,6 +2802,8 @@ __declspec(naked) void __fastcall FUN_460d60(DWORD)
     }
 }
 
+// Original initializes the active vehicle config/state block and defaults. This is
+// only reached when g_612be8 == 1 inside FUN_442030.
 // STUB: STUNTGP_D3D 0x40a2f0
 void FUN_40a2f0()
 {
@@ -2731,11 +2858,15 @@ __declspec(naked) void FUN_401de0()
     }
 }
 
+// Original builds default vehicle instances from the initialized vehicle config.
+// This is only reached when g_612be8 == 1 inside FUN_442030.
 // STUB: STUNTGP_D3D 0x413670
 void FUN_413670()
 {
 }
 
+// Original populates two 0x80-entry normalized float tables after FUN_422380.
+// This is only reached when g_612be8 == 1 inside FUN_442030.
 // STUB: STUNTGP_D3D 0x422420
 void FUN_422420()
 {
@@ -2762,6 +2893,8 @@ __declspec(naked) void FUN_4199a0()
     }
 }
 
+// Original performs a large race/session reset, initializes AI/player data, then
+// calls sound-state reset. This is only reached when g_612be8 == 1.
 // STUB: STUNTGP_D3D 0x40d500
 void FUN_40d500()
 {
@@ -2770,12 +2903,319 @@ void FUN_40d500()
 // STUB: STUNTGP_D3D 0x424c30
 void __fastcall FUN_424c30(int mode)
 {
-    (void)mode;
+    if (mode > 0x10)
+    {
+        mode = 1;
+    }
+
+    if (g_DD_LAYOUT_WIDTH == 0)
+    {
+        g_DD_LAYOUT_WIDTH = g_DD_DISPLAYRESWIDTH;
+    }
+    if (g_DD_LAYOUT_HEIGHT == 0)
+    {
+        g_DD_LAYOUT_HEIGHT = g_DD_DISPLAYRESHEIGHT;
+    }
+
+    if (mode == 1)
+    {
+        g_DD_DISPLAYRESWIDTH = g_DD_LAYOUT_WIDTH;
+        g_DD_DISPLAYRESHEIGHT = g_DD_LAYOUT_HEIGHT;
+        g_DD_SPLIT_VIEW = 0;
+    }
+
+    g_DD_VIEW_CENTER_X = g_DD_DISPLAYRESWIDTH / 2;
+    g_DD_VIEW_CENTER_Y = g_DD_DISPLAYRESHEIGHT / 2;
+    g_DD_VIEW_HALF_WIDTH = (float)g_DD_VIEW_CENTER_X + 0.5f;
+    g_DD_VIEW_HALF_HEIGHT = (float)g_DD_VIEW_CENTER_Y + 0.5f;
+    g_DD_VIEW_CENTER_XF = g_DD_VIEW_HALF_WIDTH - 0.5f;
+    g_DD_VIEW_CENTER_YF = g_DD_VIEW_HALF_HEIGHT - 0.5f;
+    g_DD_VIEW_MODE = mode;
+    g_624988_VIEW_MODE_A = mode;
+    g_62498c_VIEW_MODE_B = mode;
+    g_624990_VIEW_SCALE_X = (float)g_DD_DISPLAYRESWIDTH * 0.0015625f;
+    g_624994_VIEW_SCALE_Y = (float)g_DD_DISPLAYRESHEIGHT * 0.0020833334f;
+
+    traceLog("view layout mode=%d size=%d,%d center=%d,%d half=%.1f,%.1f scale=%.3f,%.3f split=%d", mode,
+             g_DD_DISPLAYRESWIDTH, g_DD_DISPLAYRESHEIGHT, g_DD_VIEW_CENTER_X, g_DD_VIEW_CENTER_Y,
+             g_DD_VIEW_HALF_WIDTH, g_DD_VIEW_HALF_HEIGHT, g_624990_VIEW_SCALE_X, g_624994_VIEW_SCALE_Y,
+             g_DD_SPLIT_VIEW);
 }
 
+// Original: STUNTGP_D3D 0x437360
+DWORD __fastcall FUN_437360(DWORD value)
+{
+    switch (value)
+    {
+    case 1:
+    case 8:
+    case 0x10:
+    case 0x13:
+        return 2;
+    case 2:
+    case 3:
+    case 9:
+    case 0x0d:
+        return 4;
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 0x0a:
+    case 0x0b:
+    case 0x0e:
+    case 0x0f:
+    case 0x11:
+    case 0x15:
+    case 0x16:
+        return 1;
+    case 0x0c:
+    case 0x12:
+    case 0x14:
+    case 0x17:
+    case 0x18:
+        return 3;
+    case 0x19:
+        return 5;
+    default:
+        return 0;
+    }
+}
+
+// Original: STUNTGP_D3D 0x437da0
+DWORD __fastcall FUN_437da0(DWORD value)
+{
+    switch (value)
+    {
+    case 1:
+    case 2:
+    case 3:
+    case 8:
+    case 9:
+    case 0x0d:
+    case 0x10:
+    case 0x13:
+        return 30000;
+    default:
+        return 0;
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x43d790
+__declspec(naked) int __fastcall FUN_43d790(int, int, int)
+{
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        mov eax, edx
+        cmp ecx, eax
+        jl done
+        mov eax, dword ptr [ebp + 8]
+        cmp ecx, eax
+        jg done
+        mov eax, ecx
+done:
+        pop ebp
+        ret 4
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x43dd10
+__declspec(naked) void __fastcall FUN_43dd10(DWORD)
+{
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        push ecx
+        mov edx, ecx
+        mov dword ptr [ebp - 4], ecx
+        xor eax, eax
+        and edx, 0xff
+        mov al, byte ptr [ebp - 2]
+        and ecx, 0xff00
+        shl edx, 0x10
+        or eax, edx
+        or eax, ecx
+        mov dword ptr [g_5ff4b8], eax
+        mov esp, ebp
+        pop ebp
+        ret
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x437e40
+void FUN_437e40()
+{
+}
+
+// FUNCTION: STUNTGP_D3D 0x43d430
+void FUN_43d430()
+{
+    void **slotTable = g_5ff2e0;
+    BYTE *slot = g_5fd258;
+    do
+    {
+        *slotTable = slot;
+        slotTable++;
+        slot += 0x208;
+    } while ((int)slot < (int)&g_5ff2d8);
+    g_5ff2d8 = 0x10;
+    g_5ff2dc = 0;
+}
+
+// FUNCTION: STUNTGP_D3D 0x439e30
+void FUN_439e30()
+{
+    DWORD *entry = g_5df528;
+    for (int i = 0x0d; i != 0; i--)
+    {
+        *entry = 0;
+        entry++;
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x4408e0
+void FUN_4408e0()
+{
+    g_5ff8c0 = 1;
+}
+
+// FUNCTION: STUNTGP_D3D 0x436eb0
+void FUN_436eb0()
+{
+    DWORD *entry = g_5da2e8;
+    for (int i = 0x1e; i != 0; i--)
+    {
+        *entry = 0;
+        entry++;
+    }
+}
+
+// Original: STUNTGP_D3D 0x43dee0
+void FUN_43dee0()
+{
+    g_5ff3e8[34] = 0;
+    g_5ff3e8[35] = 0;
+    g_5ff3e8[36] = 0;
+    g_5ff3e8[37] = 0;
+    g_5ff3e8[38] = 0;
+    g_5ff3e8[39] = 0;
+    g_5ff3e8[40] = 0;
+    g_5ff3e8[41] = 0;
+    g_5ff3e8[42] = 0;
+    g_5ff3e8[43] = 0;
+    g_5ff3e8[44] = 0;
+    g_5ff3e8[45] = 0;
+}
+
+// Original: STUNTGP_D3D 0x43dda0
+void FUN_43dda0()
+{
+    DWORD *entry = g_5ff3e8;
+    for (int i = 0x34; i != 0; i--)
+    {
+        *entry = 0;
+        entry++;
+    }
+    g_5ff3e8[1] = 0x10000;
+    g_5ff3e8[0] = 1;
+    g_5ff3e8[2] = 0;
+    g_5ff3e8[3] = 0;
+    g_5ff3e8[4] = 0;
+    g_5ff3e8[5] = 0;
+    g_5ff3e8[22] = 0;
+    g_5ff3e8[23] = 1;
+    g_5ff3e8[24] = 0;
+    g_5ff3e8[25] = 0;
+    g_5ff3e8[26] = 0;
+    g_5ff3e8[27] = 0;
+    g_5ff3e8[28] = 0;
+    g_5ff3e8[29] = 0;
+    g_5ff3e8[30] = 0;
+    g_5ff3e8[31] = 0;
+    g_5ff3e8[32] = 0;
+    g_5ff3e8[33] = 0;
+    g_5ff3e8[46] = 0;
+    g_5ff3e8[47] = 0;
+    g_5ff3e8[48] = 0;
+    g_5ff3e8[49] = 0;
+    g_5ff3e8[51] = 0;
+    FUN_43dee0();
+}
+
+// Original initializes track/render state and repeatedly advances setup helpers.
+// Reached from FUN_442030 when g_612be8 == 2 and g_60d61c == 0.
 // STUB: STUNTGP_D3D 0x43d0b0
 void FUN_43d0b0()
 {
+    g_5fd254++;
+    g_5fd248 = 0;
+    g_5fd250 = 1;
+
+    FUN_437e40();
+    FUN_43d430();
+
+    memset(g_5df560, 0, sizeof(g_5df560));
+    g_5df560[28] = 0;
+    g_5df560[29] = 0;
+    g_5df560[30] = 1;
+    g_5df5e0 = 100;
+    g_5df5e4 = FUN_43d790(g_ConfigDetailLevel, 0, 100);
+    g_5df5dc = 0x50;
+    g_5df5e8 = 0;
+    g_5df5ec = 0;
+    g_5df5f0 = 0;
+
+    FUN_439e30();
+    FUN_4408e0();
+    FUN_436eb0();
+    FUN_43dda0();
+    FUN_43dd10(0);
+
+    g_62e0f0 = g_5df5e0;
+    g_62e0a8 = g_5df5dc ? g_5df5dc : 1;
+    g_61297c = g_5df5e4;
+
+    BYTE *setupFlags = (BYTE *)g_5df560;
+    memset(setupFlags + 8, 0, 0x34);
+    setupFlags[9] = 1;
+    setupFlags[12] = 1;
+    setupFlags[15] = 1;
+    setupFlags[16] = 1;
+    setupFlags[17] = 1;
+    setupFlags[18] = 1;
+    setupFlags[19] = 1;
+    setupFlags[23] = 1;
+    setupFlags[29] = 1;
+    for (int i = 1; i < 0x19; i++)
+    {
+        DWORD kind = FUN_437360(i);
+        g_ModeClass[i] = kind;
+        g_ModeDuration[i] = FUN_437da0(i);
+        setupFlags[0x20 + i] = ((kind < 1) || (kind > 2)) ? 1 : 0;
+    }
+    setupFlags[0x26] = 1;
+    setupFlags[0x2b] = 1;
+    setupFlags[0x37] = 1;
+
+    memset(g_605cc8, 0, sizeof(g_605cc8));
+    g_6087a0 = 0;
+    for (i = 0; i < 9; i++)
+    {
+        g_606838[i] = &g_6087a4;
+    }
+    g_5e38dc = 0;
+
+    traceLog("track init state seq=%d flag=%d mode=%d slots=%d active=%d table0=0x%p render=%d,%d,%d color=0x%06x audio=%d,%d detail=%d cfgSound=%d,%d,%d,%d cfgD3D=%d,%d,%d,%d,%d ctrl=%s flags=%d,%d,%d setup=%d,%d,%d res=%d,0x%p class=%d,%d,%d dur=%d,%d",
+             g_5fd254, g_5fd248, g_5fd250, g_5ff2d8, g_5ff8c0, g_5ff2e0[0], g_5ff3e8[0], g_5ff3e8[1],
+             g_5ff3e8[23], g_5ff4b8, g_62e0f0, g_62e0a8, g_61297c, g_ConfigSoundQuality,
+             g_ConfigMasterVolume, g_ConfigSfxVolume, g_ConfigMusicVolume, g_ConfigD3DDeviceIndex,
+             g_ConfigD3DDriverIndex, g_ConfigD3DUvFix, g_ConfigFrameRateCorrectionDisabled, g_ConfigDisplayBootGfx,
+             g_ConfigControlMethod, setupFlags[0x21], setupFlags[0x24], setupFlags[0x39], g_5df560[28], g_5df560[29],
+             g_5df560[30], g_5e38dc, g_606838[0], g_ModeClass[1], g_ModeClass[2], g_ModeClass[0x18],
+             g_ModeDuration[1], g_ModeDuration[4]);
 }
 
 // FUNCTION: STUNTGP_D3D 0x43d420
@@ -2827,6 +3267,8 @@ void FUN_442100()
     g_612d04 = FUN_434820();
 }
 
+// Original initializes DirectInput state and enumerates devices. This is live from
+// FUN_442120; keep stubbed while keyboard handling is custom/stable.
 // STUB: STUNTGP_D3D 0x4249b0
 void FUN_4249b0()
 {
@@ -3049,6 +3491,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 
     static int mode_current = 2;
 
+    g_612be8 = 2;
+    g_612bec = 2;
+    traceLog("setup state set to %d", g_612be8);
     traceLog("=== FUN_442120 (bigger setup) ===");
     FUN_442120();
     traceLog("=== FUN_44e5d0 (timing init) ===");
@@ -3067,11 +3512,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
             if (!SHOULD_STOP)
             {
                 thunk_FUN_44e6b0(); // frame timing
+                if (g_612be8 == 2)
+                {
+                    g_612984++;
+                }
                 FUN_44e9d0();
             }
             if ((g_61c394 % 600) == 0) // log every ~10 seconds at 60fps
             {
-                traceLog("game loop alive: frame=%d tickDelta=%d", g_61c394, g_61c390 - g_61c37c);
+                traceLog("game loop alive: frame=%d tickDelta=%d state2Frames=%d", g_61c394, g_61c390 - g_61c37c,
+                         g_612984);
             }
         }
         else

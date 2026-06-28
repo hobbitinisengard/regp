@@ -4,11 +4,11 @@
 
 #include "../../globals.h"
 
-void WAD_SplitFileName(char *path, char *y, char *u);
+void __fastcall WAD_SplitFileName(char *path, char *y, char *u);
 // bool WAD_CacheNewWadFile(char * param_1);
 int bload(char *path, char *out, int maxBytes);
 int size_of_file(char *path);
 // int WAD_FindFile(uchar *param_1, char *param_2, uint *param_3);
 // void WAD_FlushWadCache(void);
-void tolower(char *out, char *in);
+void __fastcall FUN_44b470(char *out, char *in);
 // int WAD_PrintDir(uchar *param_1);

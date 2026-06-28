@@ -1,1 +1,3 @@
 cd "c:\Users\Pr0 Haxx00r\Desktop\regp\regp"; powershell -NoProfile -ExecutionPolicy Bypass -File tools/build_and_stage.ps1 -SkipCompare
+ python "$HOME\Documents\bridge_mcp_ghidra.py"
+ I've added ghidra mcp server. it sits in "$HOME\Documents\bridge_mcp_ghidra.py". Maybe it can be useful for further work.

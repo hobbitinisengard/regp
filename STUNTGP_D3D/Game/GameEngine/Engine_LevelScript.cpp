@@ -472,7 +472,7 @@ static void traceLevelAssetProbe()
 {
     char path[128] = {0};
     char texSetLower[64] = {0};
-    tolower(texSetLower, g_LevelTrackTexSet);
+    FUN_44b470(texSetLower, g_LevelTrackTexSet);
 
     sprintf(path, "meshdata\\%s.PMD", g_LevelTrack);
     traceLog("asset trackMesh %s size %d", path, size_of_file(path));
@@ -606,6 +606,53 @@ void Script_ParseGameConfig()
         readConfigInt(path, "DISPLAYRESHEIGHT", &g_DISPLAYRESHEIGHT);
         readConfigInt(path, "DISPLAYRESDEPTH", &g_DISPLAYRESDEPTH);
         readConfigValue(path, "LEVELSCRIPT", g_LevelScript, sizeof(g_LevelScript));
+
+        char controlMethod[32] = {0};
+        int soundQuality = 0;
+        int masterVolume = 0;
+        int sfxVolume = 0;
+        int musicVolume = 0;
+        int d3dDeviceIndex = 0;
+        int d3dDriverIndex = 0;
+        int d3dUvFix = 0;
+        int disableFrameRateCorrection = 0;
+        int displayBootGfx = 0;
+        int detailLevel = 0;
+        readConfigValue(path, "CONTROLMETHOD", controlMethod, sizeof(controlMethod));
+        if (controlMethod[0] != '\0')
+        {
+            strncpy(g_ConfigControlMethod, controlMethod, sizeof(g_ConfigControlMethod) - 1);
+            g_ConfigControlMethod[sizeof(g_ConfigControlMethod) - 1] = '\0';
+        }
+        readConfigInt(path, "SOUNDQUALITY", &soundQuality);
+        readConfigInt(path, "MASTERVOLUME", &masterVolume);
+        readConfigInt(path, "SFXVOLUME", &sfxVolume);
+        readConfigInt(path, "MUSVOLUME", &musicVolume);
+        if (soundQuality != 0)
+        {
+            g_ConfigSoundQuality = soundQuality;
+        }
+        g_ConfigMasterVolume = masterVolume;
+        g_ConfigSfxVolume = sfxVolume;
+        g_ConfigMusicVolume = musicVolume;
+        readConfigInt(path, "D3D_DEVICEINDEX", &d3dDeviceIndex);
+        readConfigInt(path, "D3D_DRIVERINDEX", &d3dDriverIndex);
+        readConfigInt(path, "D3D_UVFIX", &d3dUvFix);
+        readConfigInt(path, "DISABLE_FRAMERATE_CORRECTION", &disableFrameRateCorrection);
+        readConfigInt(path, "DISPLAY_BOOT_GFX", &displayBootGfx);
+        g_ConfigD3DDeviceIndex = d3dDeviceIndex;
+        g_ConfigD3DDriverIndex = d3dDriverIndex;
+        g_ConfigD3DUvFix = d3dUvFix;
+        g_ConfigFrameRateCorrectionDisabled = disableFrameRateCorrection;
+        g_ConfigDisplayBootGfx = displayBootGfx;
+        readConfigInt(path, "DETAIL_LEVEL", &detailLevel);
+        if (detailLevel != 0)
+        {
+            g_ConfigDetailLevel = detailLevel;
+        }
+        traceLog("gamecfg control=%s sound=%d volumes=%d,%d,%d d3d=%d,%d uvfix=%d framefixOff=%d bootGfx=%d detail=%d",
+                 controlMethod, soundQuality, masterVolume, sfxVolume, musicVolume, d3dDeviceIndex, d3dDriverIndex,
+                 d3dUvFix, disableFrameRateCorrection, displayBootGfx, detailLevel);
 
         int levelScriptSize = size_of_file("config\\lvscript.cfg");
         traceLog("level script %s, lvscript.cfg size %d", g_LevelScript, levelScriptSize);

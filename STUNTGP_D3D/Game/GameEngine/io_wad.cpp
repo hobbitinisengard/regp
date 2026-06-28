@@ -209,41 +209,59 @@ static int sizeOfFileInWad(const char *wadName, const char *path)
 
 // TODO: should it be here?
 // FUNCTION: STUNTGP_D3D 0x44b170
-int FUN_44b170(char *in)
+__declspec(naked) int __fastcall FUN_44b170(char *)
 {
-    // start in from the end of GameDirectory and return position of first non '\\' char
-    int len = strlen(g_GameDirectory);
-    char tmp = in[len];
-    int a = len;
-    while (tmp == '\\')
+    __asm
     {
-        a = len + 1;
-        tmp = in[a];
-        len++;
+        mov edx, ecx
+        push edi
+        mov edi, OFFSET g_GameDirectory
+        or ecx, -1
+        xor eax, eax
+        repne scasb
+        not ecx
+        dec ecx
+        pop edi
+        mov eax, ecx
+        cmp byte ptr [eax + edx], 5ch
+        jne done
+    slashLoop:
+        mov cl, byte ptr [eax + edx + 1]
+        inc eax
+        cmp cl, 5ch
+        je slashLoop
+    done:
+        ret
     }
-    return len;
 }
 
 // TODO: should it be here?
 // FUNCTION: STUNTGP_D3D 0x44b140
-void FUN_44b140(char *out, char *in)
+__declspec(naked) void __fastcall FUN_44b140(char *, char *)
 {
-    // get buffer and return filename without doubled '\\\\'
-    char tmp = *in;
-    while (tmp != '\0')
+    __asm
     {
-        if ((tmp == '\\') && (in[1] == '\\'))
-        {
-            in++;
-        }
-        tmp = *in;
-        in++;
-        *out = tmp;
-        out++;
-        tmp = *in;
+        mov al, byte ptr [edx]
+        test al, al
+        je done
+    copyLoop:
+        cmp al, 5ch
+        jne copyChar
+        cmp byte ptr [edx + 1], 5ch
+        jne copyChar
+        inc edx
+    copyChar:
+        mov al, byte ptr [edx]
+        inc edx
+        mov byte ptr [ecx], al
+        inc ecx
+        mov al, byte ptr [edx]
+        test al, al
+        jne copyLoop
+    done:
+        mov byte ptr [ecx], 0
+        ret
     }
-    *out = '\0';
-    return;
 }
 
 // inline int findLast(char *buffer, int len)
@@ -270,55 +288,98 @@ void FUN_44b140(char *out, char *in)
 //     // return len2;
 // }
 
-// TODO: shitty 38%
 // FUNCTION: STUNTGP_D3D 0x44b050
-void WAD_SplitFileName(char *in, char *a, char *filename)
+__declspec(naked) void __fastcall WAD_SplitFileName(char *, char *, char *)
 {
-    char buffer[128];
-    // char *dwojeczka = a;
-
-    strcpy(buffer, in);
-    int len = strlen(buffer) - 1; //-1/-2?
-
-    char tmp = buffer[len];
-
-    // find last '\\'
-    while ((tmp != '\\') && (0 < len))
+    __asm
     {
-        len--;
-        tmp = buffer[len];
+        push ebp
+        mov ebp, esp
+        sub esp, 84h
+        push ebx
+        push esi
+        push edi
+        mov edi, ecx
+        or ecx, -1
+        xor eax, eax
+        repne scasb
+        not ecx
+        mov dword ptr [ebp - 4], edx
+        sub edi, ecx
+        lea edx, [ebp - 84h]
+        mov eax, ecx
+        mov esi, edi
+        mov edi, edx
+        shr ecx, 2
+        rep movsd
+        mov ecx, eax
+        xor eax, eax
+        and ecx, 3
+        rep movsb
+        lea edi, [ebp - 84h]
+        or ecx, -1
+        repne scasb
+        not ecx
+        dec ecx
+        mov ebx, ecx
+        mov cl, 5ch
+    findLast:
+        dec bl
+        movsx edx, bl
+        cmp byte ptr [ebp + edx - 84h], cl
+        je slashFound
+    findLoop:
+        test bl, bl
+        jle slashFound
+        dec bl
+        movsx eax, bl
+        cmp byte ptr [ebp + eax - 84h], cl
+        jne findLoop
+    slashFound:
+        movsx edx, bl
+        mov al, bl
+        lea edi, [ebp + edx - 84h]
+        mov dl, byte ptr [ebp + edx - 84h]
+        cmp dl, cl
+        jne splitFile
+    skipSlash:
+        inc al
+        movsx edx, al
+        cmp byte ptr [ebp + edx - 84h], cl
+        je skipSlash
+    splitFile:
+        lea ecx, [ebp - 84h]
+        call FUN_44b170
+        mov ecx, dword ptr [ebp + 8]
+        movsx eax, al
+        lea esi, [ebp + eax - 84h]
+        mov edx, esi
+        call FUN_44b140
+        test bl, bl
+        jge copyRoot
+        mov esi, dword ptr [ebp - 4]
+        mov byte ptr [esi], 0
+        jmp lowercase
+    copyRoot:
+        mov ecx, dword ptr [ebp - 4]
+        mov edx, esi
+        mov byte ptr [edi], 0
+        call FUN_44b140
+        mov esi, dword ptr [ebp - 4]
+    lowercase:
+        mov ecx, dword ptr [ebp + 8]
+        mov edx, ecx
+        call FUN_44b470
+        mov edx, esi
+        mov ecx, esi
+        call FUN_44b470
+        pop edi
+        pop esi
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret 4
     }
-
-    tmp = buffer[len];
-    int len2 = len;
-
-    // skip doubled '\\'
-    while (tmp == '\\')
-    {
-        len2++;
-        tmp = buffer[len2];
-    }
-
-    // tmp = buffer[len2]; // ???? whyy, useless?
-
-    int afterGameDir = FUN_44b170(buffer);
-    FUN_44b140(filename, buffer + afterGameDir);
-
-    char *orig = a;
-    if (len < 0)
-    {
-        *a = '\0';
-    }
-    else
-    {
-        buffer[len] = '\0';
-        FUN_44b140(orig, buffer + afterGameDir);
-    }
-    orig = a;
-
-    tolower(filename, filename);
-    tolower(orig, orig);
-    return;
 }
 
 // FUNCTION: STUNTGP_D3D 0x44b260
@@ -553,23 +614,28 @@ int size_of_file(char *path)
 }
 
 // FUNCTION: STUNTGP_D3D 0x44b470
-void tolower(char *out, char *in)
+__declspec(naked) void __fastcall FUN_44b470(char *, char *)
 {
-    char tmp;
-
-    tmp = *in;
-    while (tmp != '\0')
+    __asm
     {
-        in++;
-        if ((tmp >= 'A') && (tmp <= 'Z'))
-        {
-            tmp += ' ';
-        }
-        *out = tmp;
-        out++;
-        tmp = *in;
+        mov al, byte ptr [edx]
+        test al, al
+        je done
+    loopStart:
+        inc edx
+        cmp al, 41h
+        jl storeChar
+        cmp al, 5ah
+        jg storeChar
+        add al, 20h
+    storeChar:
+        mov byte ptr [ecx], al
+        mov al, byte ptr [edx]
+        inc ecx
+        test al, al
+        jne loopStart
+    done:
+        mov byte ptr [ecx], 0
+        ret
     }
-    *out = '\0';
-
-    return;
 }

@@ -89,6 +89,9 @@ DWORD g_612cf8 = {0};
 // GLOBAL: STUNTGP_D3D 0x61297c
 DWORD g_61297c = {0};
 
+// GLOBAL: STUNTGP_D3D 0x612984
+DWORD g_612984 = {0};
+
 // GLOBAL: STUNTGP_D3D 0x60df9c
 DWORD g_60df9c = {0};
 
@@ -148,6 +151,9 @@ DWORD g_612d0c = {0};
 
 // GLOBAL: STUNTGP_D3D 0x4835e0
 DWORD g_4835e0 = {0};
+
+// GLOBAL: STUNTGP_D3D 0x483f80
+char g_GameTextPath[20] = "Config\\gametext.csv";
 
 // GLOBAL: STUNTGP_D3D 0x4835dc
 DWORD g_4835dc = {0x3000};
@@ -320,6 +326,8 @@ DWORD g_4d5b20 = {0};
 // GLOBAL: STUNTGP_D3D 0x612be8
 DWORD g_612be8 = {0};
 
+DWORD g_612bec = {0};
+
 // GLOBAL: STUNTGP_D3D 0x60d61c
 DWORD g_60d61c = {0};
 
@@ -337,6 +345,79 @@ DWORD g_5fd248 = {0};
 
 // GLOBAL: STUNTGP_D3D 0x5fd24c
 DWORD g_5fd24c = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5fd250
+DWORD g_5fd250 = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5fd254
+DWORD g_5fd254 = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5fd258
+BYTE g_5fd258[0x1f80] = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5ff2d8
+DWORD g_5ff2d8 = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5ff2dc
+DWORD g_5ff2dc = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5ff2e0
+void *g_5ff2e0[0x10] = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5df528
+DWORD g_5df528[0x0d] = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5df560
+DWORD g_5df560[0x1f] = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5df5dc
+DWORD g_5df5dc = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5df5e0
+DWORD g_5df5e0 = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5df5e4
+DWORD g_5df5e4 = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5df5e8
+DWORD g_5df5e8 = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5df5ec
+DWORD g_5df5ec = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5df5f0
+DWORD g_5df5f0 = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5ff8c0
+DWORD g_5ff8c0 = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5ff3e8
+DWORD g_5ff3e8[0x34] = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5ff4b8
+DWORD g_5ff4b8 = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5da2e8
+DWORD g_5da2e8[0x1e] = {0};
+
+// GLOBAL: STUNTGP_D3D 0x605cc8
+DWORD g_605cc8[0x2dc] = {0};
+
+// GLOBAL: STUNTGP_D3D 0x606838
+void *g_606838[9] = {0};
+
+// GLOBAL: STUNTGP_D3D 0x6087a0
+DWORD g_6087a0 = {0};
+
+// GLOBAL: STUNTGP_D3D 0x6087a4
+DWORD g_6087a4 = {0};
+
+// GLOBAL: STUNTGP_D3D 0x5e38dc
+DWORD g_5e38dc = {0};
+
+// Recovered mode classification/timing snapshot from FUN_43d0b0 setup.
+DWORD g_ModeClass[0x19] = {0};
+DWORD g_ModeDuration[0x19] = {0};
 
 // GLOBAL: STUNTGP_D3D 0x46fe80
 BYTE g_46fe80[0x10] = {0};
@@ -501,6 +582,17 @@ LevelCarInfo g_LevelCars[3] = {0};
 int g_LevelFogR = {0};
 int g_LevelFogG = {0};
 int g_LevelFogB = {0};
+int g_ConfigDetailLevel = {100};
+int g_ConfigSoundQuality = {22050};
+int g_ConfigMasterVolume = {100};
+int g_ConfigSfxVolume = {100};
+int g_ConfigMusicVolume = {100};
+char g_ConfigControlMethod[32] = "Keyboard";
+int g_ConfigD3DDeviceIndex = {0};
+int g_ConfigD3DDriverIndex = {0};
+int g_ConfigD3DUvFix = {0};
+int g_ConfigFrameRateCorrectionDisabled = {0};
+int g_ConfigDisplayBootGfx = {0};
 
 // GLOBAL: STUNTGP_D3D 0x576b80
 int g_DD_DISPLAYRESWIDTH = {0};
@@ -508,8 +600,50 @@ int g_DD_DISPLAYRESWIDTH = {0};
 // GLOBAL: STUNTGP_D3D 0x576b84
 int g_DD_DISPLAYRESHEIGHT = {0};
 
+// GLOBAL: STUNTGP_D3D 0x576b8c
+int g_DD_VIEW_CENTER_X = {0};
+
+// GLOBAL: STUNTGP_D3D 0x576b90
+int g_DD_VIEW_CENTER_Y = {0};
+
+// GLOBAL: STUNTGP_D3D 0x576b94
+float g_DD_VIEW_CENTER_XF = {0};
+
+// GLOBAL: STUNTGP_D3D 0x576b98
+float g_DD_VIEW_CENTER_YF = {0};
+
+// GLOBAL: STUNTGP_D3D 0x576b9c
+float g_DD_VIEW_HALF_WIDTH = {0};
+
+// GLOBAL: STUNTGP_D3D 0x576ba0
+float g_DD_VIEW_HALF_HEIGHT = {0};
+
 // GLOBAL: STUNTGP_D3D 0x576bbc
 int g_DD_DISPLAYRESDEPTH = {0};
+
+// GLOBAL: STUNTGP_D3D 0x576bc4
+int g_DD_LAYOUT_WIDTH = {0};
+
+// GLOBAL: STUNTGP_D3D 0x576bc8
+int g_DD_LAYOUT_HEIGHT = {0};
+
+// GLOBAL: STUNTGP_D3D 0x576bd8
+int g_DD_SPLIT_VIEW = {0};
+
+// GLOBAL: STUNTGP_D3D 0x576bdc
+int g_DD_VIEW_MODE = {0};
+
+// GLOBAL: STUNTGP_D3D 0x624988
+int g_624988_VIEW_MODE_A = {0};
+
+// GLOBAL: STUNTGP_D3D 0x62498c
+int g_62498c_VIEW_MODE_B = {0};
+
+// GLOBAL: STUNTGP_D3D 0x624990
+float g_624990_VIEW_SCALE_X = {0};
+
+// GLOBAL: STUNTGP_D3D 0x624994
+float g_624994_VIEW_SCALE_Y = {0};
 
 // GLOBAL: STUNTGP_D3D 0x5727d4
 LPDIRECTDRAWSURFACE4 g_5727d4_surfaceTable[64] = {0};

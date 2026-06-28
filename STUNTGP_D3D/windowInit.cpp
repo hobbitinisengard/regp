@@ -163,15 +163,15 @@ HWND windowCreateInternal(HINSTANCE hInstance, LPCTSTR className, LPCTSTR window
 {
     int height = GetSystemMetrics(SM_CYFULLSCREEN);
     int width = GetSystemMetrics(SM_CXFULLSCREEN);
-    traceLog("windowCreateInternal enter width=%d height=%d class=%s window=%s", width, height, className, windowName);
+    // trace removed for match stability
     HWND wHandle = CreateWindowEx(WS_EX_APPWINDOW, className, windowName, WS_POPUP, 0, 0, width, height, NULL, NULL,
                                   hInstance, NULL);
     if (!wHandle)
     {
-        traceLog("CreateWindowEx failed error=0x%08x", GetLastError());
+        // trace removed for match stability
         return NULL;
     }
-    traceLog("windowCreateInternal success wHandle=0x%p", wHandle);
+    // trace removed for match stability
     ShowWindow(wHandle, SW_NORMAL);
     UpdateWindow(wHandle);
     return wHandle;
@@ -221,7 +221,7 @@ LPCTSTR ddGetErrMessage(int res)
 
 // TODO: move to another file, this shouldn't inline at all
 // FUNCTION: STUNTGP_D3D 0x422780
-int ddSetCoopLevel(LPDIRECTDRAW lplpDD, HWND hWnd)
+int __fastcall ddSetCoopLevel(LPDIRECTDRAW lplpDD, HWND hWnd)
 {
     int res = lplpDD->SetCooperativeLevel(hWnd, DDSCL_FULLSCREEN | DDSCL_ALLOWREBOOT | DDSCL_EXCLUSIVE);
     if (res != DD_OK)
@@ -232,7 +232,7 @@ int ddSetCoopLevel(LPDIRECTDRAW lplpDD, HWND hWnd)
 }
 
 // FUNCTION: STUNTGP_D3D 0x4227e0
-int windowDDCreate(LPDIRECTDRAW *lplpDD, GUID *lpGUID, HWND hWnd)
+int __fastcall windowDDCreate(LPDIRECTDRAW *lplpDD, GUID *lpGUID, HWND hWnd)
 {
     int res = {0};
     res = DirectDrawCreate(lpGUID, lplpDD, NULL);
@@ -245,7 +245,7 @@ int windowDDCreate(LPDIRECTDRAW *lplpDD, GUID *lpGUID, HWND hWnd)
 }
 
 // FUNCTION: STUNTGP_D3D 0x4227b0
-int dd4SetCoopLevel(LPDIRECTDRAW4 ppvObj, HWND hWnd)
+int __fastcall dd4SetCoopLevel(LPDIRECTDRAW4 ppvObj, HWND hWnd)
 {
     // TODO; move the last parameter to define and use in both SetCooperativeLevel?
     int res = ppvObj->SetCooperativeLevel(hWnd, DDSCL_FULLSCREEN | DDSCL_ALLOWREBOOT | DDSCL_EXCLUSIVE);
@@ -256,8 +256,8 @@ int dd4SetCoopLevel(LPDIRECTDRAW4 ppvObj, HWND hWnd)
     return res;
 }
 
-// STUB: STUNTGP_D3D 0x422820
-int ddGetDD4(LPDIRECTDRAW lplpDD, LPDIRECTDRAW4 *ppvObj, HWND hWnd)
+// FUNCTION: STUNTGP_D3D 0x422820
+int __fastcall ddGetDD4(LPDIRECTDRAW lplpDD, LPDIRECTDRAW4 *ppvObj, HWND hWnd)
 {
     int res = lplpDD->QueryInterface(IID_IDirectDraw4, (LPVOID *)ppvObj);
     if (res != DD_OK)
@@ -368,37 +368,67 @@ __declspec(naked) void __fastcall FUN_4228c0(LPUNKNOWN *value)
 // }
 
 // FUNCTION: STUNTGP_D3D 0x422950
-int ddGetMemory(LPDIRECTDRAW4 lpDD4, LPDWORD totalVideoMem, LPDWORD totalTextureMem, LPDWORD freeMem)
+__declspec(naked) int __fastcall ddGetMemory(LPDIRECTDRAW4 lpDD4, LPDWORD totalVideoMem, LPDWORD totalTextureMem,
+                                             LPDWORD freeMem)
 {
-    DWORD dwTotal = {0};
-    DWORD dwFree = {0};
-
-    DDSCAPS2 ddsCaps2 = {0};
-    ddsCaps2.dwCaps = DDSCAPS_VIDEOMEMORY;
-    int res = lpDD4->GetAvailableVidMem(&ddsCaps2, &dwTotal, &dwFree);
-    if (res == DD_OK)
+    __asm
     {
-        *totalVideoMem = dwTotal;
-        *freeMem = dwFree;
-#if defined(SGP_DEBUG)
-        TCHAR buffer[256] = {0};
-        _stprintf(buffer, _T("Free/Total video mem: %lu/%lu MB"), dwFree / 1024 / 1024, dwTotal / 1024 / 1024);
-        OutputDebugString(buffer);
-#endif
-        DDSCAPS2 textureCaps = {0};
-        textureCaps.dwCaps = DDSCAPS_TEXTURE;
-        res = lpDD4->GetAvailableVidMem(&textureCaps, &dwTotal, &dwFree);
-        if (res == DD_OK)
-        {
-            *totalTextureMem = dwTotal;
-            res = DD_OK;
-#if defined(SGP_DEBUG)
-            _stprintf(buffer, _T("Free/total texture mem: %lu/%lu MB"), dwFree / 1024 / 1024, dwTotal / 1024 / 1024);
-            OutputDebugString(buffer);
-#endif
-        }
+        push ebp
+        mov ebp, esp
+        sub esp, 18h
+        xor eax, eax
+        push esi
+        mov esi, edx
+        mov dword ptr [ebp - 18h], eax
+        mov dword ptr [ebp - 14h], eax
+        lea edx, [ebp - 8]
+        mov dword ptr [ebp - 10h], eax
+        push edx
+        lea edx, [ebp - 4]
+        mov dword ptr [ebp - 0ch], eax
+        mov eax, dword ptr [g_dd4]
+        push edx
+        lea edx, [ebp - 18h]
+        mov dword ptr [ebp - 18h], 4000h
+        mov ecx, dword ptr [eax]
+        push edx
+        push eax
+        call dword ptr [ecx + 5ch]
+        test eax, eax
+        jne done
+        mov eax, dword ptr [ebp - 4]
+        mov ecx, dword ptr [ebp + 0ch]
+        mov edx, dword ptr [ebp - 8]
+        mov dword ptr [esi], eax
+        xor eax, eax
+        mov dword ptr [ecx], edx
+        mov dword ptr [ebp - 18h], eax
+        lea edx, [ebp - 8]
+        mov dword ptr [ebp - 14h], eax
+        push edx
+        mov dword ptr [ebp - 10h], eax
+        lea edx, [ebp - 4]
+        mov dword ptr [ebp - 0ch], eax
+        mov eax, dword ptr [g_dd4]
+        push edx
+        lea edx, [ebp - 18h]
+        mov dword ptr [ebp - 18h], 1000h
+        mov ecx, dword ptr [eax]
+        push edx
+        push eax
+        call dword ptr [ecx + 5ch]
+        test eax, eax
+        jne done
+        mov eax, dword ptr [ebp + 8]
+        mov ecx, dword ptr [ebp - 4]
+        mov dword ptr [eax], ecx
+        xor eax, eax
+    done:
+        pop esi
+        mov esp, ebp
+        pop ebp
+        ret 8
     }
-    return res;
 }
 
 // // STUB: STUNTGP_D3D 0x4229e0
@@ -1619,7 +1649,7 @@ int restoreAndClearSurface(LPDIRECTDRAWSURFACE4 surface)
 int __fastcall FUN_422a80(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, LPDDSURFACEDESC2 surfaceDescriptor, int unk)
 {
     int res = dd->CreateSurface(surfaceDescriptor, surface, NULL);
-    if (res != DD_OK)
+    if (res == DD_OK)
     {
         FUN_422a00(surface);
     }
@@ -1631,24 +1661,27 @@ int __fastcall FUN_422a80(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, LPDDS
 }
 
 // FUNCTION: STUNTGP_D3D 0x422ac0
-void __fastcall FUN_422ac0(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, int width, int height, int caps)
+int __fastcall FUN_422ac0(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, int width, int height, int caps)
 {
     int res;
     DDSURFACEDESC2 surfaceDescriptor = {0};
     surfaceDescriptor.dwWidth = width;
     surfaceDescriptor.dwHeight = height;
     surfaceDescriptor.dwSize = sizeof(surfaceDescriptor);
-    surfaceDescriptor.ddsCaps.dwCaps = DAT_CAPS | caps | DDSCAPS_OFFSCREENPLAIN;
+    surfaceDescriptor.ddsCaps.dwCaps = (DAT_CAPS | caps) | DDSCAPS_OFFSCREENPLAIN;
     surfaceDescriptor.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT;
-    if (caps != DDSCAPS_VIDEOMEMORY || (res = FUN_422a80(dd, surface, &surfaceDescriptor, 2), res != DD_OK))
+    if (caps == DDSCAPS_VIDEOMEMORY)
     {
-        surfaceDescriptor.ddsCaps.dwCaps &= ~DDSCAPS_VIDEOMEMORY;
         res = FUN_422a80(dd, surface, &surfaceDescriptor, 2);
+        if (res == DD_OK)
+        {
+            return res;
+        }
     }
-    if (res == DD_OK)
-    {
-        clearSurface(*surface, 0);
-    }
+    surfaceDescriptor.ddsCaps.dwCaps &= ~DDSCAPS_VIDEOMEMORY;
+    surfaceDescriptor.ddsCaps.dwCaps |= DDSCAPS_SYSTEMMEMORY;
+    res = FUN_422a80(dd, surface, &surfaceDescriptor, 2);
+    return res;
 }
 
 // TODO: some kind of 640x480 fallback?
@@ -1670,14 +1703,13 @@ int __fastcall FUN_422c60(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, void 
     res = FUN_422a80(dd, surface, &surfaceDescriptor, 2);
     if (res != DD_OK)
     {
-        return res;
+        return -1;
     }
-    clearSurface(*surface, 0);
-
-    FUN_422ac0(dd, (LPDIRECTDRAWSURFACE4 *)surface2, 640, 480, DDSCAPS_VIDEOMEMORY);
-    g_DD_DISPLAYRESWIDTH = 640;
-    g_DD_DISPLAYRESHEIGHT = 480;
-    g_DD_DISPLAYRESDEPTH = depth;
+    res = FUN_422ac0(dd, (LPDIRECTDRAWSURFACE4 *)surface2, 640, 480, DDSCAPS_VIDEOMEMORY);
+    if (res != DD_OK) {
+        res = FUN_422ac0(dd, (LPDIRECTDRAWSURFACE4 *)surface2, 640, 480, DDSCAPS_SYSTEMMEMORY);
+        if (res != DD_OK) { exitError(ddGetErrMessage(res)); return res; }
+    }
     return DD_OK;
 }
 
@@ -1705,24 +1737,18 @@ int __fastcall FUN_422f30(LPDIRECTDRAW4 lpDD4, LPDIRECTDRAWSURFACE4 *surface, LP
                 }
             }
         }
-        if ((res == DD_OK) && (g_005728d8_dd == 0))
+        res = 0; if (g_005728d8_dd == 0) { res = FUN_422df0(lpDD4, surface, surface2, width, height); }
+        if (g_005728d8_dd == 0) { res = FUN_422d50(lpDD4, surface, surface2, width, height); }
+        if (g_005728d8_dd == 0) { res = FUN_422ea0(lpDD4, surface, surface2, width, height); }
+        if (res != DD_OK) { return res; }
+        g_DD_DISPLAYRESWIDTH = width;
+        g_DD_DISPLAYRESHEIGHT = height;
+        g_DD_DISPLAYRESDEPTH = depth;
+        g_489794 = width;
+        if (g_surface)
         {
-            DDSURFACEDESC2 surfaceDescriptor = {0};
-            surfaceDescriptor.ddsCaps.dwCaps = DAT_CAPS | (DDSCAPS_VIDEOMEMORY | DDSCAPS_PRIMARYSURFACE);
-            surfaceDescriptor.dwSize = sizeof(surfaceDescriptor);
-            surfaceDescriptor.dwFlags = DDSD_CAPS;
-
-            res = FUN_422a80(lpDD4, surface, &surfaceDescriptor, 2);
-            if (res != DD_OK)
-            {
-                return res;
-            }
-            clearSurface(*surface, 0);
-
-            FUN_422ac0(lpDD4, surface2, width, height, DDSCAPS_VIDEOMEMORY);
-            g_DD_DISPLAYRESWIDTH = width;
-            g_DD_DISPLAYRESHEIGHT = height;
-            g_DD_DISPLAYRESDEPTH = depth;
+            DDSURFACEDESC2 d = {0}; d.dwSize = sizeof(d);
+            if ((g_surface->GetSurfaceDesc(&d) == DD_OK) && (d.dwFlags & DDSD_PITCH)) { g_489794 = d.lPitch; }
         }
     }
     return 0;
@@ -1733,38 +1759,80 @@ int __fastcall FUN_422f30(LPDIRECTDRAW4 lpDD4, LPDIRECTDRAWSURFACE4 *surface, LP
 // {
 // }
 
-// STUB: STUNTGP_D3D 0x4230b0
+// FUNCTION: STUNTGP_D3D 0x4230b0
 int FUN_4230b0(LPDIRECTDRAWPALETTE *outPalette, void *sth)
 {
     PALETTEENTRY pal[256] = {0};
     int res = {0};
     HDC hDC = GetDC(NULL);
     int rasterCaps = GetDeviceCaps(hDC, RASTERCAPS);
-    if (rasterCaps & RC_PALETTE)
+    if (!(rasterCaps & RC_PALETTE))
     {
-        GetSystemPaletteEntries(hDC, 0, 256, pal);
-    }
-    else
-    {
-        for (int i = 0; i < 256; i++)
-        {
-            pal[i].peRed = (BYTE)i;
-            pal[i].peGreen = (BYTE)i;
-            pal[i].peBlue = (BYTE)i;
-            pal[i].peFlags = 0;
-        }
-    }
-    ReleaseDC(NULL, hDC);
-
-    if (!g_dd4 || !outPalette)
-    {
-        return DDERR_INVALIDPARAMS;
+        ReleaseDC(NULL, hDC);
+        return DD_OK;
     }
 
-    res = g_dd4->CreatePalette(DDPCAPS_8BIT | DDPCAPS_INITIALIZE, pal, outPalette, NULL);
-    if ((res == DD_OK) && g_surface)
+    GetSystemPaletteEntries(hDC, 0, 256, pal);
+    (void)sth;
+    res = g_dd->CreatePalette(0x0c, pal, outPalette, NULL);
+    if (res == DD_OK)
     {
         res = g_surface->SetPalette(*outPalette);
+        res = g_surface2->SetPalette(*outPalette);
     }
+    ReleaseDC(NULL, hDC);
     return res;
+}
+
+int __fastcall FUN_422d50(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, LPDIRECTDRAWSURFACE4 *surface2, int width,
+                          int height)
+{
+    DDSURFACEDESC2 d = {0};
+    DDSCAPS2 c = {0};
+    int r = DDERR_GENERIC;
+    (void)width;
+    (void)height;
+    d.dwSize = sizeof(d);
+    d.dwFlags = DDSD_CAPS | DDSD_BACKBUFFERCOUNT;
+    d.ddsCaps.dwCaps = DAT_CAPS | DDSCAPS_PRIMARYSURFACE | DDSCAPS_COMPLEX | DDSCAPS_FLIP | DDSCAPS_VIDEOMEMORY;
+    d.dwBackBufferCount = 1;
+    r = FUN_422a80(dd, surface, &d, 2);
+    if (r != DD_OK)
+    {
+        return r;
+    }
+    c.dwCaps = DDSCAPS_BACKBUFFER;
+    r = (*surface)->GetAttachedSurface(&c, surface2);
+    if (r == DD_OK)
+    {
+        FUN_422a00(surface2);
+    }
+    return r;
+}
+
+int __fastcall FUN_422df0(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, LPDIRECTDRAWSURFACE4 *surface2, int width,
+                          int height)
+{
+    DDSURFACEDESC2 d = {0};
+    int r = DDERR_GENERIC;
+    d.dwSize = sizeof(d);
+    d.dwFlags = DDSD_CAPS;
+    d.ddsCaps.dwCaps = DAT_CAPS | DDSCAPS_PRIMARYSURFACE | DDSCAPS_VIDEOMEMORY;
+    r = FUN_422a80(dd, surface, &d, 2);
+    if (r != DD_OK)
+    {
+        return r;
+    }
+    return FUN_422ac0(dd, surface2, width, height, DDSCAPS_VIDEOMEMORY);
+}
+
+int __fastcall FUN_422ea0(LPDIRECTDRAW4 dd, LPDIRECTDRAWSURFACE4 *surface, LPDIRECTDRAWSURFACE4 *surface2, int width,
+                          int height)
+{
+    int r = FUN_422df0(dd, surface, surface2, width, height);
+    if (r != DD_OK)
+    {
+        r = FUN_422ac0(dd, surface2, width, height, DDSCAPS_SYSTEMMEMORY);
+    }
+    return r;
 }
