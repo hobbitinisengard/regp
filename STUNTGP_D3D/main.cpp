@@ -11,6 +11,7 @@
 
 #include "Game/GameEngine/Engine_LevelScript.h"
 #include "Game/GameEngine/Game.h"
+#include "Game/GameEngine/io_wad.h"
 #include "windowInit.h"
 
 #include "globals.h"
@@ -18,7 +19,11 @@
 #include "common.h"
 // #include "pure.h"
 
+extern "C" long __cdecl _ftol();
+
 static BOOL SHOULD_STOP = {false};
+
+static const char kPathJoinFormat[] = "%s\\%s";
 
 void FUN_44ea10();
 
@@ -28,7 +33,13 @@ void FUN_42bf00();
 
 void FUN_4411c0();
 
-void FUN_4320c0(float value);
+void __stdcall FUN_4320c0(float value);
+
+void __fastcall FUN_4316f0(DWORD value);
+
+void __fastcall FUN_428f70(DWORD index);
+
+void __fastcall FUN_428ee0(DWORD value);
 
 void FUN_4320a0();
 
@@ -42,13 +53,49 @@ void __stdcall FUN_432180(DWORD value);
 
 void FUN_460330();
 
+int FUN_460200();
+
+void __fastcall FUN_460af0(DWORD value);
+
+void FUN_460760();
+
 void FUN_460bc0();
 
+void __fastcall FUN_460d60(DWORD index);
+
 void FUN_443bd0();
+
+int __fastcall FUN_445b40(char value);
+
+int __fastcall FUN_445b60(char value);
+
+DWORD __fastcall FUN_445ca0(void *value);
+
+int __fastcall FUN_445b80(void *out, DWORD text);
+
+void __fastcall FUN_445ae0(DWORD text, DWORD *offset);
+
+int __fastcall FUN_443d50(char *text);
+
+int __fastcall FUN_443ca0(void *left, void *right, DWORD count);
+
+float __fastcall FUN_4457c0(char *text, DWORD *remaining);
+
+int __fastcall FUN_4456f0(void *left, void *right, DWORD count);
+
+int __fastcall FUN_445e60(void *left, void *right, DWORD count);
+
+char *__fastcall FUN_445f10(char *text);
+
+void FUN_445d10();
 
 void FUN_445620();
 
 void FUN_445610();
+
+int FUN_445ad0();
+
+void __fastcall FUN_445f70(DWORD value);
 
 void FUN_446a70();
 
@@ -66,6 +113,32 @@ DWORD FUN_43d420();
 
 DWORD FUN_43d1f0();
 
+void __fastcall FUN_44ee10(void *obj);
+
+int __stdcall FUN_462030(const void *guid, const char *name, void *unused, void *out);
+
+int __stdcall FUN_4627b6(void *callback, void *out);
+
+int __stdcall FUN_4627b0(DWORD value, void *unknown, void *out);
+
+int FUN_461cf0();
+
+int FUN_461f50();
+
+void __fastcall FUN_461e00(void *slot, char *path, DWORD flags);
+
+int FUN_461a80();
+
+void FUN_45fa60();
+
+void FUN_45fac0();
+
+void FUN_45fab0();
+
+void FUN_45fb40();
+
+void FUN_45fce0();
+
 // FUNCTION: STUNTGP_D3D 0x44e490
 void FUN_44e490()
 {
@@ -80,20 +153,17 @@ void __fastcall FUN_44e4b0(BOOL windowMessage)
     {
         if (g_WindowMessage == 0)
         {
-            traceLog("FUN_44e4b0 called with windowMessage=%d g_WindowMessage=0", windowMessage);
             g_WindowMessage = windowMessage;
             if (g_surface)
             {
                 g_surface->GetCaps(&caps);
                 if (caps.dwCaps & DDSCAPS_MODEX)
                 {
-                    traceLog("FUN_44e4b0 restoring mode-x surfaces");
                     FUN_422f30(g_dd4, &g_surface, &g_surface2, g_DISPLAYRESWIDTH, g_DISPLAYRESHEIGHT, g_DISPLAYRESDEPTH);
                 }
             }
             int primaryRes = g_surface ? restoreAndClearSurface(g_surface) : DDERR_INVALIDPARAMS;
             int secondaryRes = g_surface2 ? restoreAndClearSurface(g_surface2) : DDERR_INVALIDPARAMS;
-            traceLog("restore results primary=0x%08x secondary=0x%08x", primaryRes, secondaryRes);
             if ((primaryRes == DD_OK) && (secondaryRes == DD_OK) && g_dd4)
             {
                 g_dd4->FlipToGDISurface();
@@ -104,15 +174,13 @@ void __fastcall FUN_44e4b0(BOOL windowMessage)
             return;
         }
     }
-    else
-    {
-        g_WindowMessage = 0;
-        FUN_44ea50();
-        FUN_44ea10();
-        FUN_4411c0();
-        g_6244f4 = 0;
-        FUN_4320c0(1.0f);
-    }
+
+    g_WindowMessage = 0;
+    FUN_44ea50();
+    FUN_44ea10();
+    FUN_4411c0();
+    g_6244f4 = 0;
+    FUN_4320c0(1.0f);
 }
 
 // FUNCTION: STUNTGP_D3D 0x44e570
@@ -255,70 +323,47 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     // #define WM_NULL                         0x0000
     // #define WM_CREATE                       0x0001
     // #define WM_DESTROY                      0x0002
-    // #define WM_MOVE                         0x0003
-    // #define WM_SIZE                         0x0005
-    // #define WM_ACTIVATE                     0x0006
-
     if (uMsg == WM_DESTROY)
     {
         PostQuitMessage(0);
-        return DefWindowProc(hWnd, WM_DESTROY, wParam, lParam);
-    }
-
-    if (uMsg == WM_ACTIVATEAPP)
-    {
-        traceLog("WM_ACTIVATEAPP wParam=%d g_WindowMessage=%d", (int)wParam, g_WindowMessage);
-        g_61c374 = wParam;
-        if (wParam == 0)
-        {
-            g_WindowMessage = 0;
-        }
         return DefWindowProc(hWnd, uMsg, wParam, lParam);
     }
 
-    if (uMsg == WM_ACTIVATE)
+    if (uMsg == WM_MOVE)
     {
-        WORD activateState = LOWORD(wParam);
-        BOOL isMinimized = HIWORD(wParam) != 0;
-        traceLog("WM_ACTIVATE state=%d fMinimized=%d g_WindowMessage=%d", activateState, (int)isMinimized, g_WindowMessage);
-        if ((activateState == WA_INACTIVE) || isMinimized)
-        {
-            g_WindowMessage = 0;
-        }
-        else if (g_WindowMessage == 0)
-        {
-            traceLog("calling FUN_44e4b0(1) from WM_ACTIVATE");
-            FUN_44e4b0(1);
-        }
         return DefWindowProc(hWnd, uMsg, wParam, lParam);
     }
 
     if (uMsg == WM_SIZE)
     {
-        traceLog("WM_SIZE wParam=%d g_WindowMessage=%d", (int)wParam, g_WindowMessage);
-        if (wParam == SIZE_MINIMIZED)
+        if (IsIconic(hWnd))
         {
-            g_WindowMessage = 0;
-        }
-        else if (g_WindowMessage == 0)
-        {
-            traceLog("calling FUN_44e4b0(1) from WM_SIZE");
-            FUN_44e4b0(1);
+            g_61c374 = 1;
+            if (g_WindowMessage == 1)
+            {
+                FUN_44e4b0(0);
+            }
         }
         return DefWindowProc(hWnd, uMsg, wParam, lParam);
     }
 
-    if ((uMsg == WM_KEYDOWN) && (wParam == VK_ESCAPE))
+    if (uMsg == WM_ACTIVATEAPP)
     {
-        PostQuitMessage(0);
-        return 0;
+        g_61c374 = wParam;
+        if ((wParam != 0) && (g_WindowMessage == 1))
+        {
+            FUN_44e4b0(0);
+        }
+        return DefWindowProc(hWnd, uMsg, wParam, lParam);
     }
 
-    if ((uMsg == WM_CHAR) && (g_62ddfc == '\0'))
+    if (uMsg == WM_CHAR)
     {
-        g_62ddfc = wParam;
-        // TODO: save wparam to static
-        return DefWindowProc(hWnd, WM_CHAR, wParam, lParam);
+        if (g_62ddfc == '\0')
+        {
+            g_62ddfc = (char)wParam;
+        }
+        return DefWindowProc(hWnd, uMsg, wParam, lParam);
     }
 
     return DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -326,19 +371,23 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 // unused: STUNTGP_D3D 0x44e7a0
 
-// TODO: is this even correct? check assembly
-// STUB: STUNTGP_D3D 0x44e870
-void m_keyboard()
+// FUNCTION: STUNTGP_D3D 0x44e870
+__declspec(naked) void m_keyboard()
 {
-    int i = {10};
-    for (i = 10; i >= 0; i--)
+    __asm
     {
-        GetKeyboardState(g_62d480[i]);
-    }
-    if (g_62d480[0][VK_ESCAPE] & 0x80)
-    {
-        SHOULD_STOP = true;
-        PostQuitMessage(0);
+        push esi
+        push edi
+        mov edi, dword ptr [GetKeyboardState]
+        mov esi, 0ah
+    loopStart:
+        push OFFSET g_62d480
+        call edi
+        dec esi
+        jne loopStart
+        pop edi
+        pop esi
+        ret
     }
 }
 
@@ -355,23 +404,26 @@ BOOL windowCreate(HINSTANCE hInstance, HINSTANCE hPrevInstance)
 
     const TCHAR menuName[] = _T("AppMenu");
     const TCHAR className[] = _T("Stunt GP");
+    traceLog("windowCreate enter hInstance=0x%p hPrevInstance=0x%p", hInstance, hPrevInstance);
     if (!hPrevInstance)
     {
         WNDCLASS windowInfo = {0};
         windowInfo.style = CS_OWNDC;
         windowInfo.lpfnWndProc = WndProc;
         windowInfo.hInstance = hInstance;
-        windowInfo.hIcon = LoadIcon(hInstance, IDC_ARROW);
+        windowInfo.hIcon = LoadIcon(NULL, IDI_APPLICATION);
         windowInfo.hCursor = NULL;
         windowInfo.hbrBackground = (HBRUSH)GetStockObject(NULL_BRUSH);
         windowInfo.lpszMenuName = menuName;
         windowInfo.lpszClassName = className;
         if (!RegisterClass(&windowInfo))
         {
+            traceLog("RegisterClass failed error=0x%08x", GetLastError());
             return FALSE;
         }
     }
     g_Hwnd = windowCreateInternal(hInstance, _T("Stunt GP"), _T("Stunt GP"));
+    traceLog("windowCreateInternal returned g_Hwnd=0x%p", g_Hwnd);
     if (!g_Hwnd)
     {
         return FALSE;
@@ -468,14 +520,73 @@ void FUN_4411c0()
     }
 }
 
-// STUB: STUNTGP_D3D 0x4320c0
-void FUN_4320c0(float value)
+// FUNCTION: STUNTGP_D3D 0x4320c0
+__declspec(naked) void __stdcall FUN_4320c0(float)
 {
-    if (!g_5da1dc)
+    __asm
     {
-        return;
+        push ebp
+        mov ebp, esp
+        push edi
+        mov edi, dword ptr [g_5da1dc]
+        test edi, edi
+        je done
+        fld dword ptr [ebp + 8]
+        fsub dword ptr [g_6244f4]
+        fabs
+        fcomp qword ptr [g_46e748]
+        fnstsw ax
+        test ah, 1
+        jne done
+        fld dword ptr [ebp + 8]
+        fsub qword ptr [g_46e2c8]
+        mov eax, dword ptr [ebp + 8]
+        mov dword ptr [g_6244f4], eax
+        fmul qword ptr [g_46e740]
+        fcom qword ptr [g_46e738]
+        fnstsw ax
+        test ah, 41h
+        jne useComputed
+        fstp st(0)
+        fld dword ptr [g_46e730]
+    useComputed:
+        fld st(0)
+        fmul st(0), st(1)
+        push esi
+        fmul dword ptr [g_46e668]
+        call _ftol
+        mov edx, eax
+        mov ecx, OFFSET g_592180 + 200h
+        shr edx, 6
+        sub edx, eax
+        mov esi, eax
+        add edx, 0ff00h
+        fstp st(0)
+        shr edx, 8
+    loopStart:
+        cmp esi, 0fffeh
+        mov eax, esi
+        jbe storeValue
+        mov eax, 0fffeh
+    storeValue:
+        mov word ptr [ecx - 200h], ax
+        mov word ptr [ecx], ax
+        mov word ptr [ecx + 200h], ax
+        add ecx, 2
+        add esi, edx
+        cmp ecx, OFFSET g_592180 + 400h
+        jl loopStart
+        mov ecx, dword ptr [edi]
+        push OFFSET g_592180
+        push 0
+        push edi
+        call dword ptr [ecx + 10h]
+        pop esi
+    done:
+        pop edi
+        pop ebp
+        ret 4
     }
-    g_6244f4 = *(DWORD *)&value;
 }
 
 // FUNCTION: STUNTGP_D3D 0x4320a0
@@ -504,9 +615,160 @@ __declspec(naked) void __stdcall FUN_432180(DWORD)
     }
 }
 
-// STUB: STUNTGP_D3D 0x42bf00
-void FUN_42bf00()
+// FUNCTION: STUNTGP_D3D 0x42bf00
+__declspec(naked) void FUN_42bf00()
 {
+    __asm
+    {
+        mov edx, dword ptr [g_57e310]
+        push ebx
+        test edx, edx
+        push esi
+        je secondTable
+        mov esi, OFFSET g_57e310
+    firstLoop:
+        mov ecx, dword ptr [esi + 4]
+        call FUN_4316f0
+        mov edx, dword ptr [esi + 8]
+        add esi, 8
+        test edx, edx
+        jne firstLoop
+    secondTable:
+        mov eax, dword ptr [g_5895c0]
+        xor ebx, ebx
+        test eax, eax
+        je done
+        push edi
+        mov edi, OFFSET g_5895c0
+        mov esi, edi
+    secondLoop:
+        mov ecx, ebx
+        call FUN_428f70
+        mov ecx, dword ptr [edi]
+        call FUN_428ee0
+        mov eax, dword ptr [esi + 8]
+        add esi, 8
+        inc ebx
+        mov edi, esi
+        test eax, eax
+        jne secondLoop
+        pop edi
+    done:
+        pop esi
+        pop ebx
+        ret
+    }
+}
+
+// STUB: STUNTGP_D3D 0x4316f0
+void __fastcall FUN_4316f0(DWORD)
+{
+}
+
+// FUNCTION: STUNTGP_D3D 0x428f70
+__declspec(naked) void __fastcall FUN_428f70(DWORD)
+{
+    __asm
+    {
+        mov eax, dword ptr [g_57b314]
+        cmp ecx, eax
+        jb inRange
+        lea ecx, [eax - 1]
+    inRange:
+        lea eax, [ecx + ecx * 4]
+        lea eax, [ecx + eax * 2]
+        lea edx, [eax + eax * 4]
+        lea eax, [ecx + edx * 4]
+        shl eax, 5
+        add eax, OFFSET g_577bd0
+        mov dword ptr [g_57b310], eax
+        ret
+    }
+}
+
+// STUB: STUNTGP_D3D 0x428ee0
+void __fastcall FUN_428ee0(DWORD)
+{
+}
+
+// TODO: STUNTGP_D3D 0x42e8d0
+__declspec(naked) DWORD __fastcall FUN_42e8d0(DWORD, DWORD)
+{
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        push ecx
+        push ebx
+        push esi
+        mov ebx, edx
+        mov dword ptr [ebp - 4], ecx
+        mov esi, OFFSET g_589e2c
+        xor eax, eax
+    searchLoop:
+        mov edx, dword ptr [esi + 4]
+        test edx, edx
+        je foundSlot
+        add esi, 18h
+        inc eax
+        cmp eax, 180h
+        jb searchLoop
+        pop esi
+        xor eax, eax
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret
+    foundSlot:
+        push edi
+        lea edi, [ecx + 24h]
+        push edi
+        call malloc
+        mov ecx, dword ptr [ebp - 4]
+        lea edx, [eax + 20h]
+        and edx, 0ffffffe0h
+        add esp, 4
+        mov dword ptr [esi], edx
+        mov dword ptr [esi + 4], eax
+        mov dword ptr [esi + 8], edi
+        mov dword ptr [esi + 0ch], ecx
+        mov dword ptr [esi + 10h], ebx
+        mov eax, dword ptr [g_589e20]
+        mov dword ptr [esi + 14h], eax
+        mov esi, dword ptr [g_589e20]
+        inc esi
+        cmp ebx, 1
+        mov dword ptr [g_589e20], esi
+        jne addNormal
+        add dword ptr [g_589e18], edi
+        jmp updatePeak
+    addNormal:
+        add dword ptr [g_589e14], edi
+    updatePeak:
+        mov eax, dword ptr [g_589e14]
+        mov esi, dword ptr [g_589e18]
+        add eax, esi
+        mov esi, dword ptr [g_589e1c]
+        cmp eax, esi
+        jbe clearBlock
+        mov dword ptr [g_589e1c], eax
+    clearBlock:
+        mov esi, ecx
+        xor eax, eax
+        mov edi, edx
+        shr ecx, 2
+        rep stosd
+        mov ecx, esi
+        and ecx, 3
+        rep stosb
+        pop edi
+        pop esi
+        mov eax, edx
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret
+    }
 }
 
 // FUNCTION: STUNTGP_D3D 0x42e980
@@ -687,7 +949,452 @@ void FUN_4624b0()
 {
 }
 
-// STUB: STUNTGP_D3D 0x462090
+// FUNCTION: STUNTGP_D3D 0x462030
+__declspec(naked) int __stdcall FUN_462030(const void *, const char *, void *, void *)
+{
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        mov eax, dword ptr [ebp + 8]
+        mov ecx, dword ptr [ebp + 14h]
+        push esi
+        push edi
+        test eax, eax
+        je copyName
+        mov esi, dword ptr [eax]
+        mov edx, ecx
+        mov dword ptr [edx], esi
+        mov esi, dword ptr [eax + 4]
+        mov dword ptr [edx + 4], esi
+        mov esi, dword ptr [eax + 8]
+        mov eax, dword ptr [eax + 0ch]
+        mov dword ptr [edx + 8], esi
+        mov dword ptr [edx + 0ch], eax
+    copyName:
+        mov edi, dword ptr [ebp + 0ch]
+        lea edx, [ecx + 10h]
+        or ecx, 0ffffffffh
+        xor eax, eax
+        repne scasb
+        not ecx
+        sub edi, ecx
+        mov eax, ecx
+        mov esi, edi
+        mov edi, edx
+        shr ecx, 2
+        rep movsd
+        mov ecx, eax
+        mov eax, 1
+        and ecx, 3
+        rep movsb
+        pop edi
+        pop esi
+        pop ebp
+        ret 10h
+    }
+}
+
+// STUB: STUNTGP_D3D 0x4627b6
+int __stdcall FUN_4627b6(void *, void *)
+{
+    return 1;
+}
+
+// STUB: STUNTGP_D3D 0x4627b0
+int __stdcall FUN_4627b0(DWORD, void *, void *)
+{
+    return 1;
+}
+
+// FUNCTION: STUNTGP_D3D 0x461cf0
+__declspec(naked) int FUN_461cf0()
+{
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        sub esp, 8ch
+        mov eax, dword ptr [g_62e0b0]
+        push esi
+        xor esi, esi
+        lea edx, [ebp - 28h]
+        push esi
+        mov dword ptr [ebp - 28h], 14h
+        mov dword ptr [ebp - 24h], 11h
+        mov dword ptr [ebp - 1ch], esi
+        mov dword ptr [ebp - 20h], esi
+        mov dword ptr [ebp - 18h], esi
+        mov ecx, dword ptr [eax]
+        push OFFSET g_62e114
+        push edx
+        push eax
+        call dword ptr [ecx + 0ch]
+        test eax, eax
+        je queryCaps
+        xor eax, eax
+        pop esi
+        mov esp, ebp
+        pop ebp
+        ret
+    queryCaps:
+        mov eax, dword ptr [g_62e0b0]
+        lea edx, [ebp - 8ch]
+        mov dword ptr [ebp - 8ch], 60h
+        push edx
+        mov ecx, dword ptr [eax]
+        push eax
+        call dword ptr [ecx + 10h]
+        test eax, eax
+        je checkCaps
+        xor eax, eax
+        pop esi
+        mov esp, ebp
+        pop ebp
+        ret
+    checkCaps:
+        cmp dword ptr [ebp - 60h], 8
+        jae enumFormats
+        mov dword ptr [g_4897ac], esi
+        mov dword ptr [g_4897b0], esi
+    enumFormats:
+        mov eax, dword ptr [g_62e114]
+        lea edx, [ebp - 2ch]
+        push edx
+        lea edx, [ebp - 14h]
+        mov ecx, dword ptr [eax]
+        push 12h
+        push edx
+        push eax
+        call dword ptr [ecx + 14h]
+        test eax, eax
+        je createSurface
+        xor eax, eax
+        pop esi
+        mov esp, ebp
+        pop ebp
+        ret
+    createSurface:
+        mov ecx, dword ptr [ebp - 88h]
+        mov esi, dword ptr [g_489794]
+        and cl, 8
+        mov dword ptr [ebp - 10h], esi
+        mov eax, dword ptr [ebp - 12h]
+        mov word ptr [ebp - 14h], 1
+        neg cl
+        sbb ecx, ecx
+        and eax, 0ffffh
+        and ecx, 8
+        add ecx, 8
+        mov word ptr [ebp - 6], cx
+        and ecx, 0ffffh
+        imul eax, ecx
+        cdq
+        and edx, 7
+        add eax, edx
+        lea edx, [ebp - 14h]
+        sar eax, 3
+        mov word ptr [ebp - 8], ax
+        mov eax, dword ptr [ebp - 8]
+        and eax, 0ffffh
+        push edx
+        imul eax, esi
+        mov dword ptr [ebp - 0ch], eax
+        mov eax, dword ptr [g_62e114]
+        push eax
+        mov ecx, dword ptr [eax]
+        call dword ptr [ecx + 38h]
+        neg eax
+        sbb eax, eax
+        pop esi
+        inc eax
+        mov esp, ebp
+        pop ebp
+        ret
+    }
+}
+
+// TODO: STUNTGP_D3D 0x461e00
+void __fastcall FUN_461e00(void *, char *, DWORD)
+{
+}
+
+// FUNCTION: STUNTGP_D3D 0x461f50
+__declspec(naked) int FUN_461f50()
+{
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        sub esp, 80h
+        push ebx
+        push esi
+        push edi
+        mov ecx, 400h
+        xor eax, eax
+        mov edi, OFFSET g_62e118
+        rep stosd
+        mov eax, dword ptr [g_4899ec]
+        mov ebx, 1
+        test eax, eax
+        je done
+        mov esi, OFFSET g_4899ec
+        mov edi, OFFSET g_62e138
+    firstLoop:
+        mov eax, dword ptr [g_4897b0]
+        test eax, eax
+        jne firstCheckState
+        mov dword ptr [esi + 8], ebx
+        jmp firstNext
+    firstCheckState:
+        cmp dword ptr [esi + 8], 2
+        jne firstNext
+        mov eax, dword ptr [esi]
+        lea ecx, [ebp - 80h]
+        push eax
+        push OFFSET g_SoundDirectory
+        push OFFSET g_SfxPathFormatA
+        push ecx
+        call sprintf
+        add esp, 10h
+        lea edx, [ebp - 80h]
+        mov ecx, edi
+        push 20012h
+        call FUN_461e00
+    firstNext:
+        mov eax, dword ptr [esi + 0ch]
+        add esi, 0ch
+        add edi, 20h
+        test eax, eax
+        jne firstLoop
+        mov eax, dword ptr [g_4899ec]
+        test eax, eax
+        je done
+        mov esi, OFFSET g_4899ec
+        mov edi, OFFSET g_62e138
+    secondLoop:
+        cmp dword ptr [esi + 8], ebx
+        jne secondNext
+        mov edx, dword ptr [esi]
+        lea eax, [ebp - 80h]
+        push edx
+        push OFFSET g_SoundDirectory
+        push OFFSET g_SfxPathFormatB
+        push eax
+        call sprintf
+        add esp, 10h
+        lea edx, [ebp - 80h]
+        mov ecx, edi
+        push 2
+        call FUN_461e00
+    secondNext:
+        mov eax, dword ptr [esi + 0ch]
+        add esi, 0ch
+        add edi, 20h
+        test eax, eax
+        jne secondLoop
+    done:
+        pop edi
+        mov eax, ebx
+        pop esi
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x461a80
+__declspec(naked) int FUN_461a80()
+{
+    __asm
+    {
+        mov eax, dword ptr [g_62e114]
+        test eax, eax
+        jne query
+        ret
+    query:
+        mov ecx, dword ptr [eax]
+        push OFFSET g_62f11c
+        push OFFSET g_46fe80
+        push eax
+        call dword ptr [ecx]
+        test eax, eax
+        je success
+        xor eax, eax
+        _emit 0c3h
+    success:
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x45fac0
+__declspec(naked) void FUN_45fac0()
+{
+    __asm
+    {
+        xor eax, eax
+        mov dword ptr [g_62df0c], eax
+        mov byte ptr [g_62df18], al
+        mov dword ptr [g_62df1c], eax
+        mov dword ptr [g_62df20], eax
+        mov dword ptr [g_62df14], eax
+        mov dword ptr [g_62df24], eax
+        mov dword ptr [g_62df28], eax
+        mov dword ptr [g_62df2c], eax
+        mov dword ptr [g_62df30], eax
+        mov dword ptr [g_62df34], eax
+        mov dword ptr [g_62e084], eax
+        mov dword ptr [g_62df38], eax
+        mov dword ptr [g_62e090], eax
+        mov dword ptr [g_62e098], eax
+        mov dword ptr [g_62e09c], eax
+        mov dword ptr [g_62e0a0], eax
+        mov dword ptr [g_62df3c], eax
+        mov dword ptr [g_62df40], eax
+        mov dword ptr [g_62df50], eax
+        mov byte ptr [g_62df54], al
+        mov dword ptr [g_62e06c], eax
+        mov dword ptr [g_62e088], eax
+        mov dword ptr [g_62e08c], eax
+        mov dword ptr [g_62df08], eax
+        ret
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x45fa60
+__declspec(naked) void FUN_45fa60()
+{
+    __asm
+    {
+        mov eax, dword ptr [g_62f5ac]
+        push esi
+        xor esi, esi
+        cmp eax, esi
+        jne done
+        cmp dword ptr [g_62e0f8], esi
+        je done
+        call FUN_45fac0
+        mov dword ptr [g_62e0f8], 66h
+        mov dword ptr [g_62e10c], esi
+        mov dword ptr [g_62e0fc], esi
+        mov dword ptr [g_62e110], esi
+        mov dword ptr [g_62e100], esi
+        mov dword ptr [g_62e104], esi
+        mov dword ptr [g_62e108], esi
+        mov dword ptr [g_62f5ac], esi
+    done:
+        pop esi
+        ret
+    }
+}
+
+// TODO: STUNTGP_D3D 0x460760
+__declspec(naked) void FUN_460760()
+{
+    __asm
+    {
+        push edi
+        mov ecx, 0eh
+        xor eax, eax
+        mov edi, OFFSET g_62e0b8
+        rep stosd
+        mov dword ptr [g_62e0b8], 0fffffc18h
+        mov dword ptr [g_62e0b8 + 4], 0fffffce0h
+        mov dword ptr [g_62e0b8 + 8], eax
+        mov dword ptr [g_62e0b8 + 0ch], 3fbeb852h
+        mov dword ptr [g_62e0b8 + 10h], 3f2b851fh
+        mov dword ptr [g_62e0b8 + 14h], 0fffff71fh
+        mov dword ptr [g_62e0b8 + 18h], 3be56042h
+        mov dword ptr [g_62e0b8 + 1ch], 0fffff965h
+        mov dword ptr [g_62e0b8 + 20h], 3c343958h
+        mov dword ptr [g_62e0b8 + 24h], 10h
+        mov dword ptr [g_62e0b8 + 28h], 40f00000h
+        mov dword ptr [g_62e0b8 + 2ch], 3f000000h
+        mov dword ptr [g_62e0b8 + 30h], 0c0a00000h
+        mov dword ptr [g_62e0b8 + 34h], 2fh
+        pop edi
+        ret
+    }
+}
+
+// TODO: STUNTGP_D3D 0x460af0
+__declspec(naked) void __fastcall FUN_460af0(DWORD)
+{
+    __asm
+    {
+        mov edx, dword ptr [g_62e0ac]
+        mov eax, 1
+        cmp edx, eax
+        jne done
+        cmp dword ptr [g_4897b0], eax
+        jne done
+        cmp ecx, 6
+        ja done
+        test ecx, ecx
+        jne done
+        call FUN_460760
+    done:
+        ret
+    }
+}
+
+// TODO: STUNTGP_D3D 0x45fb40
+__declspec(naked) void FUN_45fb40()
+{
+    __asm
+    {
+        jmp FUN_45fce0
+    }
+}
+
+// TODO: STUNTGP_D3D 0x45fce0
+__declspec(naked) void FUN_45fce0()
+{
+    __asm
+    {
+        mov eax, dword ptr [g_62e088]
+        test eax, eax
+        je done
+        call FUN_460330
+        mov eax, dword ptr [g_62df08]
+        push eax
+        mov ecx, dword ptr [eax]
+        call dword ptr [ecx + 8]
+        mov edx, dword ptr [g_62df4c]
+        push edx
+        call dword ptr [g_46e1a4]
+        mov eax, dword ptr [g_62e06c]
+        test eax, eax
+        je clearState
+        push 0
+        push eax
+        call dword ptr [g_46e1a0]
+        mov dword ptr [g_62e06c], 0
+    clearState:
+        mov eax, dword ptr [g_62df38]
+        mov dword ptr [g_62e088], 0
+        and ah, 0bfh
+        mov dword ptr [g_62df38], eax
+    done:
+        ret
+    }
+}
+
+// TODO: STUNTGP_D3D 0x45fab0
+__declspec(naked) void FUN_45fab0()
+{
+    __asm
+    {
+        mov eax, dword ptr [g_62e0f8]
+        test eax, eax
+        je done
+        jmp FUN_45fb40
+    done:
+        ret
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x462090
 __declspec(naked) int FUN_462090()
 {
     __asm
@@ -721,10 +1428,81 @@ __declspec(naked) int FUN_462090()
         pop esi
         ret
     missingInitPath:
+        push OFFSET g_62f118
+        push OFFSET FUN_462030
+        call FUN_4627b6
+        test eax, eax
+        je openDevice
         pop edi
         xor eax, eax
         pop esi
         ret
+    openDevice:
+        mov ecx, dword ptr [g_62f118]
+        mov eax, 38e38e39h
+        sub ecx, OFFSET g_62f128
+        push esi
+        imul ecx
+        sar edx, 5
+        mov eax, edx
+        push OFFSET g_62e0b0
+        shr eax, 1fh
+        add edx, eax
+        push esi
+        mov dword ptr [g_62f120], edx
+        call FUN_4627b0
+        test eax, eax
+        je setCoop
+        pop edi
+        xor eax, eax
+        pop esi
+        ret
+    setCoop:
+        mov eax, dword ptr [g_62e0b0]
+        mov edx, dword ptr [g_Hwnd]
+        push 3
+        push edx
+        mov ecx, dword ptr [eax]
+        push eax
+        call dword ptr [ecx + 18h]
+        call FUN_461cf0
+        test eax, eax
+        jne checkMode
+        pop edi
+        pop esi
+        ret
+    checkMode:
+        cmp dword ptr [g_4897b4], esi
+        jne restoreMode
+        mov dword ptr [g_4897b0], esi
+    createMode:
+        call FUN_461f50
+        test eax, eax
+        jne success
+        pop edi
+        pop esi
+        ret
+    restoreMode:
+        cmp dword ptr [g_4897b0], edi
+        jne createMode
+        call FUN_461a80
+        test eax, eax
+        jne createMode
+        pop edi
+        pop esi
+        ret
+    success:
+        mov dword ptr [g_62e0ac], edi
+        call FUN_45fa60
+        call FUN_460bc0
+        mov eax, dword ptr [g_4897b0]
+        mov dword ptr [g_4897b4], eax
+        mov eax, edi
+        pop edi
+        pop esi
+        ret
+        nop
+        nop
     }
 }
 
@@ -762,7 +1540,195 @@ __declspec(naked) void FUN_45ec30()
 // STUB: STUNTGP_D3D 0x445d70
 void __fastcall FUN_445d70(DWORD index)
 {
+    FUN_445d10();
     g_612944 = index;
+}
+
+// FUNCTION: STUNTGP_D3D 0x445d10
+__declspec(naked) void FUN_445d10()
+{
+    __asm
+    {
+        mov eax, dword ptr [g_46e780]
+        xor edx, edx
+        test eax, eax
+        je copyTail
+        push esi
+        xor eax, eax
+        mov ecx, OFFSET g_46e780
+    copyLoop:
+        mov esi, dword ptr [ecx]
+        mov ecx, dword ptr [ecx + 4]
+        inc edx
+        mov dword ptr [eax + g_60f350], esi
+        mov dword ptr [eax + g_60f350 + 4], ecx
+        lea eax, [edx*8]
+        mov esi, dword ptr [eax + g_46e780]
+        lea ecx, [eax + g_46e780]
+        test esi, esi
+        jne copyLoop
+        pop esi
+    copyTail:
+        mov eax, dword ptr [edx*8 + g_46e780]
+        mov ecx, dword ptr [edx*8 + g_46e780 + 4]
+        mov dword ptr [edx*8 + g_60f350], eax
+        mov dword ptr [edx*8 + g_60f350 + 4], ecx
+        ret
+    }
+}
+
+// TODO: STUNTGP_D3D 0x445ad0
+__declspec(naked) int FUN_445ad0()
+{
+    __asm
+    {
+        xor eax, eax
+        ret
+    }
+}
+
+// TODO: STUNTGP_D3D 0x445f70
+__declspec(naked) void __fastcall FUN_445f70(DWORD)
+{
+    __asm
+    {
+        mov dword ptr [g_4835e0], ecx
+        ret
+    }
+}
+
+// TODO: STUNTGP_D3D 0x445e60
+__declspec(naked) int __fastcall FUN_445e60(void *, void *, DWORD)
+{
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        sub esp, 8
+        mov eax, dword ptr [ebp + 8]
+        push ebx
+        push esi
+        push edi
+        xor edi, edi
+        mov dword ptr [ebp - 8], edx
+        test eax, eax
+        mov dword ptr [ebp - 4], ecx
+        jle done
+        mov ecx, OFFSET g_60f350
+    entryLoop:
+        mov esi, dword ptr [ebp - 4]
+        mov eax, dword ptr [ecx]
+    compareLoop:
+        mov dl, byte ptr [eax]
+        mov bl, dl
+        cmp dl, byte ptr [esi]
+        jne compareDiff
+        test bl, bl
+        je compareSame
+        mov dl, byte ptr [eax + 1]
+        mov bl, dl
+        cmp dl, byte ptr [esi + 1]
+        jne compareDiff
+        add eax, 2
+        add esi, 2
+        test bl, bl
+        jne compareLoop
+    compareSame:
+        xor eax, eax
+        jmp compareDone
+    compareDiff:
+        sbb eax, eax
+        sbb eax, -1
+    compareDone:
+        test eax, eax
+        je matched
+        mov eax, dword ptr [ebp + 8]
+        inc edi
+        add ecx, 8
+        cmp edi, eax
+        jl entryLoop
+        pop edi
+        pop esi
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret 4
+    matched:
+        mov ecx, dword ptr [ebp - 8]
+        call FUN_445f10
+        mov ecx, dword ptr [edi*8 + g_60f350 + 4]
+        mov edx, dword ptr [ebp + 8]
+        mov dword ptr [ecx*4 + g_6127a0], eax
+        lea eax, [edx - 1]
+        cmp edi, eax
+        jge done
+        mov edx, eax
+        lea ecx, [edi*8 + g_60f350]
+        sub edx, edi
+    shiftLoop:
+        mov esi, dword ptr [ecx + 8]
+        mov dword ptr [ecx], esi
+        mov esi, dword ptr [ecx + 0ch]
+        mov dword ptr [ecx + 4], esi
+        add ecx, 8
+        dec edx
+        jne shiftLoop
+    done:
+        pop edi
+        pop esi
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret 4
+    }
+}
+
+// TODO: STUNTGP_D3D 0x445f10
+__declspec(naked) char *__fastcall FUN_445f10(char *)
+{
+    __asm
+    {
+        push esi
+        mov esi, ecx
+        push edi
+        mov edi, esi
+        or ecx, 0ffffffffh
+        xor eax, eax
+        repne scasb
+        not ecx
+        dec ecx
+        or eax, 0ffffffffh
+        sub eax, ecx
+        mov ecx, dword ptr [g_4835dc]
+        add ecx, eax
+        mov dword ptr [g_4835dc], ecx
+        jns copyString
+        pop edi
+        xor eax, eax
+        pop esi
+        ret
+    copyString:
+        mov ecx, dword ptr [g_4835dc]
+        mov edi, esi
+        xor eax, eax
+        lea edx, [ecx + g_60f6a0]
+        or ecx, 0ffffffffh
+        repne scasb
+        not ecx
+        sub edi, ecx
+        mov eax, ecx
+        mov esi, edi
+        mov edi, edx
+        shr ecx, 2
+        rep movsd
+        mov ecx, eax
+        mov eax, edx
+        and ecx, 3
+        rep movsb
+        pop edi
+        pop esi
+        ret
+    }
 }
 
 // FUNCTION: STUNTGP_D3D 0x445f80
@@ -792,14 +1758,47 @@ __declspec(naked) void FUN_45f9d0()
     }
 }
 
-// STUB: STUNTGP_D3D 0x460330
-void FUN_460330()
+// TODO: STUNTGP_D3D 0x460330
+__declspec(naked) void FUN_460330()
 {
+    __asm
+    {
+        call FUN_460200
+        test eax, eax
+        jne success
+        mov eax, 887800aah
+        mov dword ptr [g_62e08c], eax
+        ret
+    success:
+    }
 }
 
-// STUB: STUNTGP_D3D 0x460dd0
-void FUN_460dd0()
+// FUNCTION: STUNTGP_D3D 0x460200
+int FUN_460200()
 {
+    if ((g_62e088 != 0) && ((g_62df38 & 0x4000) != 0))
+    {
+        return 1;
+    }
+    return 0;
+}
+
+// FUNCTION: STUNTGP_D3D 0x460dd0
+__declspec(naked) void FUN_460dd0()
+{
+    __asm
+    {
+        push esi
+        xor esi, esi
+    loopStart:
+        mov ecx, esi
+        call FUN_460d60
+        inc esi
+        cmp esi, 80h
+        jb loopStart
+        pop esi
+        ret
+    }
 }
 
 // FUNCTION: STUNTGP_D3D 0x460c90
@@ -833,9 +1832,445 @@ __declspec(naked) void FUN_443d70()
     }
 }
 
-// STUB: STUNTGP_D3D 0x443bd0
-void FUN_443bd0()
+// TODO: STUNTGP_D3D 0x445ca0
+__declspec(naked) DWORD __fastcall FUN_445ca0(void *)
 {
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        sub esp, 100h
+        push esi
+        push ecx
+        push OFFSET g_GameDirectory
+        lea eax, [ebp - 100h]
+        push OFFSET kPathJoinFormat
+        push eax
+        call sprintf
+        add esp, 10h
+        lea ecx, [ebp - 100h]
+        push ecx
+        call size_of_file
+        add esp, 4
+        mov esi, eax
+        test esi, esi
+        jg loadFile
+        xor eax, eax
+        pop esi
+        mov esp, ebp
+        pop ebp
+        ret
+    loadFile:
+        lea ecx, [esi + 1]
+        push edi
+        push ecx
+        call malloc
+        add esp, 4
+        mov edi, eax
+        mov edx, edi
+        lea ecx, [ebp - 100h]
+        push esi
+        push edx
+        push ecx
+        call bload
+        add esp, 0ch
+        mov byte ptr [edi + esi], 0
+        mov eax, edi
+        pop edi
+        pop esi
+        mov esp, ebp
+        pop ebp
+        ret
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x445b40
+__declspec(naked) int __fastcall FUN_445b40(char)
+{
+    __asm
+    {
+        cmp cl, 20h
+        je match
+        cmp cl, 9
+        je match
+        xor eax, eax
+        ret
+    match:
+        mov eax, 1
+        ret
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x445b60
+__declspec(naked) int __fastcall FUN_445b60(char)
+{
+    __asm
+    {
+        cmp cl, 0dh
+        je match
+        cmp cl, 0ah
+        je match
+        xor eax, eax
+        ret
+    match:
+        mov eax, 1
+        ret
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x445b80
+__declspec(naked) int __fastcall FUN_445b80(void *, DWORD)
+{
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        push ecx
+        push ebx
+        push esi
+        mov esi, dword ptr [ebp + 8]
+        push edi
+        mov edi, edx
+        xor ebx, ebx
+        mov eax, dword ptr [esi]
+        mov dword ptr [ebp - 4], ecx
+        mov byte ptr [ecx], bl
+        mov cl, byte ptr [eax + edi]
+        call FUN_445b40
+        test eax, eax
+        je afterLeadingSpaces
+    leadingSpaces:
+        mov edx, dword ptr [esi]
+        inc edx
+        mov eax, edx
+        mov dword ptr [esi], edx
+        mov cl, byte ptr [eax + edi]
+        call FUN_445b40
+        test eax, eax
+        jne leadingSpaces
+    afterLeadingSpaces:
+        mov eax, dword ptr [esi]
+        mov cl, byte ptr [eax + edi]
+        test cl, cl
+        jne hasToken
+        pop edi
+        pop esi
+        xor eax, eax
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret 4
+    hasToken:
+        cmp cl, 22h
+        jne unquoted
+        mov cl, byte ptr [eax + edi + 1]
+        inc eax
+        cmp cl, 22h
+        mov dword ptr [esi], eax
+        je quotedEnd
+    quotedLoop:
+        test cl, cl
+        je quotedEnd
+        mov edx, dword ptr [ebp - 4]
+        inc ebx
+        inc eax
+        mov byte ptr [ebx + edx - 1], cl
+        mov dword ptr [esi], eax
+        mov cl, byte ptr [eax + edi]
+        cmp cl, 22h
+        jne quotedLoop
+    quotedEnd:
+        mov eax, dword ptr [esi]
+        cmp byte ptr [eax + edi], 22h
+        je quotedClose
+        pop edi
+        pop esi
+        xor eax, eax
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret 4
+    quotedClose:
+        inc eax
+        mov dword ptr [esi], eax
+        jmp finishToken
+    unquoted:
+        cmp cl, 2ch
+        je finishToken
+    unquotedCheck:
+        mov eax, dword ptr [esi]
+        mov cl, byte ptr [eax + edi]
+        call FUN_445b60
+        test eax, eax
+        jne finishToken
+        mov eax, dword ptr [esi]
+        mov cl, byte ptr [eax + edi]
+        test cl, cl
+        je finishToken
+        mov edx, dword ptr [ebp - 4]
+        inc ebx
+        inc eax
+        mov byte ptr [ebx + edx - 1], cl
+        mov dword ptr [esi], eax
+        cmp byte ptr [eax + edi], 2ch
+        jne unquotedCheck
+    finishToken:
+        mov eax, dword ptr [ebp - 4]
+        mov byte ptr [ebx + eax], 0
+        mov eax, dword ptr [esi]
+        cmp byte ptr [eax + edi], 2ch
+        jne done
+        inc eax
+        mov dword ptr [esi], eax
+    done:
+        pop edi
+        mov eax, ebx
+        pop esi
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret 4
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x445ae0
+__declspec(naked) void __fastcall FUN_445ae0(DWORD, DWORD *)
+{
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        sub esp, 8
+        push ebx
+        push esi
+        push edi
+        mov edi, edx
+        mov dword ptr [ebp - 8], ecx
+        mov dword ptr [ebp - 4], 0
+    scan:
+        mov esi, dword ptr [edi]
+        mov eax, dword ptr [ebp - 8]
+        mov bl, byte ptr [esi + eax]
+        mov cl, bl
+        call FUN_445b40
+        test eax, eax
+        jne whitespace
+        mov cl, bl
+        call FUN_445b60
+        test eax, eax
+        je done
+    whitespace:
+        mov cl, bl
+        call FUN_445b60
+        test eax, eax
+        je advance
+        mov dword ptr [ebp - 4], 1
+    advance:
+        inc esi
+        mov dword ptr [edi], esi
+        jmp scan
+    done:
+        mov eax, dword ptr [ebp - 4]
+        pop edi
+        pop esi
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x443ca0
+__declspec(naked) int __fastcall FUN_443ca0(void *, void *, DWORD)
+{
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        sub esp, 8
+        mov eax, dword ptr [ebp + 8]
+        push ebx
+        push esi
+        push edi
+        xor edi, edi
+        mov dword ptr [ebp - 8], edx
+        test eax, eax
+        mov dword ptr [ebp - 4], ecx
+        jle done
+        mov ecx, OFFSET g_482720
+    entryLoop:
+        mov esi, dword ptr [ebp - 4]
+        mov eax, dword ptr [ecx]
+    compareLoop:
+        mov dl, byte ptr [eax]
+        mov bl, dl
+        cmp dl, byte ptr [esi]
+        jne compareDiff
+        test bl, bl
+        je compareSame
+        mov dl, byte ptr [eax + 1]
+        mov bl, dl
+        cmp dl, byte ptr [esi + 1]
+        jne compareDiff
+        add eax, 2
+        add esi, 2
+        test bl, bl
+        jne compareLoop
+    compareSame:
+        xor eax, eax
+        jmp compareDone
+    compareDiff:
+        sbb eax, eax
+        sbb eax, -1
+    compareDone:
+        test eax, eax
+        je matched
+        mov eax, dword ptr [ebp + 8]
+        inc edi
+        add ecx, 8
+        cmp edi, eax
+        jl entryLoop
+        pop edi
+        pop esi
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret 4
+    matched:
+        mov ecx, dword ptr [ebp - 8]
+        call FUN_443d50
+        mov ecx, dword ptr [edi*8 + g_482720 + 4]
+        mov edx, dword ptr [ebp + 8]
+        mov dword ptr [ecx*4 + g_60d688], eax
+        lea eax, [edx - 1]
+        cmp edi, eax
+        jge done
+        mov edx, eax
+        lea ecx, [edi*8 + g_482720]
+        sub edx, edi
+    shiftLoop:
+        mov esi, dword ptr [ecx + 8]
+        mov dword ptr [ecx], esi
+        mov esi, dword ptr [ecx + 0ch]
+        mov dword ptr [ecx + 4], esi
+        add ecx, 8
+        dec edx
+        jne shiftLoop
+    done:
+        pop edi
+        pop esi
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret 4
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x443d50
+__declspec(naked) int __fastcall FUN_443d50(char *)
+{
+    __asm
+    {
+        mov eax, dword ptr [g_48271c]
+        sub eax, 4
+        mov dword ptr [g_48271c], eax
+        jns parse
+        xor eax, eax
+        ret
+    parse:
+        push ecx
+        call atoi
+        add esp, 4
+        ret
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x443bd0
+__declspec(naked) void FUN_443bd0()
+{
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        sub esp, 144h
+        push ebx
+        push esi
+        push edi
+        mov ecx, 25h
+        xor eax, eax
+        mov edi, OFFSET g_60d688
+        rep stosd
+        mov eax, dword ptr [g_482720]
+        xor ebx, ebx
+        test eax, eax
+        mov dword ptr [ebp - 4], 0
+        je parseStart
+        mov eax, OFFSET g_482720
+    countLoop:
+        mov ecx, dword ptr [eax + 8]
+        add eax, 8
+        inc ebx
+        test ecx, ecx
+        jne countLoop
+    parseStart:
+        mov ecx, OFFSET g_482b30
+        call FUN_445ca0
+        mov esi, eax
+        lea eax, [ebp - 4]
+        push eax
+        mov edx, esi
+        lea ecx, [ebp - 44h]
+        call FUN_445b80
+        test eax, eax
+        je cleanup
+    parseLoop:
+        lea ecx, [ebp - 4]
+        mov edx, esi
+        push ecx
+        lea ecx, [ebp - 144h]
+        call FUN_445b80
+        test eax, eax
+        je cleanup
+        mov ecx, dword ptr [ebp - 4]
+        mov al, byte ptr [ecx + esi]
+        test al, al
+        je lineEnd
+    scanLine:
+        cmp al, 0ah
+        je lineEnd
+        inc ecx
+        mov dword ptr [ebp - 4], ecx
+        mov al, byte ptr [ecx + esi]
+        test al, al
+        jne scanLine
+    lineEnd:
+        lea edx, [ebp - 4]
+        mov ecx, esi
+        call FUN_445ae0
+        lea edx, [ebp - 144h]
+        lea ecx, [ebp - 44h]
+        push ebx
+        call FUN_443ca0
+        lea edx, [ebp - 4]
+        lea ecx, [ebp - 44h]
+        push edx
+        mov edx, esi
+        mov ebx, eax
+        call FUN_445b80
+        test eax, eax
+        jne parseLoop
+    cleanup:
+        push esi
+        call free
+        add esp, 4
+        mov dword ptr [g_482718], 0
+        pop edi
+        pop esi
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret
+    }
 }
 
 // FUNCTION: STUNTGP_D3D 0x4457e0
@@ -853,14 +2288,214 @@ __declspec(naked) void FUN_4457e0()
     }
 }
 
-// STUB: STUNTGP_D3D 0x445620
-void FUN_445620()
+// FUNCTION: STUNTGP_D3D 0x4456f0
+__declspec(naked) int __fastcall FUN_4456f0(void *, void *, DWORD)
 {
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        sub esp, 8
+        mov eax, dword ptr [ebp + 8]
+        push ebx
+        push esi
+        push edi
+        xor edi, edi
+        mov dword ptr [ebp - 8], edx
+        test eax, eax
+        mov dword ptr [ebp - 4], ecx
+        jle done
+        mov ecx, OFFSET g_482f40
+    entryLoop:
+        mov esi, dword ptr [ebp - 4]
+        mov eax, dword ptr [ecx]
+    compareLoop:
+        mov bl, byte ptr [eax]
+        mov dl, bl
+        cmp bl, byte ptr [esi]
+        jne compareDiff
+        test dl, dl
+        je compareSame
+        mov bl, byte ptr [eax + 1]
+        mov dl, bl
+        cmp bl, byte ptr [esi + 1]
+        jne compareDiff
+        add eax, 2
+        add esi, 2
+        test dl, dl
+        jne compareLoop
+    compareSame:
+        xor eax, eax
+        jmp compareDone
+    compareDiff:
+        sbb eax, eax
+        sbb eax, -1
+    compareDone:
+        test eax, eax
+        je matched
+        mov eax, dword ptr [ebp + 8]
+        inc edi
+        add ecx, 0ch
+        cmp edi, eax
+        jl entryLoop
+        pop edi
+        pop esi
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret 4
+    matched:
+        mov ecx, dword ptr [ebp - 8]
+        lea esi, [edi + edi*2]
+        mov edx, OFFSET g_482f3c
+        shl esi, 2
+        call FUN_4457c0
+        mov eax, dword ptr [esi + g_482f40 + 8]
+        mov ecx, dword ptr [ebp + 8]
+        fmul dword ptr [esi + g_482f40 + 4]
+        fstp dword ptr [eax*4 + g_60f2d0]
+        lea eax, [ecx - 1]
+        cmp edi, eax
+        jge done
+        mov edx, eax
+        lea ecx, [esi + g_482f40]
+        sub edx, edi
+    shiftLoop:
+        lea esi, [ecx + 0ch]
+        dec edx
+        mov edi, esi
+        mov ebx, dword ptr [edi]
+        mov dword ptr [ecx], ebx
+        mov ebx, dword ptr [edi + 4]
+        mov dword ptr [ecx + 4], ebx
+        mov edi, dword ptr [edi + 8]
+        mov dword ptr [ecx + 8], edi
+        mov ecx, esi
+        jne shiftLoop
+    done:
+        pop edi
+        pop esi
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret 4
+    }
 }
 
-// STUB: STUNTGP_D3D 0x445610
-void FUN_445610()
+// FUNCTION: STUNTGP_D3D 0x4457c0
+__declspec(naked) float __fastcall FUN_4457c0(char *, DWORD *)
 {
+    __asm
+    {
+        mov eax, dword ptr [edx]
+        add eax, -4
+        mov dword ptr [edx], eax
+        jns parse
+        fld dword ptr [g_46e1ec]
+        ret
+    parse:
+        push ecx
+        call atof
+        add esp, 4
+        ret
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x445620
+__declspec(naked) void FUN_445620()
+{
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        sub esp, 144h
+        push ebx
+        push esi
+        push edi
+        mov ecx, 1fh
+        xor eax, eax
+        mov edi, OFFSET g_60f2d0
+        rep stosd
+        mov eax, dword ptr [g_482f40]
+        xor ebx, ebx
+        test eax, eax
+        mov dword ptr [ebp - 4], 0
+        je parseStart
+        mov eax, OFFSET g_482f40
+    countLoop:
+        mov ecx, dword ptr [eax + 0ch]
+        add eax, 0ch
+        inc ebx
+        test ecx, ecx
+        jne countLoop
+    parseStart:
+        mov ecx, OFFSET g_483408
+        call FUN_445ca0
+        mov esi, eax
+        lea eax, [ebp - 4]
+        push eax
+        mov edx, esi
+        lea ecx, [ebp - 44h]
+        call FUN_445b80
+        test eax, eax
+        je cleanup
+    parseLoop:
+        lea ecx, [ebp - 4]
+        mov edx, esi
+        push ecx
+        lea ecx, [ebp - 144h]
+        call FUN_445b80
+        test eax, eax
+        je cleanup
+        mov ecx, dword ptr [ebp - 4]
+        mov al, byte ptr [ecx + esi]
+        test al, al
+        je lineEnd
+    scanLine:
+        cmp al, 0ah
+        je lineEnd
+        inc ecx
+        mov dword ptr [ebp - 4], ecx
+        mov al, byte ptr [ecx + esi]
+        test al, al
+        jne scanLine
+    lineEnd:
+        lea edx, [ebp - 4]
+        mov ecx, esi
+        call FUN_445ae0
+        lea edx, [ebp - 144h]
+        lea ecx, [ebp - 44h]
+        push ebx
+        call FUN_4456f0
+        lea edx, [ebp - 4]
+        lea ecx, [ebp - 44h]
+        push edx
+        mov edx, esi
+        mov ebx, eax
+        call FUN_445b80
+        test eax, eax
+        jne parseLoop
+    cleanup:
+        push esi
+        call free
+        add esp, 4
+        mov dword ptr [g_482f38], 0
+        pop edi
+        pop esi
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x445610
+__declspec(naked) void FUN_445610()
+{
+    __asm
+    {
+        ret
+    }
 }
 
 // STUB: STUNTGP_D3D 0x4469f0
@@ -1020,14 +2655,80 @@ __declspec(naked) void FUN_460ce0()
     }
 }
 
+// FUNCTION: STUNTGP_D3D 0x460d60
+__declspec(naked) void __fastcall FUN_460d60(DWORD)
+{
+    __asm
+    {
+        mov eax, dword ptr [g_62e0ac]
+        test eax, eax
+        je done
+        shl ecx, 5
+        mov ecx, dword ptr g_62e118[ecx]
+        test ecx, ecx
+        je decrementCount
+        mov eax, dword ptr [ecx]
+        push ecx
+        call dword ptr [eax + 48h]
+    decrementCount:
+        dec dword ptr [g_62f5b4]
+    done:
+        ret
+    }
+}
+
 // STUB: STUNTGP_D3D 0x40a2f0
 void FUN_40a2f0()
 {
 }
 
-// STUB: STUNTGP_D3D 0x401de0
-void FUN_401de0()
+// FUNCTION: STUNTGP_D3D 0x44ee10
+__declspec(naked) void __fastcall FUN_44ee10(void *)
 {
+    __asm
+    {
+        mov edx, 3f800000h
+        xor eax, eax
+        mov dword ptr [ecx], edx
+        mov dword ptr [ecx + 4], eax
+        mov dword ptr [ecx + 8], eax
+        mov dword ptr [ecx + 0ch], eax
+        mov dword ptr [ecx + 10h], eax
+        mov dword ptr [ecx + 14h], edx
+        mov dword ptr [ecx + 18h], eax
+        mov dword ptr [ecx + 1ch], eax
+        mov dword ptr [ecx + 20h], eax
+        mov dword ptr [ecx + 24h], eax
+        mov dword ptr [ecx + 28h], edx
+        mov dword ptr [ecx + 2ch], eax
+        mov dword ptr [ecx + 30h], eax
+        mov dword ptr [ecx + 34h], eax
+        mov dword ptr [ecx + 38h], eax
+        mov dword ptr [ecx + 3ch], edx
+        ret
+    }
+}
+
+// FUNCTION: STUNTGP_D3D 0x401de0
+__declspec(naked) void FUN_401de0()
+{
+    __asm
+    {
+        mov ecx, OFFSET g_472210
+        mov dword ptr [g_497f20], 0
+        mov dword ptr [g_497f24], 42fa0000h
+        mov dword ptr [g_497f28], 0c6435000h
+        mov dword ptr [g_497f70], 0
+        mov dword ptr [g_497f74], 0
+        mov dword ptr [g_497f78], 0
+        mov dword ptr [g_497f80], 3f800000h
+        mov dword ptr [g_497f84], 42c80000h
+        call FUN_44ee10
+        mov ecx, OFFSET g_472250
+        call FUN_44ee10
+        mov ecx, OFFSET g_472290
+        jmp FUN_44ee10
+    }
 }
 
 // STUB: STUNTGP_D3D 0x413670
@@ -1040,9 +2741,25 @@ void FUN_422420()
 {
 }
 
-// STUB: STUNTGP_D3D 0x4199a0
-void FUN_4199a0()
+// FUNCTION: STUNTGP_D3D 0x4199a0
+__declspec(naked) void FUN_4199a0()
 {
+    __asm
+    {
+        mov eax, OFFSET g_4d5cc0
+    carLoop:
+        mov word ptr [eax], 0
+        add eax, 19d00h
+        cmp eax, OFFSET g_570ac0
+        jl carLoop
+        mov eax, OFFSET g_4a1460
+    objectLoop:
+        mov dword ptr [eax], 0
+        add eax, 7724h
+        cmp eax, OFFSET g_4cdf38
+        jl objectLoop
+        ret
+    }
 }
 
 // STUB: STUNTGP_D3D 0x40d500
@@ -1301,36 +3018,7 @@ __declspec(naked) void FUN_44ea10()
 // FUNCTION: STUNTGP_D3D 0x44ea50
 void FUN_44ea50()
 {
-    if (g_61c384)
-    {
-        g_61c384->Release();
-        g_61c384 = NULL;
-    }
-    if (g_surface2)
-    {
-        g_surface2->Release();
-        g_surface2 = NULL;
-    }
-    if (g_surface)
-    {
-        g_surface->Release();
-        g_surface = NULL;
-    }
-    if (g_dd4)
-    {
-        g_dd4->Release();
-        g_dd4 = NULL;
-    }
-    if (g_dd)
-    {
-        g_dd->Release();
-        g_dd = NULL;
-    }
-    if (g_Hwnd)
-    {
-        DestroyWindow(g_Hwnd);
-        g_Hwnd = NULL;
-    }
+    // intentionally empty; original binary contains only a return here
 }
 
 // FUNCTION: STUNTGP_D3D 0x44ea60
@@ -1344,21 +3032,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
     Script_ParseGameConfig();
     traceLog("config %s %d %d %d", g_GameDirectory, g_DISPLAYRESWIDTH, g_DISPLAYRESHEIGHT, g_DISPLAYRESDEPTH);
 
-    BOOL windowCreated = {windowCreate(hInstance, hPrevInstance)};
+    BOOL windowCreated = windowCreate(hInstance, hPrevInstance);
     traceLog("windowCreate result %d", windowCreated);
     if (!windowCreated)
     {
         return 0;
     }
 
-#if defined(SGP_DEBUG)
-    OutputDebugString(_T("Woo, window created!"));
-#endif
-
-#if !defined(SGP_DEBUG)
-    ShowCursor(false);
-#endif
-
+    ShowCursor(0);
     GetGameBuildVersion();
 
     // srand(time(NULL));
@@ -1378,6 +3059,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
         if (!availableMessage)
         {
             m_keyboard();
+            if (g_62d480[0][VK_ESCAPE] & 0x80)
+            {
+                SHOULD_STOP = true;
+                PostQuitMessage(0);
+            }
             if (!SHOULD_STOP)
             {
                 thunk_FUN_44e6b0(); // frame timing

@@ -1,5 +1,5 @@
 param(
-    [string]$StageDir = "C:\SGP_RE",
+    [string]$StageDir = "reversed_game",
     [string]$BuildDir = "build",
     [switch]$Unicode,
     [switch]$SkipCompare
@@ -8,7 +8,11 @@ param(
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
-$stagePath = Resolve-Path $StageDir
+$stagePath = Join-Path $repoRoot $StageDir
+if (!(Test-Path $stagePath)) {
+    New-Item -ItemType Directory -Path $stagePath | Out-Null
+}
+$stagePath = Resolve-Path $stagePath
 $buildPath = Join-Path $repoRoot $BuildDir
 $cmake = Join-Path $repoRoot ".venv\Scripts\cmake.exe"
 $reccmpProject = Join-Path $repoRoot ".venv\Scripts\reccmp-project.exe"

@@ -1,0 +1,1 @@
+cd "c:\Users\Pr0 Haxx00r\Desktop\regp\regp"; powershell -NoProfile -ExecutionPolicy Bypass -File tools/build_and_stage.ps1 -SkipCompare
