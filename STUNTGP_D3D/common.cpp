@@ -2,11 +2,13 @@
 
 void traceLog(const char *fmt, ...)
 {
-    FILE *file = fopen("regp_trace.txt", "a");
+    static bool firstOpen = true;
+    FILE *file = fopen("regp_trace.txt", firstOpen ? "w" : "a");
     if (!file)
     {
         return;
     }
+    firstOpen = false;
 
     va_list args;
     va_start(args, fmt);

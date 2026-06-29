@@ -1916,19 +1916,380 @@ void FUN_460c90()
     g_48979c = 0xff;
 }
 
+// Original points the session allocator/state cursor at the middle of the
+// large 0x4d5cc0 workspace.
+// STUB: STUNTGP_D3D 0x443050
+void FUN_443050()
+{
+    g_60df90 = &g_4d5cc0[0x33a00];
+}
+
+// Original derives camera/session scalar constants from g_482668.
+// STUB: STUNTGP_D3D 0x441f90
+void FUN_441f90()
+{
+    g_482688 = 0.0f;
+    g_48268c = -1.0f;
+    g_482690 = 0.0f;
+    g_48266c = 1.0f / g_482668;
+    g_482670 = g_482668 * 0.2725f;
+    g_482674 = 1.0f / g_482670;
+    g_482678 = 0.0f;
+    g_48267c = -g_482670;
+    g_482680 = 0.0f;
+}
+
+// Original resets a small render/session tail state.
+// STUB: STUNTGP_D3D 0x4192d0
+void FUN_4192d0()
+{
+    g_474670 = 0xffffffff;
+    g_4d5c9c = 0;
+    g_4d5ca0 = 0;
+}
+
+// Original clears a 0x4e0-DWORD session/object table.
+// STUB: STUNTGP_D3D 0x401000
+void FUN_401000()
+{
+    memset(g_496990, 0, sizeof(g_496990));
+}
+
+// Original seeds 64 status-table entries to state 2.
+// STUB: STUNTGP_D3D 0x45e0e0
+void FUN_45e0e0()
+{
+    for (int i = 0; i < 0x40; i++)
+    {
+        g_62a078[i].status = 2;
+    }
+    g_62d478 = 0;
+}
+
+// Original copies two cached fields inside one session slot.
+// STUB: STUNTGP_D3D 0x40e360
+void __fastcall FUN_40e360(BYTE *slot)
+{
+    *(DWORD *)(slot + 0x2270) = *(DWORD *)(slot + 0x0f78);
+    *(DWORD *)(slot + 0x2570) = *(DWORD *)(slot + 0x2574);
+}
+
+// Original clears one slot field and refreshes the same cached field.
+// STUB: STUNTGP_D3D 0x40e380
+void __fastcall FUN_40e380(BYTE *slot)
+{
+    *(DWORD *)(slot + 0x2568) = 0;
+    *(DWORD *)(slot + 0x2570) = *(DWORD *)(slot + 0x2574);
+}
+
 // Original resets broad game/session state, clears car/player slot arrays, and
 // calls several setup routines. This is live from FUN_442030, so keep disabled
 // until the surrounding initializers are recovered.
 // STUB: STUNTGP_D3D 0x445fa0
 void FUN_445fa0()
 {
+    FUN_443050();
+    g_482668 = 4.0f;
+    memset(g_60f02c, 0, sizeof(g_60f02c));
+    FUN_441f90();
+    FUN_401000();
+    FUN_45e0e0();
+    for (int i = 0; i < 6; i++)
+    {
+        BYTE *slot = g_SessionSlotWorkspace[i];
+        *(DWORD *)(slot + 0x1ba8) = 0;
+        *(DWORD *)(slot + 0x26b0) = 0;
+        *(DWORD *)(slot + 0x26b4) = 0;
+        FUN_40e360(slot);
+        FUN_40e380(slot);
+    }
+    g_61b634 = 0;
+    g_612948 = 0;
+    g_61294c = 0;
+    g_612958 = 0;
+    g_612968 = 0;
+    g_612974 = 0;
+    g_612978 = 0;
+    g_612980 = 0;
+    g_612984 = 0;
+    g_612988 = 0;
+    g_61298c = 0;
+    g_612990 = 0;
+    g_612994 = 0;
+    g_612998 = 0;
+    g_61299c = 0;
+    g_6129a0 = 0;
+    g_612be4 = 0;
+    g_612bf0 = 0;
+    g_571328 = 0;
+    memset(g_612d54, 0, sizeof(g_612d54));
+    g_612d94 = 0;
+    g_612d98 = 0;
+    g_612d9c = 0;
+    g_612da0 = 0;
+    memset(g_612da4, 0, sizeof(g_612da4));
+    memset(g_61b5a4, 0, sizeof(g_61b5a4));
+    g_49a164 = 0;
+    g_61b624 = 0;
+    g_61b628 = 0;
+    g_61b62c = 0;
+    FUN_4192d0();
+
+    traceLog("session reset partial slots=%u slotStride=%u objTable=%u statusTable=%u,%u big=%u tail=%u flags=%u,%u,%u timer=%u,%u cursor=0x%p scale=%.3f inv=%.3f span=%.3f tailState=0x%08x,%u,%u",
+             (unsigned)(sizeof(g_60f02c) / sizeof(g_60f02c[0])),
+             (unsigned)sizeof(g_SessionSlotWorkspace[0]),
+             (unsigned)(sizeof(g_496990) / sizeof(g_496990[0])),
+             (unsigned)(sizeof(g_62a078) / sizeof(g_62a078[0])), g_62a078[0].status,
+             (unsigned)(sizeof(g_612da4) / sizeof(g_612da4[0])),
+             (unsigned)(sizeof(g_61b5a4) / sizeof(g_61b5a4[0])),
+             g_612948, g_612984, g_612bf0, g_612d00, g_612d04, g_60df90, g_482668, g_48266c, g_482670,
+             g_474670, g_4d5c9c, g_4d5ca0);
 }
 
 // Original performs the main per-level setup chain, including object/track setup,
 // camera/state setup, and several global flags. This is live from FUN_442030.
+// Original calls FUN_44fd60 twice; currently only the cursor reset is enabled.
+// STUB: STUNTGP_D3D 0x44fd60
+void FUN_44fd60()
+{
+    g_6227cc = g_61c7cc;
+    g_6227d0 = 0;
+}
+
+// Original clears the level script/parser working tables.
+// STUB: STUNTGP_D3D 0x42eb00
+void FUN_42eb00()
+{
+    memset(g_58c238, 0, sizeof(g_58c238));
+    memset(g_58c540, 0, sizeof(g_58c540));
+    memset(g_58c810, 0, sizeof(g_58c810));
+    memset(g_58c600, 0, sizeof(g_58c600));
+    g_58c234 = 0;
+    g_58c808 = 0;
+    g_58c800 = 0;
+    g_58d810 = 0;
+    g_58c230 = 0;
+    g_58c538 = NULL;
+    g_58c80c = NULL;
+    g_58d814 = 0;
+}
+
+// Original clears one scheduling/resource flag.
+// FUNCTION: STUNTGP_D3D 0x42e6d0
+void FUN_42e6d0()
+{
+    g_589e08 = 0;
+}
+
+// Original initializes graphics cache state.
+// STUB: STUNTGP_D3D 0x42e3e0
+void FUN_42e3e0()
+{
+    g_6249a0 = 0;
+    g_6249a4 = 0x100;
+}
+
+// Original derives viewport scale factors from the configured resolution.
+// STUB: STUNTGP_D3D 0x425070
+void FUN_425070()
+{
+    g_624990_VIEW_SCALE_X = (float)g_DISPLAYRESWIDTH * 0.0015625f;
+    g_624994_VIEW_SCALE_Y = (float)g_DISPLAYRESHEIGHT * 0.0020833334f;
+}
+
+// Original refreshes parsed level-script lookup tables. This partial covers the
+// state-2-safe table clear/cursor setup only.
+// STUB: STUNTGP_D3D 0x42f090
+void FUN_42f090()
+{
+    if (g_612be8 == 2)
+    {
+        g_58c540[0] = 0;
+        g_58c808 = 0;
+    }
+    memset(g_58c810, 0, sizeof(g_58c810));
+    g_58c80c = g_58c810;
+    g_58c538 = g_58c600;
+}
+
+// Original resets two dynamic list cursors. State-2 path stops after this setup.
+// STUB: STUNTGP_D3D 0x42b740
+void FUN_42b740()
+{
+    g_4955e4 = &g_632cf8;
+    g_4955e0 = &g_62f5d8;
+    g_632cf8 = 0;
+    g_62f5d8 = 0;
+}
+
+// Original normalizes parsed level records. State 2 first resets the record
+// sources to empty fallback tables; heavier per-record processing is disabled.
+// STUB: STUNTGP_D3D 0x42d700
+void FUN_42d700()
+{
+    if (g_612be8 == 2)
+    {
+        g_589e04 = 0;
+        g_62447c = g_589628;
+        g_62449c = 0;
+        g_62452c = 0;
+        g_624494 = g_5898d0;
+        g_624488 = g_5898f8;
+    }
+}
+
+// Original is currently empty.
+// FUNCTION: STUNTGP_D3D 0x44ee00
+void FUN_44ee00()
+{
+}
+
+// Original copies camera/object metadata outside state 2. In the current state-2
+// boot path this is intentionally a no-op.
+// STUB: STUNTGP_D3D 0x401d40
+void FUN_401d40()
+{
+    if (g_612be8 == 2)
+    {
+        return;
+    }
+}
+
+// Original builds a render/object list outside state 2. Current state-2 path is
+// a no-op before any pointer dereference.
+// STUB: STUNTGP_D3D 0x426260
+void FUN_426260()
+{
+    if (g_612be8 == 2)
+    {
+        return;
+    }
+}
+
+// Original processes pending object updates only when g_60f2a8 is set.
+// Current boot path leaves it clear, so this partial is a safe no-op.
+// STUB: STUNTGP_D3D 0x4312c0
+void FUN_4312c0()
+{
+    if (g_60f2a8 == 0)
+    {
+        return;
+    }
+}
+
+// Original updates render transforms when the render device object exists.
+// Current boot path leaves it null, so this partial is a safe no-op.
+// STUB: STUNTGP_D3D 0x431420
+void FUN_431420()
+{
+    if (g_5da1c4 == NULL)
+    {
+        return;
+    }
+}
+
+// Original frees a temporary loaded buffer when present.
+// Current boot path leaves it null, so this partial is a safe no-op.
+// STUB: STUNTGP_D3D 0x44b1a0
+void FUN_44b1a0()
+{
+    if (g_61b878 == NULL)
+    {
+        return;
+    }
+}
+
+// Original clears broad per-level working state. This partial covers only the
+// bounded arrays and scalar resets currently declared.
+// STUB: STUNTGP_D3D 0x42e510
+void FUN_42e510()
+{
+    memset(g_636418, 0, sizeof(g_636418));
+    g_61c5ec = 0;
+    memset(g_62dcf0, 0, sizeof(g_62dcf0));
+    memset(g_62d480, 0, 0x40 * sizeof(DWORD));
+    g_61c5f4 = 0;
+    g_61c5f8 = 0;
+    g_61c5fc = 0;
+    g_61c600 = 0;
+    g_61c5f0 = 0;
+    g_61c518 = 0;
+    g_61c51c = 0;
+    g_624530 = 0;
+    memset(g_61c7cc, 0, sizeof(g_61c7cc));
+    g_6227cc = NULL;
+    g_6227d0 = 0;
+    g_61c52c = 0;
+    g_61c530 = 0;
+    g_61c5e4 = 0xffffffff;
+    g_61c50c = 0;
+    g_61c510 = 0;
+    g_61c514 = 0;
+    g_61c5e8 = 0;
+    g_61c520 = 0;
+    g_61c604 = 0;
+    memset(g_61c608, 0, sizeof(g_61c608));
+    g_61c7c8 = 0;
+    memset(g_6227d4, 0, sizeof(g_6227d4));
+    g_6243b8 = 0;
+    memset(g_6243c0, 0, sizeof(g_6243c0));
+    memset(g_6243e0, 0, sizeof(g_6243e0));
+    g_61c524 = 0;
+    g_61c528 = 0;
+    memset(g_6244a8, 0, sizeof(g_6244a8));
+    memset(g_6244c8, 0, sizeof(g_6244c8));
+    memset(g_624460, 0, sizeof(g_624460));
+    FUN_42eb00();
+}
+
 // STUB: STUNTGP_D3D 0x42e6e0
 void FUN_42e6e0()
 {
+    FUN_42e510();
+    FUN_44fd60();
+    if (g_6244f8 == 0)
+    {
+        FUN_42e6d0();
+        g_6244f8 = 1;
+        g_624980 = 1;
+        g_624984 = 1;
+    }
+    FUN_42e3e0();
+    FUN_42f090();
+    FUN_425070();
+    FUN_42b740();
+    FUN_42d700();
+    FUN_44ee00();
+    FUN_401d40();
+    FUN_426260();
+    FUN_4312c0();
+    FUN_431420();
+    FUN_44b1a0();
+    g_6244f4 = 0;
+    FUN_4320c0(1.0f);
+    g_6244f8 = 0;
+    g_6244f8 = 1;
+    g_57b41c = 0;
+    static bool logged = false;
+    if (!logged)
+    {
+        logged = true;
+        traceLog("level setup partial table=%u aux=%u keyClear=%u mid=%u tail=%u small=%u tail2=%u script=%u,%u,%u,%u pool=0x%p count=%u capacity=%u marker=0x%08x flags=%u,%u,%u sched=%u cache=%u,%u scriptCursor=0x%p,0x%p dyn=0x%p,0x%p/%u,%u records=0x%p,%u,0x%p,0x%p noop=6 palette=0x%p final=%u,%u viewScale=%.3f,%.3f",
+                 (unsigned)(sizeof(g_636418) / sizeof(g_636418[0])),
+                 (unsigned)(sizeof(g_62dcf0) / sizeof(g_62dcf0[0])), 0x40u,
+                 (unsigned)(sizeof(g_61c608) / sizeof(g_61c608[0])),
+                 (unsigned)(sizeof(g_6227d4) / sizeof(g_6227d4[0])),
+                 (unsigned)(sizeof(g_6243e0) / sizeof(g_6243e0[0])),
+                 (unsigned)(sizeof(g_624460) / sizeof(g_624460[0])),
+                 (unsigned)(sizeof(g_58c238) / sizeof(g_58c238[0])),
+                 (unsigned)(sizeof(g_58c540) / sizeof(g_58c540[0])),
+                 (unsigned)(sizeof(g_58c810) / sizeof(g_58c810[0])),
+                 (unsigned)(sizeof(g_58c600) / sizeof(g_58c600[0])), g_6227cc, g_6227d0,
+                 (unsigned)(sizeof(g_61c7cc) / sizeof(g_61c7cc[0])), g_61c5e4, g_6244f8, g_624980, g_624984,
+                 g_589e08, g_6249a0, g_6249a4, g_58c80c, g_58c538, g_4955e4, g_4955e0, g_632cf8, g_62f5d8,
+                 g_62447c, g_62449c, g_624494, g_624488, g_5da1dc, g_6244f4, g_57b41c, g_624990_VIEW_SCALE_X,
+                 g_624994_VIEW_SCALE_Y);
+    }
 }
 
 // FUNCTION: STUNTGP_D3D 0x443d70
