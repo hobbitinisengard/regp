@@ -77,6 +77,30 @@ LPDIRECTDRAW4 g_dd4 = {NULL};
 // GLOBAL: STUNTGP_D3D 0x61c384
 LPDIRECTDRAWPALETTE g_61c384 = {NULL};
 
+// GLOBAL: STUNTGP_D3D 0x572ce8
+DWORD g_InputDeviceBlocks[0xe1a] = {0};
+
+// GLOBAL: STUNTGP_D3D 0x576618
+DWORD g_InputDeviceState[0x154] = {0};
+
+// GLOBAL: STUNTGP_D3D 0x576b68
+void *g_InputDirectInput = {NULL};
+
+// GLOBAL: STUNTGP_D3D 0x576550
+DWORD *g_InputActiveBlock = {NULL};
+
+// GLOBAL: STUNTGP_D3D 0x576554
+DWORD g_InputDeviceCount = {0};
+
+// GLOBAL: STUNTGP_D3D 0x576558
+DWORD g_InputObjectGuids[16] = {0};
+
+// GLOBAL: STUNTGP_D3D 0x576b6c
+DWORD *g_InputDeviceList = {NULL};
+
+// GLOBAL: STUNTGP_D3D 0x5766ac
+DWORD g_InputDeviceListStorage = {0};
+
 // GLOBAL: STUNTGP_D3D 0x5d91cc
 DWORD g_SurfaceResourceCount = {0};
 

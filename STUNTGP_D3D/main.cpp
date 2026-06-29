@@ -1314,33 +1314,29 @@ __declspec(naked) void FUN_45fa60()
     }
 }
 
-// TODO: STUNTGP_D3D 0x460760
-__declspec(naked) void FUN_460760()
+// Original: STUNTGP_D3D 0x460760
+void FUN_460760()
 {
-    __asm
+    DWORD *entry = g_62e0b8;
+    for (int i = 0x0e; i != 0; i--)
     {
-        push edi
-        mov ecx, 0eh
-        xor eax, eax
-        mov edi, OFFSET g_62e0b8
-        rep stosd
-        mov dword ptr [g_62e0b8], 0fffffc18h
-        mov dword ptr [g_62e0b8 + 4], 0fffffce0h
-        mov dword ptr [g_62e0b8 + 8], eax
-        mov dword ptr [g_62e0b8 + 0ch], 3fbeb852h
-        mov dword ptr [g_62e0b8 + 10h], 3f2b851fh
-        mov dword ptr [g_62e0b8 + 14h], 0fffff71fh
-        mov dword ptr [g_62e0b8 + 18h], 3be56042h
-        mov dword ptr [g_62e0b8 + 1ch], 0fffff965h
-        mov dword ptr [g_62e0b8 + 20h], 3c343958h
-        mov dword ptr [g_62e0b8 + 24h], 10h
-        mov dword ptr [g_62e0b8 + 28h], 40f00000h
-        mov dword ptr [g_62e0b8 + 2ch], 3f000000h
-        mov dword ptr [g_62e0b8 + 30h], 0c0a00000h
-        mov dword ptr [g_62e0b8 + 34h], 2fh
-        pop edi
-        ret
+        *entry = 0;
+        entry++;
     }
+    g_62e0b8[0] = 0xfffffc18;
+    g_62e0b8[1] = 0xfffffce0;
+    g_62e0b8[2] = 0;
+    g_62e0b8[3] = 0x3fbeb852;
+    g_62e0b8[4] = 0x3f2b851f;
+    g_62e0b8[5] = 0xfffff71f;
+    g_62e0b8[6] = 0x3be56042;
+    g_62e0b8[7] = 0xfffff965;
+    g_62e0b8[8] = 0x3c343958;
+    g_62e0b8[9] = 0x10;
+    g_62e0b8[10] = 0x40f00000;
+    g_62e0b8[11] = 0x3f000000;
+    g_62e0b8[12] = 0xc0a00000;
+    g_62e0b8[13] = 0x2f;
 }
 
 // TODO: STUNTGP_D3D 0x460af0
@@ -1697,27 +1693,19 @@ __declspec(naked) void FUN_445d10()
     }
 }
 
-// TODO: STUNTGP_D3D 0x445ad0
-__declspec(naked) int FUN_445ad0()
+// FUNCTION: STUNTGP_D3D 0x445ad0
+int FUN_445ad0()
 {
-    __asm
-    {
-        xor eax, eax
-        ret
-    }
+    return 0;
 }
 
-// TODO: STUNTGP_D3D 0x445f70
-__declspec(naked) void __fastcall FUN_445f70(DWORD)
+// FUNCTION: STUNTGP_D3D 0x445f70
+void __fastcall FUN_445f70(DWORD value)
 {
-    __asm
-    {
-        mov dword ptr [g_4835e0], ecx
-        ret
-    }
+    g_4835e0 = value;
 }
 
-// TODO: STUNTGP_D3D 0x445e60
+// FUNCTION: STUNTGP_D3D 0x445e60
 __declspec(naked) int __fastcall FUN_445e60(void *, void *, DWORD)
 {
     __asm
@@ -1803,7 +1791,7 @@ __declspec(naked) int __fastcall FUN_445e60(void *, void *, DWORD)
     }
 }
 
-// TODO: STUNTGP_D3D 0x445f10
+// FUNCTION: STUNTGP_D3D 0x445f10
 __declspec(naked) char *__fastcall FUN_445f10(char *)
 {
     __asm
@@ -1878,7 +1866,7 @@ __declspec(naked) void FUN_45f9d0()
     }
 }
 
-// TODO: STUNTGP_D3D 0x460330
+// FUNCTION: STUNTGP_D3D 0x460330
 __declspec(naked) void FUN_460330()
 {
     __asm
@@ -2942,7 +2930,7 @@ void __fastcall FUN_424c30(int mode)
              g_DD_SPLIT_VIEW);
 }
 
-// Original: STUNTGP_D3D 0x437360
+// FUNCTION: STUNTGP_D3D 0x437360
 DWORD __fastcall FUN_437360(DWORD value)
 {
     switch (value)
@@ -2982,7 +2970,7 @@ DWORD __fastcall FUN_437360(DWORD value)
     }
 }
 
-// Original: STUNTGP_D3D 0x437da0
+// FUNCTION: STUNTGP_D3D 0x437da0
 DWORD __fastcall FUN_437da0(DWORD value)
 {
     switch (value)
@@ -3065,6 +3053,24 @@ void FUN_43d430()
     g_5ff2dc = 0;
 }
 
+// Original: STUNTGP_D3D 0x43c060
+// Partial recovery: clears the active setup block and seeds the scalar defaults
+// currently required by the boot path. The original also initializes timing and
+// wider state tables that are not wired yet.
+void FUN_43c060()
+{
+    memset(g_5df560, 0, sizeof(g_5df560));
+    g_5df560[28] = 0;
+    g_5df560[29] = 0;
+    g_5df560[30] = 1;
+    g_5df5e0 = 100;
+    g_5df5e4 = FUN_43d790(g_ConfigDetailLevel, 0, 100);
+    g_5df5dc = 0x50;
+    g_5df5e8 = 0;
+    g_5df5ec = 0;
+    g_5df5f0 = 0;
+}
+
 // FUNCTION: STUNTGP_D3D 0x439e30
 void FUN_439e30()
 {
@@ -3145,39 +3151,209 @@ void FUN_43dda0()
     FUN_43dee0();
 }
 
-// Original initializes track/render state and repeatedly advances setup helpers.
-// Reached from FUN_442030 when g_612be8 == 2 and g_60d61c == 0.
-// STUB: STUNTGP_D3D 0x43d0b0
-void FUN_43d0b0()
+// Original: STUNTGP_D3D 0x43c000
+// Partial recovery: copies setup scalars into runtime globals and refreshes
+// derived sound/detail values. Calls that touch broader timing systems are not
+// enabled yet.
+void FUN_43c000()
 {
-    g_5fd254++;
-    g_5fd248 = 0;
-    g_5fd250 = 1;
-
-    FUN_437e40();
-    FUN_43d430();
-
-    memset(g_5df560, 0, sizeof(g_5df560));
-    g_5df560[28] = 0;
-    g_5df560[29] = 0;
-    g_5df560[30] = 1;
-    g_5df5e0 = 100;
-    g_5df5e4 = FUN_43d790(g_ConfigDetailLevel, 0, 100);
-    g_5df5dc = 0x50;
-    g_5df5e8 = 0;
-    g_5df5ec = 0;
-    g_5df5f0 = 0;
-
-    FUN_439e30();
-    FUN_4408e0();
-    FUN_436eb0();
-    FUN_43dda0();
-    FUN_43dd10(0);
-
     g_62e0f0 = g_5df5e0;
-    g_62e0a8 = g_5df5dc ? g_5df5dc : 1;
+    g_62e0a8 = g_5df5dc;
+    if (g_5df5dc == 0)
+    {
+        g_62e0a8 = 1;
+    }
     g_61297c = g_5df5e4;
+    FUN_460bc0();
+}
 
+// Original: STUNTGP_D3D 0x440ae0
+// Partial recovery: resets the resource-name table state. The original then
+// parses a resource list into g_606838/g_5e38dc; keep that disabled until the
+// parser helpers are recovered.
+void FUN_440ae0()
+{
+    DWORD *entry = g_605cc8;
+    int i;
+    for (i = 0x2dc; i != 0; i--)
+    {
+        *entry = 0;
+        entry++;
+    }
+    g_6087a0 = 0;
+
+    void **resourceSlot = g_606838;
+    for (i = 9; i != 0; i--)
+    {
+        *resourceSlot = &g_6087a4;
+        resourceSlot++;
+    }
+    g_5e38dc = 0;
+}
+
+// FUNCTION: STUNTGP_D3D 0x43c580
+int __fastcall FUN_43c580(char value)
+{
+    if ((value != ' ') && (value != '\t'))
+    {
+        return 0;
+    }
+    return 1;
+}
+
+// FUNCTION: STUNTGP_D3D 0x43c5a0
+int __fastcall FUN_43c5a0(char value)
+{
+    if ((value != '\r') && (value != '\n'))
+    {
+        return 0;
+    }
+    return 1;
+}
+
+// Original: STUNTGP_D3D 0x43c520
+int __fastcall FUN_43c520(char *text, int *offset)
+{
+    int crossedLine = 0;
+    for (;;)
+    {
+        int index = *offset;
+        char value = text[index];
+        if (FUN_43c580(value) == 0)
+        {
+            if (FUN_43c5a0(value) == 0)
+            {
+                return crossedLine;
+            }
+        }
+        if (FUN_43c5a0(value) != 0)
+        {
+            crossedLine = 1;
+        }
+        *offset = index + 1;
+    }
+}
+
+// Original: STUNTGP_D3D 0x43c5c0
+void __fastcall FUN_43c5c0(char *text, int *offset)
+{
+    char value = text[*offset];
+    while (value != '\0')
+    {
+        int index = *offset;
+        if (FUN_43c5a0(value) != 0)
+        {
+            break;
+        }
+        value = text[index + 1];
+        *offset = index + 1;
+    }
+    FUN_43c520(text, offset);
+}
+
+// Original: STUNTGP_D3D 0x43c680
+int __fastcall FUN_43c680(char *out, char *text, int *offset)
+{
+    *out = 0;
+    int outIndex = 0;
+    while (FUN_43c580(text[*offset]) != 0)
+    {
+        *offset = *offset + 1;
+    }
+
+    int index = *offset;
+    char value = text[index];
+    if (value == '\0')
+    {
+        return 0;
+    }
+
+    if (value == '"')
+    {
+        index++;
+        *offset = index;
+        value = text[index];
+        while ((value != '"') && (value != '\0'))
+        {
+            out[outIndex] = value;
+            outIndex++;
+            index++;
+            *offset = index;
+            value = text[index];
+        }
+        if (text[*offset] != '"')
+        {
+            return 0;
+        }
+        *offset = *offset + 1;
+    }
+    else
+    {
+        while ((value != ',') && (FUN_43c5a0(value) == 0))
+        {
+            value = text[*offset];
+            if (value == '\0')
+            {
+                break;
+            }
+            out[outIndex] = value;
+            outIndex++;
+            *offset = *offset + 1;
+            value = text[*offset];
+        }
+    }
+
+    out[outIndex] = 0;
+    while ((0 < outIndex) && (out[outIndex - 1] == ' '))
+    {
+        outIndex--;
+        out[outIndex] = 0;
+    }
+    if (text[*offset] == ',')
+    {
+        *offset = *offset + 1;
+    }
+    return outIndex;
+}
+
+static int g_DebugParserTokenLen = 0;
+static int g_DebugParserOffset = 0;
+static char g_DebugParserToken[32] = {0};
+static int g_DebugParserToken2Len = 0;
+static int g_DebugParserLineOffset = 0;
+static char g_DebugParserToken2[32] = {0};
+
+void DebugProbeResourceParser()
+{
+    char sample[] = "  \"alpha\", beta\r\nnext";
+    int offset = 0;
+    g_DebugParserTokenLen = FUN_43c680(g_DebugParserToken, sample, &offset);
+    g_DebugParserOffset = offset;
+    g_DebugParserToken2Len = FUN_43c680(g_DebugParserToken2, sample, &offset);
+    FUN_43c5c0(sample, &offset);
+    g_DebugParserLineOffset = offset;
+}
+
+// Original: STUNTGP_D3D 0x43c400
+// Partial recovery: snapshots the active flag bytes within g_5df560. The
+// original also copies a wider block to 0x5e167c, which is not declared yet.
+void FUN_43c400()
+{
+    DWORD *source = &g_5df560[2];
+    DWORD *dest = &g_5df560[15];
+    for (int i = 0x0d; i != 0; i--)
+    {
+        *dest = *source;
+        source++;
+        dest++;
+    }
+}
+
+// Original: STUNTGP_D3D 0x43c370
+// Partial recovery: initializes the setup flag block and mode classification
+// flags. The original also snapshots this state through FUN_43c400.
+void FUN_43c370()
+{
     BYTE *setupFlags = (BYTE *)g_5df560;
     memset(setupFlags + 8, 0, 0x34);
     setupFlags[9] = 1;
@@ -3199,22 +3375,63 @@ void FUN_43d0b0()
     setupFlags[0x26] = 1;
     setupFlags[0x2b] = 1;
     setupFlags[0x37] = 1;
+    FUN_43c400();
+}
 
-    memset(g_605cc8, 0, sizeof(g_605cc8));
-    g_6087a0 = 0;
-    for (i = 0; i < 9; i++)
+// Original: STUNTGP_D3D 0x43d280
+// Partial recovery: applies the post-parse normalization from detail.cfg and
+// language.cfg without enabling the original file parser path yet.
+void FUN_43d280()
+{
+    int detail = FUN_43d790(g_5df5e4, 0, 100);
+    g_5df5e4 = detail - (detail % 10);
+
+    if ((g_5df5f0 < 1) || (8 < g_5df5f0))
     {
-        g_606838[i] = &g_6087a4;
+        g_5df5f0 = 0;
     }
-    g_5e38dc = 0;
+}
 
-    traceLog("track init state seq=%d flag=%d mode=%d slots=%d active=%d table0=0x%p render=%d,%d,%d color=0x%06x audio=%d,%d detail=%d cfgSound=%d,%d,%d,%d cfgD3D=%d,%d,%d,%d,%d ctrl=%s flags=%d,%d,%d setup=%d,%d,%d res=%d,0x%p class=%d,%d,%d dur=%d,%d",
+// Original initializes track/render state and repeatedly advances setup helpers.
+// Reached from FUN_442030 when g_612be8 == 2 and g_60d61c == 0.
+// STUB: STUNTGP_D3D 0x43d0b0
+void FUN_43d0b0()
+{
+    g_5fd254++;
+    g_5fd248 = 0;
+    g_5fd250 = 1;
+
+    FUN_437e40();
+    FUN_43d430();
+
+    FUN_43c060();
+    FUN_439e30();
+    FUN_4408e0();
+    FUN_436eb0();
+    FUN_43dda0();
+    FUN_43dd10(0);
+
+    FUN_43c000();
+
+    FUN_43c370();
+    FUN_440ae0();
+    int idleResult = FUN_445ad0();
+    FUN_445f70(g_4835e0);
+    FUN_43d280();
+    DebugProbeResourceParser();
+
+    BYTE *setupFlags = (BYTE *)g_5df560;
+    traceLog("track init state seq=%d flag=%d mode=%d slots=%d active=%d table0=0x%p render=%d,%d,%d color=0x%06x audio=%d,%d detail=%d lang=%d derived=%d,%d,0x%08x cfgSound=%d,%d,%d,%d cfgD3D=%d,%d,%d,%d,%d ctrl=%s flags=%d,%d,%d flagSnap=0x%08x setup5df5d0=%d,%d,%d res=%d,0x%p idle=%d setter=%d parser=%s,%d,%d/%s,%d,%d class=%d,%d,%d dur=%d,%d",
              g_5fd254, g_5fd248, g_5fd250, g_5ff2d8, g_5ff8c0, g_5ff2e0[0], g_5ff3e8[0], g_5ff3e8[1],
-             g_5ff3e8[23], g_5ff4b8, g_62e0f0, g_62e0a8, g_61297c, g_ConfigSoundQuality,
+             g_5ff3e8[23], g_5ff4b8, g_62e0f0, g_62e0a8, g_61297c, g_5df5f0, g_60d738, g_60d734, g_62e0f8,
+             g_ConfigSoundQuality,
              g_ConfigMasterVolume, g_ConfigSfxVolume, g_ConfigMusicVolume, g_ConfigD3DDeviceIndex,
              g_ConfigD3DDriverIndex, g_ConfigD3DUvFix, g_ConfigFrameRateCorrectionDisabled, g_ConfigDisplayBootGfx,
-             g_ConfigControlMethod, setupFlags[0x21], setupFlags[0x24], setupFlags[0x39], g_5df560[28], g_5df560[29],
-             g_5df560[30], g_5e38dc, g_606838[0], g_ModeClass[1], g_ModeClass[2], g_ModeClass[0x18],
+             g_ConfigControlMethod, setupFlags[0x21], setupFlags[0x24], setupFlags[0x39], g_5df560[15],
+             g_5df560[28], g_5df560[29], g_5df560[30], g_5e38dc, g_606838[0], idleResult, g_4835e0,
+             g_DebugParserToken,
+             g_DebugParserTokenLen, g_DebugParserOffset, g_DebugParserToken2, g_DebugParserToken2Len,
+             g_DebugParserLineOffset, g_ModeClass[1], g_ModeClass[2], g_ModeClass[0x18],
              g_ModeDuration[1], g_ModeDuration[4]);
 }
 
@@ -3267,11 +3484,55 @@ void FUN_442100()
     g_612d04 = FUN_434820();
 }
 
+// Original seeds DirectInput object GUIDs used while enumerating devices.
+// STUB: STUNTGP_D3D 0x4239b0
+void FUN_4239b0()
+{
+    g_InputObjectGuids[0] = 0x13541c27;
+    g_InputObjectGuids[1] = 0x11d08e33;
+    g_InputObjectGuids[2] = 0xa000d09a;
+    g_InputObjectGuids[3] = 0x356ea0c9;
+    g_InputObjectGuids[4] = 0x13541c28;
+    g_InputObjectGuids[5] = 0x11d08e33;
+    g_InputObjectGuids[6] = 0xa000d09a;
+    g_InputObjectGuids[7] = 0x356ea0c9;
+    g_InputObjectGuids[8] = 0x13541c29;
+    g_InputObjectGuids[9] = 0x11d08e33;
+    g_InputObjectGuids[10] = 0xa000d09a;
+    g_InputObjectGuids[11] = 0x356ea0c9;
+    g_InputObjectGuids[12] = 0x13541c2a;
+    g_InputObjectGuids[13] = 0x11d08e33;
+    g_InputObjectGuids[14] = 0xa000d09a;
+    g_InputObjectGuids[15] = 0x356ea0c9;
+}
+
 // Original initializes DirectInput state and enumerates devices. This is live from
-// FUN_442120; keep stubbed while keyboard handling is custom/stable.
+// FUN_442120. Device creation/enumeration is still disabled while keyboard
+// handling is custom/stable.
 // STUB: STUNTGP_D3D 0x4249b0
 void FUN_4249b0()
 {
+    memset(g_InputDeviceBlocks, 0, sizeof(g_InputDeviceBlocks));
+    memset(g_InputDeviceState, 0, sizeof(g_InputDeviceState));
+    g_InputDirectInput = NULL;
+    g_InputDeviceCount = 0;
+    g_InputActiveBlock = g_InputDeviceBlocks;
+    g_InputDeviceState[0] = 1;
+    g_InputDeviceState[1] = 1;
+    g_InputDeviceList = &g_InputDeviceListStorage;
+    FUN_4239b0();
+
+    unsigned blockHeadsCleared = 0;
+    for (DWORD *entry = g_InputDeviceBlocks; entry < g_InputDeviceBlocks + 0xe1a; entry += 0x169)
+    {
+        *entry = 0;
+        blockHeadsCleared++;
+    }
+
+    traceLog("input init partial blocks=%u heads=%u stride=%u state=%u,%u active=0x%p devices=%u directInput=0x%p list=0x%p guid0=0x%08x",
+             (unsigned)(sizeof(g_InputDeviceBlocks) / sizeof(g_InputDeviceBlocks[0])), blockHeadsCleared, 0x169,
+             g_InputDeviceState[0], g_InputDeviceState[1], g_InputActiveBlock, g_InputDeviceCount,
+             g_InputDirectInput, g_InputDeviceList, g_InputObjectGuids[0]);
 }
 
 // FUNCTION: STUNTGP_D3D 0x442030

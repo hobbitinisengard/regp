@@ -43,6 +43,15 @@ extern LPDIRECTDRAW4 g_dd4;
 
 extern LPDIRECTDRAWPALETTE g_61c384;
 
+extern DWORD g_InputDeviceBlocks[0xe1a];
+extern DWORD g_InputDeviceState[0x154];
+extern void *g_InputDirectInput;
+extern DWORD *g_InputActiveBlock;
+extern DWORD g_InputDeviceCount;
+extern DWORD g_InputObjectGuids[16];
+extern DWORD *g_InputDeviceList;
+extern DWORD g_InputDeviceListStorage;
+
 struct SurfaceResourceEntry
 {
     LPDIRECTDRAWSURFACE4 surfaceA;
